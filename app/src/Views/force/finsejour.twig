@@ -1,0 +1,50 @@
+{% extends "maitre.twig" %}
+
+{% block content %}
+
+
+  <p style = "margin-top : 45px; font-size :25px;text-decoration: underline"><b> {{titre}} {{ "now"|date("d/m/Y") }}</b>  à 60 jours </p></br></br>
+  {% set lieutrav = " " %}
+  {% for lieu in lieux %}
+      {% set lieutrav = lieu.lieu %}
+      {% set count = 0 %}
+            {% for salarie in salaries %}
+
+                  {% if salarie.id_lieu_travail == lieu.idlieu and (salarie.datesejour|date("Y/m/d", "Europe/Paris") >= datein|date("Y/m/d", "Europe/Paris") and salarie.datesejour|date("Y/m/d", "Europe/Paris") <= dateout|date("Y/m/d", "Europe/Paris")) %}
+                    {% if count == 0 %}<p style ="text-decoration: underline "><b>{{lieutrav}}</b></p>
+
+                          <table class="table table-active">
+                            <thead>
+                                <tr>
+                                  <th scope="col">Nom</td>
+                                  <th scope="col">Prénom</td>
+                                  <th scope="col">Date fin séjour</td>
+                                </tr>
+                            </thead>
+                    {% endif %}  
+
+                                <tbody>
+                                    <tr>
+                                      <td width = 30%>{{salarie.nom}}</td>
+                                      <td width = 30%>{{salarie.prenom}}</td>
+                                      <td width = 30%>{{salarie.datesejour|date("d/m/Y")}}</td>
+                                    </tr>
+                                </tbody>
+                    {% set count = count + 1 %}
+                  {% endif %}
+
+            {% endfor %}
+            </table>
+          </br>
+    {% endfor %}
+
+
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  <script src="js/chart-master/Chart.js"></script>
+</script>
+{% endblock %}

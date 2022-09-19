@@ -1,0 +1,15 @@
+{% extends "maitre.twig" %}
+{% block title %}Accès refusé{% endblock %}
+{% block content %}
+<section class="login-block">
+  <div class="container text-center">
+    <h2>Accès refusé</h2>
+    <p>
+      Votre statut ne vous permet pas d'acceder à cet onglet...<br/><br/>
+      <a href="{{path_for('home')}}" class="btn btn-secondary">Retour accueil</a>
+    </p>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

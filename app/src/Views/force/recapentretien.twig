@@ -1,0 +1,62 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<style type="text/css">
+      .fond input[type="radio"] {
+        display: none;
+      }
+      .fond input[type="checkbox"] {
+        display: none;
+      }
+     
+
+      .toolbar label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+       .toolbar1 label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+
+      .toolbar input[type="radio"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+       .toolbar input[type="checkbox"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+      
+      .toolbar1 input[type="radio"]:checked+label {
+        background-color: red;
+        color : white;
+      }
+    
+   
+</style>
+<h5 id="fichesalarie" class="fa fa-2x fa-angle-right"style ="color :#007BFF">{{titre}}</h5>
+<section id="main-content" style ="margin: auto ;display : flex; background : #0092C7; box-shadow: 15px 15px 8px 1px #DCDCDC">
+    {% set vare ='EN COURS DE DEVELOPPEMENT' %}
+    {{vare}}
+</section></br>  
+  DU <input type ="date" name ="datein"></input> 
+  AU <input type ="date"name ="dateout"></input> </br></br>
+    
+     <div class ="fond toolbar label">
+            {% for lieu in lieus %}
+
+                  <input type ="radio" name ="idlieu" id = "{{lieu.lieu}}"  value ='{{lieu.idlieu}}'>
+                  <label class =" d-grid gap-2 col-3 mx-auto btn btn-light" for = "{{lieu.lieu}}" >{{lieu.lieu}}</label></br>
+            {% endfor %}
+     </div>      
+{% endblock %}

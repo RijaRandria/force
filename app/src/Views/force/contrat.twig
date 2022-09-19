@@ -1,0 +1,408 @@
+{% extends "maitre.twig" %}
+{% block content%}
+<head>
+
+    
+    <title>Contrat de travail de {{civilite}} {{prenom}} {{nom}}</title>
+    
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            text-indent: 0;
+        }
+
+        h2 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 15pt;
+        }
+
+        .p,
+        p {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 14pt;
+            margin: 0pt;
+        }
+
+        h1 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 15pt;
+        }
+
+        h3 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14pt;
+        }
+
+        .a,
+        a {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+
+        .s2 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+
+        .s3 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+
+        li {
+            display: block;
+        }
+
+        #l1 {
+            padding-left: 0pt;
+            counter-reset: c1 1;
+        }
+
+        #l1>li>*:first-child:before {
+            counter-increment: c1;
+            content: counter(c1, decimal)". ";
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 12pt;
+        }
+
+        #l1>li:first-child>*:first-child:before {
+            counter-increment: c1 0;
+        }
+
+        #l2 {
+            padding-left: 0pt;
+        }
+
+        #l2>li>*:first-child:before {
+            content: "- ";
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+
+        #l3 {
+            padding-left: 0pt;
+        }
+
+        #l3>li>*:first-child:before {
+            content: "- ";
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+
+        table,
+        tbody {
+            vertical-align: top;
+            overflow: visible;
+        }
+
+        @media print {
+            .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <p style="text-indent: 0pt;text-align: left;"><br/></p>
+    <p style="text-indent: 0pt;text-align: left;"><br/></p>
+    <h1 style="text-indent: 0pt;text-align: center;">Contrat à Durée Déterminée – A temps partiel Dans le cadre d’un</h1>
+    <h1 style="text-indent: 0pt;text-align: center;">CDDI – Contrat de travail à durée déterminée d’insertion professionnelle</h1>
+    <h2 style="text-indent: 0pt;text-align: center;">(Articles L. 1242-3 et L. 5132-15 du Code du travail)</h2>
+    <p style="padding-left: 5pt;text-indent: 0pt;text-align: left;" />
+    <p style="text-indent: 0pt;text-align: left;"><br/></p>
+     </br>
+    </br>
+      <p style="padding-top: 2pt;padding-left: 9pt;text-indent: 0pt;text-align: left;">Entre :</p>
+    <h1 style="padding-top: 9pt;padding-left: 9pt;text-indent: 0pt;line-height: 16pt;text-align: left;">Association Formation Cap Emploi (FOR.C.E.),</h1>
+    <p style="padding-left: 9pt;text-indent: 0pt;line-height: 13pt;text-align: left;">N° Siret : 400 121 745 000 30 – Code APE : 9499Z</p>
+    <p style="padding-left: 9pt;text-indent: 0pt;text-align: left;">dont le siège social est situé à MONTPELLIER 34 070 90, rue du Mas de Portaly</p>
+    <p style="padding-left: 9pt;text-indent: 0pt;line-height: 173%;text-align: left;">Représentée par {{civ}} <b>{{prenomsignataire|capitalize}} {{nomsignataire}}</b>, agissant en qualité de <b>{{fonctionsignataire}}</b> D&#39;une part,</p>
+    <p style="padding-left: 9pt;text-indent: 0pt;text-align: left;">Et</p>
+    <h1 style="padding-top: 9pt;padding-left: 9pt;text-indent: 0pt;line-height: 16pt;text-align: left;">{{civilite}}&nbsp {{prenom|capitalize}} &nbsp{{nom}}</h1>
+    <p style="padding-left: 9pt;text-indent: 0pt;text-align: left;">{% if civilite == "Monsieur" %} Né {% else %}Née {% endif %} le {{datenaissance}} à {{lieunaissance}}, de nationalité {{nationalite}}, {% if civilite == "Monsieur" %} Immatriculé {% else %}Immatriculée {% endif %} à la sécurité sociale sous le n°&nbsp{{securitesociale}}.</br> Demeurant {{adresse1}}&nbsp{{adresse2}} - {{codepostaladresse}}&nbsp{{villeadresse}}</p>
+    <p style="padding-top: 9pt;padding-left: 9pt;text-indent: 0pt;text-align: left;">D&#39;autre part,</p>
+    <h2 style="padding-top: 9pt;padding-left: 9pt;text-indent: 0pt;text-align: left;">Il a été convenu et arrêté ce qui suit :</h2>
+    <p style="padding-top: 9pt;padding-left: 9pt;text-indent: 0pt;text-align: left;">En vertu de l’article L 5132-15 du Code du Travail, les A.C.I sont conventionnées par l’État et peuvent conclure des CDDI en application de l’article L 1242-3 du Code du Travail.</p>
+    <p style="text-indent: 0pt;text-align: left;"><br/></p>
+    <ol id="l1">
+        <li>
+            <h2 style="padding-left: 22pt;text-indent: -12pt;line-height: 15pt;text-align: justify;">Engagement</h2>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">L’association Formation Cap Emploi – FOR.C.E. engage <b>{{civilite}}&nbsp {{prenom}} &nbsp{{nom}}</b><i>, </i>en contrat à durée déterminée d’insertion professionnelle, en qualité de Salarié Polyvalent (hors classification)<i>, </i>à compter
+                du <b>{{datedebcontrat}} </b>sous réserve des résultats de la visite médicale d’embauche.</p>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">La déclaration nominative préalable à l’embauche a été remise à l’URSSAF du Languedoc Roussillon auprès de laquelle l’association Formation Cap Emploi est immatriculée sous le n° 917000001201362276 et un exemplaire est remis au salarié.</p>
+            <h3 style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} <span class="p"> pourra exercer auprès de cet organisme son droit d’accès et de rectification que lui confère la loi n° 78-17 datant du 06/01/1978.</span></h3>
+        </li>
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 22pt;text-indent: -12pt;line-height: 15pt;text-align: left;">Objet et durée du contrat</h2>
+            <h2 style="padding-left: 9pt;text-indent: 0pt;text-align: left;">{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} <span class="p">est {% if civilite == "Monsieur" %} embauché {% else %}embauchée {% endif %} du </span>{{datedebcontrat}} <span class="p">au </span>{{datefininitial}} <span class="p">dans le cadre d’un contrat d’insertion professionnelle.</span></h2>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: left;">Ce contrat prendra fin automatiquement à l’échéance du terme prévu le <b>{{datefininitial}}</b>.</p>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: left;">Le présent contrat étant un contrat de travail à durée déterminée d’insertion, il ne sera pas attribué de prime de précarité à la fin du contrat, en vertu de l’article L 1242-3 alinéa 1 et L 1243-10 du Code du travail.</p>
+        </li>
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 22pt;text-indent: -12pt;line-height: 15pt;text-align: justify;">Période d’essai</h2>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">Le contrat est conclu sous réserve d’une période d’essai de <b>{{essai}} jours </b>expirant le <b>{{dateessai}} </b>au soir et ne sera valable que dans la limite de la validité de l’agrément de Pôle Emploi.</p>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">Au cours de cette période, le contrat pourra être rompu par l’une ou l’autre partie, à tout moment, sous réserve, en cas de rupture par l’employeur, du respect du délai de prévenance prévu à l’article L 1221-25 du Code du travail.</p>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">Toute rupture de période d’essai, quel qu’en soit l’auteur, sera notifiée par écrit, adressé en recommandé avec demande d’avis de réception.</p>
+            <p style="text-indent: 0pt;text-align: left;"><br/></p>
+
+
+        </li>
+           {% if fse ==1 %}   
+                    <table style="border-collapse:collapse" cellspacing="0">
+                        <td style="width:296pt;height :10px">
+                        </td>
+                            <tr >
+                                <td style="width:183pt">              
+                                <span><img width="90" height="90" alt="image" src="../../assets/images/force.jpg "/></span>
+                                <span><img width="70" height="70" alt="image" src="../../assets/images/esus1.png "/></span>
+                                </td>
+                                <td style="width:296pt">
+                                </td>
+                                <td style="width:183pt">              
+                                   <span style ="text-align : left"><img width="300" height="100" alt="image" src="../../assets/images/logo fse.png "/></span>
+                                </td>
+                            </tr>
+                    </table>
+                
+                {% else %}
+                                <span><img width="83" height="78" alt="image" src="../../assets/images/force.jpg "/></span>
+                                <span><img width="70" height="70" alt="image" src="../../assets/images/esus1.png "/></span>
+                {% endif %}
+              <div class="pagebreak"> </div>
+        <li>
+            <h2 style="padding-top: 2pt;padding-left: 22pt;text-indent: -12pt;line-height: 15pt;text-align: left;">Modalités de rupture du contrat</h2>
+            <p style="padding-left: 9pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Le CDDI pourra prend fin, en vertu de l’article L 1243-1 du Code du Travail</p></br>
+            <ul id="l2">
+                <li>
+                    <p style="padding-left: 45pt;text-indent: -18pt;line-height: 13pt;text-align: left;">d’un commun accord.</p>
+                </li>
+                <li>
+                    <p style="padding-left: 45pt;text-indent: -18pt;text-align: left;">pour inaptitude totale du salarié.</p>
+                </li>
+                <li>
+                    <p style="padding-left: 45pt;text-indent: -18pt;text-align: left;">pour faute grave.</p>
+                </li>
+                <li>
+                    <p style="padding-left: 45pt;text-indent: -18pt;text-align: left;">en cas de force majeure.</p>
+                    <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">Par dérogation au deuxième alinéa de l’article L1243-2 du Code du travail, <b>{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} </b>peut rompre le contrat, sans avoir à exécuter de préavis, {% if civilite == "Monsieur" %} s'il {% else %}si elle {% endif %} justifie d’une embauche sous contrat à
+                        durée indéterminée ou un contrat à durée déterminée d’au moins 6 mois ou du suivi d’une formation professionnelle qualifiante au sens de l’article L6314-1 du Code du Travail.</p>
+                </li>
+            </ul>
+        </li>
+         </br>
+                              
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 22pt;text-indent: -12pt;line-height: 15pt;text-align: left;">Convention collective</h2>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: left;">Le présent contrat est soumis aux dispositions de la convention collective nationale des Ateliers et Chantiers d’Insertion – numéro 3016, ainsi qu’à l’adhésion auprès des caisses de retraite complémentaire et des organismes de prévoyance.</p>
+        </li>       
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 22pt;text-indent: -12pt;line-height: 15pt;text-align: justify;">Durée et Horaires de travail</h2>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">La durée mensuelle de travail de <b>{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} </b> sera de <b>112.67 </b>heures soit <b>26 </b>heures hebdomadaires réparties selon le planning qui sera remis au salarié. La répartition des heures pourra faire
+                l&#39;objet d&#39;une modification qui sera notifiée par écrit au salarié au moins 7 jours avant la date à laquelle la modification envisagée doit intervenir.</p>
+        </li>
+        
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 22pt;text-indent: -12pt;line-height: 15pt;text-align: justify;">Heures complémentaires</h2>
+            <h3 style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} <span class="p">pourra être {% if civilite == "Monsieur" %} amené {% else %}amenée {% endif %} à effectuer des heures complémentaires au-delà du temps de travail fixé à 112.67 heures mensuelles dans la limite de 10 pour cent par mois.</span></h3>
+            <h3 style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} <span class="p">ne pourra refuser d’effectuer les heures complémentaires qui lui seront demandées dans la limite fixée à l’alinéa précédent, sauf {% if civilite == "Monsieur" %} s'il {% else %}si elle {% endif %} en a été {% if civilite == "Monsieur" %} informé {% else %}informée {% endif %} moins de trois jours avant la date prévue. Dans ce cas, ainsi que pour les heures complémentaires excédant la limite prévue au contrat, son refus ne saurait constituer une faute.</span></h3>
+        </li>
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 22pt;text-indent: -12pt;line-height: 15pt;text-align: justify;">Absences</h2>
+            <h3 style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} <span class="p">{% if civilite == "Monsieur" %} est tenu {% else %}est tenue {% endif %} de prévenir immédiatement l’association de toute absence pour maladie ou accident. Il/Elle devra fournir un certificat médical justifiant son absence dans les 48 heures. En cas de prolongation d’arrêt de travail, </span>{{civilite}}&nbsp
+                {{prenom}} &nbsp{{nom}} <span class="p">devra transmettre dans les mêmes délais le certificat médical justifiant cette absence.</span></h3>
+        </li>
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 22pt;text-indent: -12pt;line-height: 15pt;text-align: justify;">Rémunération</h2>
+            <h3 style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} <span class="p">percevra une rémunération mensuelle brute de {{smic}} euros (<b>{{lettre}}</b>) pour 112.67 heures mensuelles. (Salaire de base)</span></h3>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">À cette rémunération s’ajoutera, le cas échéant, la rémunération des heures complémentaires effectuées au cours du mois en sus de l’horaire prévu à l’article « Durée et horaires de travail » ci-dessus., plus éventuellement les avantages en
+                nature, les primes et majorations.</p>
+        </li>
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 28pt;text-indent: -18pt;line-height: 15pt;text-align: justify;">Lieu de travail</h2>
+            <h3 style="padding-left: 9pt;text-indent: 0pt;text-align: left;">{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} <span class="p">exercera ses fonctions sur le chantier d’insertion TCE de {{lieutravail}}.</span></h3>
+        </li>
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 28pt;text-indent: -18pt;line-height: 15pt;text-align: justify;">Parcours et formation professionnels</h2>
+            <p style="text-indent: 0pt;text-align: left;">
+                <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">À la signature du présent contrat d’insertion, <b>{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} </b>s’engage à suivre un parcours d’insertion professionnelle en concertation directe avec le chargé d’insertion sociale de l’association Formation
+                    Cap Emploi, chargé du suivi des parcours d’insertion.</p>
+                <p style="text-indent: 0pt;text-align: left;"><br/></p>
+                 <table style="border-collapse:collapse" cellspacing="0">
+                       
+                        </td>
+                         <td style="width:296pt;height :100px">
+                         </td>
+                         {% if fse ==1 %}   
+                            
+                            <tr style="height:38pt">
+                                <td style="width:183pt">              
+                                <span><img width="90" height="90" alt="image" src="../../assets/images/force.jpg "/></span>
+                                <span><img width="70" height="70" alt="image" src="../../assets/images/esus1.png "/></span>
+                                </td>
+                                <td style="width:296pt">
+                                </td>
+                                <td style="width:183pt">              
+                                
+                                    <span style ="text-align : left"><img width="250" height="90" alt="image" src="../../assets/images/logo fse.png "/></span>
+                                </td>
+                            </tr>
+                   
+                
+                         {% else %}
+                         <tr style="height:38pt">
+                                 <td style="width:183pt">              
+                                <span><img width="90" height="90" alt="image" src="../../assets/images/force.jpg "/></span>
+                                <span><img width="70" height="70" alt="image" src="../../assets/images/esus1.png "/></span>
+                                </td>
+                           </tr>     
+                        {% endif %}
+                 </table>
+              <div class="pagebreak"> </div>
+                <p style="padding-top: 8pt;padding-left: 9pt;text-indent: 0pt;text-align: left;">Aux fins de développer son expérience, ses compétences ou de confirmer son projet professionnel, le salarié sera amené à effectuer une (des) période (s) d’immersion auprès d’un autre employeur.</p>
+                <p style="padding-left: 9pt;text-indent: 0pt;text-align: left;">La période d’immersion doit faire l’objet :</p>
+                <ul id="l3">
+                    <li>
+                        <p style="padding-left: 15pt;text-indent: -5pt;text-align: left;">d’un avenant au contrat de travail avec le salarié</p>
+                    </li>
+                    <li>
+                        <p style="padding-left: 15pt;text-indent: -5pt;text-align: left;">d’une convention de mise à disposition à titre gratuit entre la SIAE et l’entreprise d’accueil</p>
+                    </li>
+                </ul>
+        </li>
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 28pt;text-indent: -18pt;line-height: 15pt;text-align: justify;">Congés payés</h2>
+            <h3 style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">{{civilite}}&nbsp {{prenom}} &nbsp{{nom}}<span class="p"> bénéficiera de congés payés dans les conditions de droit commun ; à l’issue du présent contrat, les congés non pris donneront lieu au versement d’une indemnité compensatrice de congés payés.</span></h3>
+        </li>
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 28pt;text-indent: -18pt;line-height: 15pt;text-align: justify;">Avantages sociaux</h2>
+            <h3 style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} <span class="p">bénéficiera des lois sociales instituées en faveur des salariés notamment en matière de sécurité sociale et en ce qui concerne le régime de retraite complémentaire. </span>{{civilite}}&nbsp
+                {{prenom}} &nbsp{{nom}}
+                <span class="p">sera {% if civilite == "Monsieur" %} affilié {% else %}affiliée {% endif %} à la caisse de retraite complémentaire AG2R Retraite Arrco, 37 boulevard Brune, 75014 PARIS ainsi qu’à la caisse de prévoyance CHORUM, BP 70066, 75622 PARIS Cedex 13.</span>
+            </h3>
+            <p style="text-indent: 0pt;text-align: left;"><br/></p>
+        </li>
+          </br>     
+               
+
+        <li>
+            <h2 style="padding-left: 28pt;text-indent: -18pt;line-height: 15pt;text-align: justify;">Obligations professionnelles</h2>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">Pendant la durée de son contrat, <b>{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} </b>s’engage à respecter les instructions qui pourront lui être données par l’association, notamment dans le cadre de son accompagnement socio- professionnel.</p>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: left;">De même,{% if civilite == "Monsieur" %} il {% else %}elle {% endif %} s’oblige à se conformer à la discipline intérieure de l’association, en particulier aux prescriptions de son règlement intérieur dont {% if civilite == "Monsieur" %} il {% else %}elle {% endif %} a pris connaissance et qui est affiché sur le lieu de travail. </br><b>{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} </b>observera
+                impérativement les consignes d’hygiène et de sécurité qui lui seront données.</p>
+            <h3 style="padding-left: 9pt;text-indent: 0pt;text-align: left;">{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} <span class="p">sera {% if civilite == "Monsieur" %} tenu {% else %}tenue {% endif %} à l’obligation de discrétion concernant les renseignements qu’{% if civilite == "Monsieur" %} il {% else %}elle {% endif %} aurait pu recueillir durant ses périodes de travail.</span></h3>
+                    </br>
+               
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">Les équipements de protection individuelle seront remis à <b>{{civilite}}&nbsp {{prenom}} &nbsp{{nom}}. </b>En conséquence <b>{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} </b> {% if civilite == "Monsieur" %} est tenu {% else %}est tenue {% endif %} de se présenter sur son lieu de travail muni des différents
+                équipements qui lui ont été confiés, de les porter et de les utiliser pour exécuter les travaux et les tâches qui lui sont confiés par le présent contrat.</p>
+            <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">En outre, <b>{{civilite}}&nbsp {{prenom}} &nbsp{{nom}} </b>s’engage à faire connaître sans délai, tout changement qui interviendrait dans sa situation concernant son adresse, situation de famille etc.</p>
+        </li>
+          
+                      
+              
+        <li>
+            <h2 style="padding-top: 9pt;padding-left: 28pt;text-indent: -18pt;line-height: 15pt;text-align: justify;">Mention légale-Traitement des données personnelles (RGPD)</h2>
+        </li>
+    </ol>
+    <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">Conformément à la loi « Informatique et Libertés » du 6 janvier 1978, modifiée, Formation Cap Emploi (FOR.C.E) dispose d’un traitement informatique pour l’accomplissement de ses activités. À cette fin, FOR.C.E est amenée à enregistrer des données
+        vous appartenant et à les transmettre à certaines administrations, aux cofinanceurs de l’insertion par l’activité économique, aux partenaires institutionnels de l’emploi.</p>
+    <p style="padding-left: 9pt;text-indent: 0pt;text-align: justify;">Conformément aux articles 39 et suivants de la loi n°78-17 du 6 janvier 1978, relative à l’informatique et aux libertés, vous bénéficiez d’un droit d’accès et le cas échéant d’un droit de rectification, ou de suppression des informations en vous adressant à 
+       contact@formationcapemploi.fr</p>
+    </p>
+    <p style="padding-top: 9pt;padding-left: 9pt;text-indent: 0pt;line-height: 172%;text-align: justify;">Le présent contrat est établi en deux exemplaires dont un pour chacune des parties.</br> Fait à Montpellier le {{datedebcontrat}}</p>
+    </br>
+
+
+    <table style="border-collapse:collapse" cellspacing="0">
+        <tr style="height:38pt">
+            <td style="width:200pt">
+                <p  style="padding-top: 4pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{article}} {{fonctionsignataire}}</p>
+                <p  style="padding-left: 2pt;text-indent: 0pt;text-align: left;">{{prenomsignataire}} {{nomsignataire}}</p>
+            </td>
+            <td style="width:296pt">
+               
+            </td>
+            <td style="width:296pt">
+                <p  style="padding-left: 65pt;text-indent: 0pt;line-height: 11pt;text-align: left;">Signature du salarié précédée de la mention manuscrite &lt;lu et approuvé&gt;</p>
+            
+                <p  style="padding-left: 65pt;text-indent: 0pt;line-height: 12pt;text-align: left;">{{prenom}} &nbsp{{nom}}</p>
+            </td>
+        </tr>
+    </table>
+    <p style="text-indent: 0pt;text-align: left;" />
+
+    <p style="text-indent: 0pt;text-align: left;">
+    </p>
+    
+             
+            <table style="border-collapse:collapse" cellspacing="0">
+                       <td style="width:296pt;height : 90px">
+                        </td>
+                  
+                    <tr style="height:38pt">
+                        <td style="width:183pt">              
+                           <span><img width="90" height="90" alt="image" src="../../assets/images/force.jpg "/></span>
+                           <span><img width="70" height="70" alt="image" src="../../assets/images/esus1.png "/></span>
+                        </td>
+                        <td style="width:296pt">
+                        </td>
+                        {% if fse ==1 %}
+                         <td style="width:183pt">              
+                          
+                            <span style ="text-align : left"><img width="300" height="100" alt="image" src="../../assets/images/logo fse.png "/></span>
+                        </td>
+                         {% endif %}
+                    </tr>
+            </table>
+        
+      
+       
+
+</div>
+
+</body>
+
+</html>
+{% endblock %}

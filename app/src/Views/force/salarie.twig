@@ -1,0 +1,140 @@
+{% extends "maitre.twig" %}
+
+ 
+
+{% block content %}
+<style type="text/css">
+ 
+      #essai:checked + label > img {
+        color : green;
+      }  
+        .tsyhita{
+        visibility : hidden;
+      }
+   
+</style>
+
+<h4 id="salarie" class="fa fa-2x fa-angle-right"style ="color :#007BFF">{{titre}}</h4></br>
+
+<div id="essai" style = "display : flex" >
+ <a  href="{{path_for('newsalarie')}}" style ="display:table-cell;vertical-align:middle" onclick="bouton()" id="newsalarie"  >
+      <label style ="position : absolute"  id = "orange" for ="newsalarie"><img  src ="../../assets/images/new bouton.png" style ="width :120px; height :110px; position : absolute" class =" btn btn-outline-warning rounded-circle" title = "Saisie Nouveau Salarié"   role="button"></br></img></i></label>
+      <label class ="tsyhita" style ="position : relative" id = "vert" for ="newsalarie"><img src ="../../assets/images/bouton ok.png" style ="width :120px; height :110px; position : relative"  title = "Saisie Nouveau Salarié"  role="button"></br></img></i></label>
+  
+</a>  
+</div>
+
+</div>
+<div  style ="width : 1620px, ">
+          <!-- page start-->
+          <div >
+             <div class="scroller adv-table table-responsive -xl} ">
+                <table id = "etable" class ="table table-striped table-bordered " >
+                <!--<table>-->
+                  <thead class=" thead-dark centre" >
+                      
+                          <tr class="table-primary" style ="width : 100%; height : 50%; " >
+                          
+                            <th scope="col " >Nom et</br>Prénom</th>
+                            <th scope="col " >Chantier</th>
+                            <th scope="col " >Début</br>Fin</th>
+                            <th scope="col " >FORMATION</th>
+                            <th scope="col " >Dossier</th>
+                            <th scope="col " >Sanction</th>
+                            <th scope="col " >Modif</th>
+                            <th scope="col " >Sortie</th>
+                            <th scope="col " colspan="3"> CIP</th>
+                            <th scope="col " >Situation Familiale</th>
+                            <th scope="col " >Tranche d'Âge</th>
+                            <th scope="col " >Ressources</th>
+                            <th scope="col " >Chômage</th>
+                            <th scope="col " >Niveau d'Etudes</th>
+                          
+                          </tr>
+
+                  </thead>
+                  <tbody>
+                        {% for ligne in lignes %}
+                            {% if ligne.datesortie == null %}
+                          
+                                <tr class="centre overflow-auto">
+                                    
+                                    <td ><b>{{ligne.nom}}</br> {{ligne.prenom}}</b></td>
+                                    <td ><b>{{ligne.lieu}}</b></td>
+                                    <td >{{ligne.datedebcontrat|date("d/m/Y", "Europe/Paris")}}</br>{{ligne.datefinreelle|date("d/m/Y", "Europe/Paris")}}</td>
+                                    <td ><a href="{{path_for('salarieformation',{'idsalarie'        : ligne.id},{'idlieu' : ligne.idlieu})  }}"> <button class ="btn btn-outline-secondary" type ="button" ><img src="../../assets/images/cqp.png" style ="text-align:justify-all color :#696969" title = "Formation de {{ ligne.genre }} {{ ligne.nom }}"></img></button></a></td>
+                                    <td ><a href="{{path_for('modifsalarie',{'idsalarie'            : ligne.id},{'idlieu' : ligne.idlieu})  }}"> <button class ="btn btn-outline-info" type ="button" ><p class="fa fa-folder-open " style ="text-align:justify-all" title = "Dossier administratif de {{ ligne.genre }} {{ ligne.nom }}"></p></button></a></td>
+                                    <td ><a href="{{path_for('sanctionsalarie',{'idsalarie'         : ligne.id},{'idlieu' : ligne.idlieu})  }}"> <button type="button" class="btn btn-outline-danger" title = "Fiche de Sanction de {{ ligne.genre }} {{ ligne.nom }}">S</button></a></td>
+                                    <td ><a href="{{path_for('editsalarie',{'idsalarie'             : ligne.id},{'idlieu' : ligne.idlieu})  }}"> <button class ="btn btn-outline-warning" type ="button" ><img src="../../assets/images/modif.png" title = "Modification Fiche de {{ ligne.genre }} {{ ligne.nom }}"></img></button1> </a></td>
+                                    <td ><a href="{{path_for('sortiesalarie',{'idsalarie'           : ligne.id},{'idlieu' : ligne.idlieu})  }}"> <button class ="btn btn-outline-secondary" type ="button" ><i class="fa fa-sign-out fa-lg " style ="text-align:justify-all  " title = "Fiche de Sortie de {{ ligne.genre }} {{ ligne.nom }}"></i></button>  </a></td>
+                                    <td ><a href="{{path_for('suivisalarie',{'idsalarie'            : ligne.id})                            }}"> <button type="button" class="btn btn-info" title = "Fiche d'entretien de {{ ligne.genre }} {{ ligne.nom }}">1er Entretien / </br>Diagnostic</button> </a></td>
+                                    <!--<td ><a href="{{path_for('diagnosticsalarie',{'idsalarie'   : ligne.id})                            }}"> <button type="button" class="btn btn-info" title = "Fiche de Diagnostic de {{ ligne.genre }} {{ ligne.nom }}">Diagnostic</button> </a></td>-->
+                                    <td ><a href="{{path_for('entretiensalarie',{'idsalarie'        : ligne.id})                            }}"> <button type="button" class="btn btn-success" title = "Fiche de suivi de {{ ligne.genre }} {{ ligne.nom }}">Suivi</button> </a></td>
+                                    <td ><a href="{{path_for('demarchesalarie',{'idsalarie'         : ligne.id})                            }}"> <button type="button" class="btn btn-primary" title = "Fiche de Démarche de {{ ligne.genre }} {{ ligne.nom }}">Démarche</button> </a></td>
+                                    <td >{{ligne.situation}}</td>
+                                    <td >{{ligne.tranche}}</td>
+                                    <td >{{ligne.ressources}}</td>
+                                    <td >{{ligne.duree}}</td>
+                                    <td >{{ligne.niveau}}</td>
+
+                                  </tr>
+                          
+                            {% else %}
+                                  <tr class="centre "style =" background : #d2e9fb ">
+                                    <td ><s style="color:red"><b><span style="color:black"><b>{{ligne.nom}}</br> {{ligne.prenom}}</b></span></b></s></td>
+                                    <td ><s style="color:red"><b><span style="color:black">{{ligne.lieu}}</span></b></td>
+                                    <td ><s style="color:red"><span style="color:black">{{ligne.datedebcontrat|date("d/m/Y", "Europe/Paris")}}</br>{{ligne.datefinreelle|date("d/m/Y", "Europe/Paris")}}</td>
+                                    <td><s style="color:red"><p class="text text-danger" ><a href="{{path_for('salarieformation',{'idsalarie'        : ligne.id},{'idlieu' : ligne.idlieu})  }}"> <button class ="btn btn-outline-secondary" type ="button" ><img src="../../assets/images/cqp.png" style ="text-align:justify-all color :#696969" title = "Formation de {{ ligne.genre }} {{ ligne.nom }}"></img></button></a></p></td>
+                                    <td><s style="color:red"> <p class="text text-success" ><a href="{{path_for('modifsalarie',{'idsalarie'            : ligne.id},{'idlieu' : ligne.idlieu})  }}"> <button class ="btn btn-outline-info" type ="button" ><p class="fa fa-folder-open " style ="text-align:justify-all" title = "Dossier administratif de {{ ligne.genre }} {{ ligne.nom }}"></p></button></a></p></td>
+                                    <td ><s style="color:red"> <p class="text text-danger" ><a href="{{path_for('sanctionsalarie',{'idsalarie'         : ligne.id},{'idlieu' : ligne.idlieu})  }}"> <button type="button" class="btn btn-outline-danger" title = "Fiche de Sanction de {{ ligne.genre }} {{ ligne.nom }}">S</button></a></p>  </td>
+                                    <td ><s style="color:red"><p class="text text-warning" ><a href="{{path_for('editsalarie',{'idsalarie'             : ligne.id},{'idlieu' : ligne.idlieu})  }}"> <button class ="btn btn-outline-warning" type ="button" ><img src="../../assets/images/modif.png" title = "Modification Fiche de {{ ligne.genre }} {{ ligne.nom }}"></img></button1> </a></p>
+                                    <td ><a style =" color : #000080" href="{{path_for('sortiesalarie',{'idsalarie'           : ligne.id},{'idlieu' : ligne.idlieu})  }}">{{ ligne.datesortie|date("d/m/Y", "Europe/Paris") }} </td>
+                                    <td ><s style="color:red"><p class="text text-info" ><a href="{{path_for('suivisalarie',{'idsalarie'            : ligne.id})                            }}"> <button type="button" class="btn btn-info" title = "Fiche d'entretien de {{ ligne.genre }} {{ ligne.nom }}">1er Entretien / </br>Diagnostic</button> </a></p> </td>
+                                    <td ><s style="color:red"><p class="text text-success" ><a href="{{path_for('entretiensalarie',{'idsalarie'        : ligne.id})                            }}"> <button type="button" class="btn btn-success" title = "Fiche de suivi de {{ ligne.genre }} {{ ligne.nom }}">Suivi</button> </a></p></td>
+                                    <td ><s style="color:red"><p class="text text-primary" ><a href="{{path_for('demarchesalarie',{'idsalarie'         : ligne.id})                            }}"> <button type="button" class="btn btn-primary" title = "Fiche de Démarche de {{ ligne.genre }} {{ ligne.nom }}">Démarche</button> </a></p></td>
+                                    <td ><s style="color:red"><span style="color:black">{{ligne.situation}}</td>
+                                    <td ><s style="color:red"><span style="color:black">{{ligne.tranche}}</td>
+                                    <td ><s style="color:red"><span style="color:black">{{ligne.ressources}}</td>
+                                    <td ><s style="color:red"><span style="color:black">{{ligne.duree}}</td>
+                                    <td ><s style="color:red"><span style="color:black">{{ligne.niveau}}</td>
+                                  </tr>                      
+
+
+                          
+                            {% endif %}
+                         {% endfor %}
+                 </tbody>
+                </table>
+            </div>
+          </div>
+</div>
+<!--</div>-->
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+  <script type="text/javascript" src="DataTables/datatables.min.js"></script>
+  <script src="..assets/js/jquery/jquery.min.js"></script>
+  <script src="..assets/js/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="..assets/js/jquery.backstretch.min.js"></script>
+  
+  <script>
+        $(document).ready(function() {
+        $('#etable').DataTable();
+      } );
+        
+  </script>
+  
+ <script>
+      function bouton()
+      { 
+      document.getElementById("orange").style.visibility = "hidden";   
+      document.getElementById("vert")  .style.visibility = "visible";  
+      
+    
+      } 
+</script>
+
+
+{% endblock %}

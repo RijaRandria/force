@@ -1,0 +1,365 @@
+{% extends "maitre.twig" %}
+
+{% block content %}
+<body >
+
+<!---lien pour fonctionnement-->
+<!--<link href="img/favicon.png" rel="icon">
+<link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+<section id="main-content">
+     <section >
+       <div class="row">
+         <div class="col-lg-9 main-chart">
+           <!--CUSTOM CHART START -->
+           <div class="border-head " >
+            <h3 ><b>Nombre de salariés par chantiers ( en parcours)</b> </h3>
+          
+           </div>
+           
+           <div class="custom-bar-chart " >
+            
+               {% set chantier = 0 %}
+             {% for lieu in lieux %}
+                 
+                  {% set count  = 0 %}
+                  {% set pcount = 0 %}
+                  {% for salarie in salaries %}
+                      {% if salarie.id_lieu_travail == lieu.idlieu and salarie.datesortie == "" %}
+                              {% set count = count + 1 %}
+                      {% endif %}
+                  
+                  {% endfor %}
+
+                      {% if (count > chantier) %}
+                          {% set chantier = count %}
+                      {% endif %}
+                  {% set pcount = ((count * 4.7) ) %}
+                   <ul class="y-axis">
+               <li><span>40</span></li>
+               <li><span>30</span></li>
+               <li><span>20</span></li>
+               <li><span>10</span></li>
+               <li><span>0</span></li>
+             </ul>
+
+                  <div class="bar ">
+                        <div class="value tooltips" data-original-title="3" data-toggle="tooltip" data-placement="top" style ="height : {{pcount}}px">{{count}}</div>
+                        <div class="title">{{lieu.lieu}}</div>
+                  </div>
+              {% endfor %}
+           </div>
+
+              </br></br>
+           <!--custom chart end-->
+           <div class = "row">
+             <!-- SERVER STATUS PANELS -->
+             <div class="col-md-4 col-sm-4 mb grey-panel">
+               <div class="darkblue-header">
+               
+                 <h5><b>SALARIES PAR CHANTIERS </b></h5>
+               </div>
+                 <div class="row">
+                   <table class="table table-active table-bordered">
+                   <thead>
+                       <tr>
+                         <th class = "text-center" scope="col">Chantiers</th>
+                         <th class = "text-center" scope="col">Nombre Total</th>
+                         <th class = "text-center" scope="col">Sortie</th>
+                         <th class = "text-center" scope="col"> En Parcours</th>
+
+                       </tr>
+                    </thead>
+                  </br>
+                   {% set total = 0 %}
+                   {% set totsor = 0 %}
+                   {% set totpar = 0 %}
+
+
+                   {% for lieu in lieux %}
+                        {% set count  = 0 %}
+                        {% set parcours = 0 %}
+                        {% set ppc = 0 %}
+                        {% set pcount = 0 %}
+                        {% for salarie in salaries %}
+                            {% if salarie.id_lieu_travail == lieu.idlieu %}
+                                  {% set count = count + 1 %}
+                                  {% if salarie.id_lieu_travail != "8" %}
+                                     
+                                      {% set total = total + 1 %}
+                                  
+                                  {% endif %}
+                                     
+                                  {% if (salarie.datesortie > 0)  %}
+                                          {% set parcours = parcours + 1 %}
+                                  {% endif %}
+                            {% endif %}
+                             {% set ppc = count - parcours %}
+                           
+
+                            {% set pcount = (count * 100) / tout %}
+
+                        {% endfor %}
+
+                            <tbody>
+                                <tr>
+                                  <td width = 60%>{{lieu.lieu}}</td>
+                                  <td class = "text-center" width = 10%>{{count}}</td>
+                                   <td class = "text-center" width = 10%>{{parcours}}</td>
+                                   <td class = "text-center" width = 10%>{{ppc}}</td>
+                              
+                                  </br>
+                                </tr>
+                            </tbody>
+                              {% set totsor = totsor + ppc %}
+                              {% set totpar = totpar + parcours %}
+                        {% endfor %}
+                        
+                      </table>
+                      <table class="table table-active table-bordered">
+                            <thead>
+                            <tr>
+                              <th class = "text-center" scope="col">Total Salariés sans PNR</th>
+                              <th class = "text-center" scope="col">Total Sortis</th>
+                              <th class = "text-center" scope="col">Total En Parcours</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                                      <tr>
+                                        <td class = "text-center" width = 10%>{{total}}</td>
+                                        <td class = "text-center" width = 10%>{{totpar}}</td>
+                                        <td class = "text-center" width = 10%>{{totsor}}</td>
+                                    
+                                        </br>
+                                      </tr>
+                            </tbody>
+                      </table>
+                </div>
+                 
+               <!-- /grey-panel -->
+             </div>
+             
+             <div class="col-md-4 col-sm-4 mb grey-panel">
+                 <div class="darkblue-header">
+                   <h5><b>SORTIE</b></h5>
+                 </div>
+                <div class="row">
+                   <table class="table table-active table-bordered">
+                     <thead>
+                         <tr>
+                           <th class = "text-center" scope="col">Sortie : {{totpar}}</td>
+                           <th class = "text-center" scope="col">Nbre</td>
+                           <th class = "text-center" scope="col">%</td>
+                         </tr>
+                      </thead>
+                                 
+                      {% for sortie in sorties %}
+                                   <tbody>
+                                      <tr>
+                                          <td class = "text-center" width = 20%>{{sortie.sortie}}</td>
+                                 
+                                          {% set count = 0 %}
+                                          {% for salarie in salaries %}
+                                            {% if salarie.idsortie == sortie.idsortie %}
+                                                {% set count = count + 1 %}
+
+                                            {% endif %} 
+                                          {% endfor %} 
+                                          <td class = "text-center" width = 20%>{{count}}</td>
+                                          {% set percent = (count / totpar) * 100 %}  
+                                          <td class = "text-center" width = 20%>{{percent|round(2, 'floor')}}</td>
+                                  
+                                            
+                                          
+                                      </tr>
+                                   </tbody>
+
+                            
+                      {% endfor %}   
+                    
+                 </table>
+               </div>
+            </div>
+
+        
+           
+             <!-- /col-md-4-->
+             <div class="col-md-4 col-sm-4 mb grey-panel">
+                 <div class="darkblue-header">
+                   <h5><b>PARITE</b></h5>
+                 </div>
+                 <div class="row">
+                   <table class="table table-active table-bordered">
+                     <thead>
+                         <tr>
+                           <th class = "text-center" scope="col">Genre</td>
+                           <th class = "text-center" scope="col">Nbre</td>
+                           <th class = "text-center" scope="col">%</td>
+                         </tr>
+                      </thead>
+                      </br>
+                     <tbody>
+                         <tr>
+                           <td width = 60%>&nbsp<img src ="../../assets/images/femme.png " width = 40px, heigth = 40px >Femme</img></td>
+                           <td class = "text-center" width = 20%>{{dame}}</td></br>
+                            <td class = "text-center" width = 20%>{{pdame}}</td></br>
+                         </tr>
+                         <tr>
+                           <td width = 60%>&nbsp<img src ="../../assets/images/homme.png " width = 40px, heigth = 40px >Homme</img></td>
+                           <td class = "text-center" width = 20%>{{homme}}</td></br>
+                            <td class = "text-center" width = 20%>{{phomme}}</td></br>
+                         </tr>
+                     </tbody>
+
+                 </table>
+               </div>
+               <div class="darkblue-header">
+                    <h5><b>TRANCHE D'AGES</b></h5>
+
+                 <div class="row">
+                   <table class="table table-active table-bordered">
+                   <thead>
+                       <tr>
+                         <th class = "text-center" scope="col">Tranche</td>
+                         <th class = "text-center" scope="col">Nombre</td>
+                       </tr>
+                    </thead>
+                    </br>
+                  {% for trancheage in trancheages %}
+                      {% set niv = 0  %}
+                      {% set pcount = 0 %}
+                      {% for salarie in salaries %}
+                            {% if trancheage.idage == salarie.trancheage and  salarie.id_lieu_travail != "8" %}
+                                  {% set niv = niv + 1 %}
+                            {% endif %}
+                            
+                      {% endfor %}
+
+                          <tbody>
+                              <tr>
+                                <td class = "text-center" width = 60%>{{trancheage.tranche}}</td>
+                                <td class = "text-center" width = 30%>{{niv}}</td></br>
+                              </tr>
+                          </tbody>
+
+                      {% endfor %}
+                </table>
+                  </div>
+
+               <!-- /grey-panel -->
+             </div>
+
+             </div> 
+           </div>
+
+           <!-- /row -->
+           <div class="row text-normal">
+                           <!-- WEATHER PANEL -->
+              <div id ="essai"  style ="color : #696969 ">
+                <p> {{vdate1}}  </p><n/>
+              <!---  {{ "now"|date("d/m/Y") }} -->
+
+              </div>
+          </div>
+              </br>
+          <div class="row text-normal">
+          
+             
+                  <a href="{{path_for('finsejour')}}" class ="col-lg-2 text-uppercase border border-solid border-dark btn btn-light align-center"  role="button" style ="text-decoration : underline; color : #FF0000; padding:0" >Fin Titre de séjour 
+                    </br>
+                              
+                      {% set i = 0 %} 
+                    {% for sejour in sejours  %}
+                        {% if sejour.datesejour|date("Y/m/d", "Europe/Paris") >= vdate|date("Y/m/d", "Europe/Paris") and sejour.datesejour|date("Y/m/d", "Europe/Paris") <= datefincontrat|date("Y/m/d", "Europe/Paris")  %}
+                           {% set i = i + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if i > 1 %}
+                      <span> {{i}} salariés </span>
+                     {% elseif i == 1 %}
+                      <span> {{i}} salarié </span>
+                    {% else %}
+                    {% endif %}
+                   
+                </a>
+            <div style ="width:11%">
+
+            </div>
+         
+                <a href="{{path_for('finametra')}}" class ="col-lg-2 text-uppercase border border-solid border-dark btn btn-light align-center"  role="button" style ="text-decoration : underline; color : #FF0000; padding:0" >Date AMETRA 
+                    {% set i = 0 %}
+                   
+                    {% for ametra in sejours  %}
+                     
+                      {% if ametra.dateametra|date("Y/m/d", "Europe/Paris") >= vdate|date("Y/m/d", "Europe/Paris") and ametra.dateametra|date("Y/m/d", "Europe/Paris") <= dateout|date("Y/m/d", "Europe/Paris")  %}
+                        {% set i = i + 1 %}
+                         
+                      {% endif %}
+                    {% endfor %}
+                     {% if i > 1 %}
+                      <span> {{i}} salariés </span>
+                     {% elseif i == 1 %}
+                      <span> {{i}} salarié </span>
+                    {% else %}
+                    {% endif %}
+                </a>
+          
+            <div style ="width:11%">
+
+            </div>
+           
+                    <a href="{{path_for('fincontrat')}}" class ="col-lg-2 text-uppercase border border-solid border-dark btn btn-light align-center"  role="button" style ="text-decoration : underline; color : #FF0000; padding:0" >Fin CDDI 
+                    </br>
+                    {% set i = 0 %}
+                    {% for finreelle in sejours  %}
+                        {% if finreelle.datefinreelle|date("Y/m/d", "Europe/Paris") >= vdate|date("Y/m/d", "Europe/Paris") and finreelle.datefinreelle|date("Y/m/d", "Europe/Paris") <= datefincontrat|date("Y/m/d", "Europe/Paris")  %}
+                            {% set i = i + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if i > 1 %}
+                      <span> {{i}} salariés </span>
+                    {% elseif i == 1 %}
+                      <span> {{i}} salarié </span>
+                    {% else %}
+                    {% endif %}
+
+           </a>
+              <div style ="width:11%">
+
+            </div>
+            
+           
+                    <!--<a class="dropdown-item nav-link {% if is_current_path('fincontrat')          %}active{% endif %}" href="{{path_for('finmutuelle')}}  "style ="text-decoration : underline; color : #FF0000;padding:0">Fin mutuelle </a>-->
+                    <a  href="{{path_for('finmutuelle')}} " class="col-lg-2 text-uppercase border border-solid border-dark btn btn-light align-center"  role="button" style ="text-decoration : underline; color : #FF0000;padding:0"  >Fin mutuelle 
+                    </br>
+                    {% set i = 0 %}
+                    {% for finreelle in sejours  %}
+                        {% if finreelle.datemutuelle|date("Y/m/d", "Europe/Paris") >= vdate|date("Y/m/d", "Europe/Paris") and finreelle.datemutuelle|date("Y/m/d", "Europe/Paris") <= datefincontrat|date("Y/m/d", "Europe/Paris")  %}
+                            {% set i = i + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if i > 1 %}
+                      <span> {{i}} salariés </span>
+                    {% elseif i == 1 %}
+                      <span> {{i}} salarié </span>
+                    {% else %}
+                    {% endif %}
+                  </a>
+              </br></br>
+
+           </div>   
+            <div style ="height:25%">
+            <p></p>
+            </div>
+            
+
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  <script src="js/chart-master/Chart.js"></script>
+</script>
+{% endblock %}

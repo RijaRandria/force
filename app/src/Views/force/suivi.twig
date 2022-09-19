@@ -1,0 +1,37 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<h4 id="suivi" class="fa fa-2x fa-angle-right" style ="color :#007BFF">{{titre}}</h4>
+<img src ="../../assets/images/salarie.png" style ="width : 100px; height : 100px" title = "Suivi salarié"></br></img>
+</br>
+<div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+            <div class="adv-table">
+            <table class ="table table-hover table-bordered " id="hidden-table-info">
+            <!--<table>-->
+              <thead class="thead-light">
+                  <tr >
+                    <th class=" center hidden-phone">Nom</th>
+                    <th class=" center hidden-phone">Prénom</th>
+                    <th class=" center hidden-phone">Adresse</th>
+
+  <tr/>
+  {% for ligne in lignes %}
+  <tr style ="border : 2 solid black">
+      <td class=" center hidden-phone">{{ ligne.nom }}</td>
+      <td class=" center hidden-phone">{{ ligne.prenom }}</td>
+      <td class=" center hidden-phone">{{ ligne.adresse1 }}</td>
+      <td class=" center hidden-phone"> <p class="fa fa-folder-open" style ="text-align:justify-all; color : blue"></p></td>
+
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  // alert("Coucou les auditeurs !");
+</script>
+{% endblock %}

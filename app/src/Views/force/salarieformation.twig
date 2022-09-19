@@ -1,0 +1,114 @@
+{% extends "maitre.twig" %}
+{% block content %}
+  {% block fiche %}
+      {% include './force/basefiche.twig' %}
+       </br>
+  {% endblock %}
+
+    <div class="row">
+   
+ 
+                <div class="col-md-6 detailed border rounded border-primary">
+                    </br>
+                
+                      <h4 class="bg-primary text-white">Inscrit aux formations </h4></br>
+                   
+                      {% for doss in dossier %}
+                            {% set vdatedeb = doss.datedeb %}
+                            {% set vdatefin = doss.datefin %}
+                            {% set validation = " " %}
+                            {% if doss.validation == 'O' %}
+                              {% set validation = " Validation : OUI" %}
+                            {% elseif doss.validation == 'N' %}
+                              {% set validation = " Validation : NON" %}
+                            {% endif %}
+                            
+                                <!--<button class="btn btn-primary" type="button">Button</button>
+                                <button  ton class="btn btn-primary" type="button">Button</button> -->
+                                <p style =" margin-left : 5pt"  class="btn btn-primary d-grid gap-2 col-12 border " ><b>{{doss.formation}}</b> {{validation}}Du {{vdatedeb |date("d/m/Y", "Europe/Paris")}} au {{vdatefin |date("d/m/Y", "Europe/Paris")}} par {{doss.organisme}} {% if doss.heures %}({{doss.heures}}H) ({{doss.lieu|capitalize}}){% endif %}</p></br> 
+                                                      
+                        
+                        
+                       
+                      {% endfor %}
+                </div>
+
+                   <div class="col-md-6 detailed border rounded border-primary">
+                    </br>
+                      <h4 class="bg-info text-white">Saisie heures effectives </h4></br></br>
+                      {% for doss in dossier %}
+                        {% set vdatedeb = doss.datedeb %}
+                        {% set vdatefin = doss.datefin %}
+                        {% set validation = " " %}
+                        {% if doss.valid == '1' %}
+                          {% set validation = " Validation : OUI" %}
+                        {% elseif doss.valid == '0' %}
+                          {% set validation = " Validation : NON" %}
+                        {% elseif doss.valid == '' %}
+                          {% set validation = "Validation : NC" %}  
+                        {% endif %}
+
+                        <div class="col-lg-12 detailed border rounded bg-info text-white">
+                          <a href="{{path_for('updatesalarieformation',{'idcqp' : doss.idcqp})  }}"><button type="button" class ="btn btn-primary" title = " Heures effectives du salarié">Heures effectives</button></a>
+                          <a href="{{path_for('supprsalarieformation',{'idcqp' : doss.idcqp})  }}"><button type="button" class ="btn btn-danger" title = " Suppression formation suivie par le salarié">Suppr</button></a>
+                          </br>   
+                           <span> Du  {{vdatedeb |date("d/m/Y", "Europe/Paris")}} au {{vdatefin |date("d/m/Y", "Europe/Paris")}} => <b>{{doss.formation}}</b> {{validation}}.
+                              Formation de {{doss.heures}} heures par {{doss.organisme}}</span></br>
+                               <!--en {{doss.jours}} jours-->
+                           {% if doss.inscrit == 1 %}   
+                                
+                                {% set inscrit = "OUI" %}
+                                  
+                                 <span> Inscrit : {{inscrit}} / Heures effectuées : {{doss.nbheures}} / {{validation}}
+                                 
+                                 </span>
+                               
+                           {% else %}
+                                {% set inscrit = "NON" %}
+                           {% endif %}
+                           
+                           </br>
+                          </span>
+                        </div>    
+                      {% endfor %}
+                </div>
+    
+    </div>
+
+ 
+
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

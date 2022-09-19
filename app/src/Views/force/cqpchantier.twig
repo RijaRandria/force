@@ -1,0 +1,144 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<div id="cqpsst" class="fa fa-2x fa-angle-right"style ="color :#007BFF">{{titre}} {{lieu}}</div>
+<section id="main-content" style ="display : flex; background : #C0C0C0">
+
+            <!-- /panel-heading renouvellement-->
+            <div class="panel-body">
+              <div class="tab-content">
+                <div id="détailrenouvellement" class="tab-pane active">
+                  <div class="row">
+                    <div class="col-md-6">
+
+                      <section>
+                      <div id="login-page">
+                          <div class="container">
+                              <div class="row ">
+                                  <div class="col-12">
+                                      <br/>
+                                      <div class="col-md-12 detailed">
+                                         <h5>Saisie nouvelle date de formation</h5>
+                                      </div>
+                                      <form size ="350 px" class="form-login" method="POST"  action="{{ path_for('insertcqpchantier') }}">
+                                        <div class="form-group">
+                                          {% for formation in formations %}
+                                             &nbsp <input type= "radio" name="idformation" id="idformation" value='{{formation.idform}}'> {{formation.formation}}</input></br>
+
+                                          {% endfor %}
+                                          </br>
+                                          <input type="hidden" class="form-control" name="idlieu" id ="idlieu" value ='{{idlieu}}' >
+                                          <!--<input type="hidden" class="form-control" name="idsalarie" id ="idlieu" >-->
+                                          <label >Date début</label>
+                                          <input type="date" class="form-control" name="datedeb" id ="datedeb">
+                                          <label >Date fin</label>
+                                          <input type="date" class="form-control" name="datefin" id ="datefin"></br>
+                                          <label >Nbre d'heures  :</label>
+                                          <input type="text" name="nbheures" id ="nbheures" maxlength ="3" size = "3">
+                                           <label >Nbre de jours :</label>
+                                          <input type="text" name="jours" id ="jours" maxlength ="3" size = "3"></br>
+                                            <label >N° Devis     : </label>
+                                          <input type="text" name="deviscert" id ="deviscert" maxlength ="20" size = "20"></br>
+                                            <label >Organisme chargé de la formation   : </label>
+                                          <input type="text" name="organisme" id ="organisme" maxlength ="40" size = "40"></br>
+                                          
+                                          <label >Intitulé</label></br>
+                                          <input type="text" name="formation" id= "formation"  placeholder =" Nouvelle Formation">
+                                          {{csrf}}
+
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                                        <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                                      </form>
+                                      </br></br>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      </section>
+                    </div>
+                    <!-- /col-md-6 -->
+                    <div class="col-md-6 detailed" >
+                    </br>
+                      <h5>Formation déjà existante</h5>
+                      <h6> (Attention une suppression peut entraîner une perte de données) <h6></br>
+                      {% for ligne in lignes %}
+                         <div class="border border-secondary ">
+                   
+                            &nbsp <a href="{{path_for('supprdatechant',{'iddatechant' : ligne.iddatechant,'idlieut' : ligne.idlieut})  }}"<button type="button" class ="btn btn-outline-danger" title = " Suppression">Suppr</button></a>          
+                              <tr >
+                                <td ><img src ="../../assets/images/fleche.png"  width = 4%, height = 3.5% > </img></td>
+                                <td >Du {{ ligne.datedeb|date("d/m/Y", "Europe/Paris") }}</td>
+                                <td > Au {{ ligne.datefin|date("d/m/Y", "Europe/Paris") }} : </td>
+                                <td >{{ ligne.formation }}</td></br>
+                                <td >Une formation de {{ ligne.heures }} heures</td>
+                                <td >en {{ ligne.jours }} jours</td>
+                                <td >N° Devis {{ ligne.deviscert }} </td></br>
+                                <td >Organisme de Formation {{ ligne.organisme }} </td>
+
+
+                              </tr>
+                        </div>
+                        </br>
+                      {% endfor %}
+
+                    </div>
+                    <!-- /col-md-6 -->
+                  </div>
+                  <!-- /OVERVIEW -->
+                </div>
+                <!-- /tab-pane -->
+
+              </div>
+              <!-- /tab-content -->
+            </div>
+            <!-- /panel-body fin renouvellement-->
+
+      </div>
+              <!-- /tab-content -->
+    </div>
+  </div>
+        <!-- /col-lg-12 -->
+  </div>
+        <!-- /row -->
+</div>
+      <!-- /container -->
+    <!--</section>-->
+    <!-- /wrapper -->
+  </section>
+
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

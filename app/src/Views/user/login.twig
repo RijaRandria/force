@@ -1,0 +1,168 @@
+{% extends "maitre.twig" %}
+
+{% block title %}Identification{% endblock %}
+{% block content %}
+<style type="text/css">
+      .fond input[type="radio"] {
+        display: none;
+      }
+      .fond input[type="checkbox"] {
+        display: none;
+        
+      }
+    
+      .toolbar label {
+        display: inline-block;
+        
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+       .toolbar1 label {
+        display: inline-block;
+       
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+
+      .toolbar input[type="radio"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+      .toolbar input[type="checkbox"]:checked+label {
+        
+        color : white;
+      }
+
+      .toolbar1 input[type="radio"]:checked+label {
+        background-color: red;
+        color : white;
+      }
+     .toolbar1 input[type="checkbox"]:checked+label {
+        background-color: red;
+        color : white;
+      }  
+
+      .tsyhita{
+        visibility : hidden;
+      }
+    
+   
+</style>
+<link href="img/favicon.png" rel="icon">
+<link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+<!--<link href="../assets/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
+  <!--external css-->
+  <!--<link href="../js/font-awesome/css/font-awesome.css" rel="stylesheet" />-->
+  <!-- Custom styles for this template -->
+  <link href="../..assets/css/dashio/style.css" rel="stylesheet">
+  <link href="../../assets/css/dashio/style-responsive.css" rel="stylesheet">
+
+<div id="login-page">
+    <div class="container">
+    
+
+
+       <form class="form-login" id="auth" role="form" method="POST" onsubmit = " myTest()"action="{{ path_for('verifauth') }}">
+       <h2 class="form-login-heading">Login</h2>
+     
+        <div class="login-wrap toolbar" id ="essai"> 
+          
+          <input type ="hidden" name="test" value= "{{pwd}}">
+          <input type="text" v-model ="nom" name="login" class="form-control">
+       
+          {{ csrf() }}
+         
+          </br>
+          {% set maso = '' %}
+          <input type="password" width ="50" name="pword" id ="pword" class="form-control" placeholder="Password">
+       
+          <div class ="fond col-12" >
+              <input  type="checkbox" onclick="Afficher()" id="maso" > 
+              <label style ="position : absolute"  id = "vmaso" for ="maso"><i class="fa fa-eye-slash" ></i></label>
+              <label class ="tsyhita" style ="position : relative; color : green" id = "masov" for ="maso"><i class="fa fa-eye" ></i></label>
+
+             <br>
+          </div>
+          <div class="form-check text-center">
+              <button class="btn btn btn-primary" href="index.html" type="submit"><i class="fa fa-lock"></i> VALIDER</button>
+              <a href="{{ path_for('home') }}" class="btn btn-secondary">Annuler</a>
+          </div>
+         
+      </form>
+
+    </div>
+  </div>
+
+  {% block javascript %}
+  <script src="..assets/js/jquery/jquery.min.js"></script>
+  <script src="..assets/js/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="..assets/js/jquery.backstretch.min.js"></script>
+  <script>
+    $.backstretch("img/login-bg.jpg", {
+      speed: 500
+    });
+  </script>
+  <script>
+      function Afficher()
+      { 
+      document.getElementById("vmaso").style.visibility = "visible";  
+      var input = document.getElementById("pword"); 
+      if (input.type === "password")
+      { 
+      input.type = "text"; 
+        document.getElementById("masov").style.visibility = "visible";
+        document.getElementById("vmaso").style.visibility = "hidden";
+            } 
+      else
+      { 
+      input.type = "password"; 
+      document.getElementById("masov").style.visibility = "hidden";
+      document.getElementById("vmaso").style.visibility = "visible";
+      
+      } 
+      } 
+   </script>
+   <script>
+       function myTest()
+       {
+          var test = document.getElementsByName("test");
+          for(let i = 0; i <test.length;i++){
+           console.log(i)
+           console.log(test[i].value)
+
+          }
+
+
+       }
+
+   </script>
+
+  {% endblock %}
+  {% block Vue %}
+   
+    <script>
+      var essai = new Vue({ 
+        el: "#essai",
+        data: {
+         nom: "Identifiant ",
+         listes = ["pizza","mofo akondro","mofo anana"]
+        }
+
+
+      })
+    </script>  
+  {% endblock %}
+  <!-- js placed at the end of the document so the pages load faster -->
+
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  
+{% endblock %}
+
+

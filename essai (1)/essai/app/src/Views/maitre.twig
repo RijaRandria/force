@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{titre}}</title>
+    {% block stylesheet %}
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="{{ path_for('home') }}assets/css/main.min.css"><!-- main.css for dev -->
+    {% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="{{ path_for('home') }}">
+        Blog V1.0
+      </a>
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link {% if is_current_path('home') %}active{% endif %}" href="{{path_for('home')}}">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if is_current_path('nomaudi') %}active{% endif %}" href="{{path_for('nomaudi')}}">Audi</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if is_current_path('nomcitroen') %}active{% endif %}" href="{{path_for('nomcitroen')}}">Citroen</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if is_current_path('nomrenault') %}active{% endif %}" href="{{path_for('nomrenault')}}">Renault</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if is_current_path('nomskoda') %}active{% endif %}" href="{{path_for('nomskoda')}}">Skoda</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if is_current_path('recherche') %}active{% endif %}" href="{{path_for('recherche')}}">Recherche</a>
+        </li>
+        <li class="nav-item">
+        {% if username != 'Visiteur' %}
+          <a class="nav-link alert-success {% if is_current_path('deconnecte') %}active{% endif %}" href="{{path_for('deconnecte')}}">Déconnecter {{username}}</a>
+        {% else %}
+          <span class="nav-link text-warning">{{username}}&nbsp;&nbsp;<a href="{{path_for('authentification')}}" title="Vous connecter"><i class="fa fa-2x fa-sign-in text-success"></i></a></span>
+        {% endif %}
+        </li>
+      </ul>
+    </nav>
+    <div class="container">
+      {% if alert is defined and alert is not empty %}
+        {% for key,messages in alert %}
+          <div class="alert alert-dismissible alert-{{key}} container">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {% for msg in messages %}
+              {{msg}}<br>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% block content %}
+    {% endblock %}
+    </div>
+    {% block javascript %}
+      <script src="{{ path_for('routerjs') }}"></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+      <script src="{{ path_for('home') }}assets/js/bundle.min.js" charset="utf-8"></script><!-- bundle.js for dev -->
+    {% endblock %}
+  </body>
+</html>

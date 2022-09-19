@@ -1,0 +1,33 @@
+{% extends "maitre.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <br/>
+                <h2 class="text-center">{{titre}}</h2>
+                <form method="POST" action="{{ path_for('ajouterimage') }}" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <label for="caption">Texte rattaché à l'image</label>
+                    <input type="text" class="form-control" name="caption" placeholder="Texte venant appuyer l'image">
+                    <input type="hidden" name="articleid" value="{{id}}">
+                  </div>
+                  <div class="form-group">
+                    <label for="url">Url de l'image</label>
+                    <input type="text" class="form-control" name="url" placeholder="URL de l'image si elle n'est pas sur notre serveur">
+                  </div>
+                  <div class="form-group">
+                    <label for="content">Téléchargement d'une image</label>
+                    <input type="file" class="form-control" name="fileimage" lang="fr" accept=".jpg,.jpeg">
+                  </div>
+                  <button type="submit" class="btn btn-info">Valider</button>&nbsp;&nbsp;
+                  <a href="{{ path_for('article', {'id': idsousfamille}) }}" class="btn btn-secondary">Annuler</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

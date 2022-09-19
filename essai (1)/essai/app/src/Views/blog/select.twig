@@ -1,0 +1,28 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<div class="container text-center">
+  <h1 >Affichage du Formulaire</h1>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page"><a href="#">Select</a></li>
+    </ol>
+  </nav>
+  <div class="row">
+    <div class="card col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+      <select>
+        {% for menu in menus %}
+        <option value="{{menu.id}}" {% if menu.id == 6 %} selected {% endif %}>{{menu.name}} 
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+</script>
+{% endblock %}

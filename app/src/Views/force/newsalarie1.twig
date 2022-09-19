@@ -1,0 +1,190 @@
+{% extends "maitre.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<!--<section>
+<div id="login-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <br/>
+                <h2 class="text-center">{{titre}}</h2>
+                <form class="form-login" method="POST" onSubmit="return accepter()" action="{{ path_for('insertsal') }}">
+                  <div class="form-group">
+                    <label for="nom">Nom utilisateur</label>
+                    <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom de l'usager">
+                    {{csrf()}}
+                  </div>
+                  <div class="form-group">
+                    <label for="prénom">prénom</label>
+                    <input type="text" class="form-control" name="prenom" id =" prenom" placeholder="Mot de passe de l'usager">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                  <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</section>-->
+<section class="wrapper site-min-height">
+     <div class="row mt">
+       <div class="col-lg-12">
+         <div class="right-divider hidden-sm hidden-xs">
+            <div class="row mt">
+              <div class="col-lg-12">
+                <div class="form-panel">
+                  <!--<h4 class="mb"><i class="fa fa-angle-right"></i> Form Elements</h4>-->
+                    <form
+                      method="POST" onSubmit="return accepter()" action="{{path_for('insertsal')}}">
+                      <div class="form-saisie">
+                        <h5 style ="color : blue">Etat-Civil et Administratif</h5>
+                        <div id="etatcivil">
+                            <div class="col-sm-10">
+                                <input type="hidden" class="form-control" name="id_user" placeholder= $id_user >
+                                <input type= "radio" name="genre" id ="genre" value="H" checked /> M.
+                                <input type= "radio" name="genre" id ="genre" value="F" /> Mme.
+                            </div>
+                            <div class="form-group ">
+                              <label style="font-weight : bold " for="nom">Nom </label>
+                              <div class="col-sm-12">
+                                <input type="text" size = "60px" name="nom" id ="nom" placeholder="Nom " >
+                              {{csrf()}}
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="prenom" style="font-weight : bold ">Prénom</label>
+                              <div class="col-sm-12">
+                                <input type="text" size = "60px" name="prenom" id ="prenom" placeholder="Prénom " >
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="datenaissance" style="font-weight : bold">Date de naissance</label></br>
+                              <div class="col-sm-12">
+                                <input type="date" name ="datenaissance"  >
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="lieunaissance" style="font-weight : bold" >Lieu de naissance</label>
+                              <div class="col-sm-12">
+                                <input type="text" size =" 60px" name="lieunaissance" id ="lieunaissance" placeholder="Lieu de naissance">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="dptnaissance" style="font-weight : bold ">Département de naissance</label>
+                              <div class="col-sm-12">
+                                <input type="text" size =" 2px" name="dptnaissance" id ="dptnaissance" placeholder="00">
+                              </div>
+                            </div>
+
+                        </div> <!--etatcivil-->
+
+                          <div class="form-group">
+                            <label style="font-weight:bold" for="adresse1">Adresse</label>
+                            <div class="col-sm-12">
+                              <input type="text" size ="60" name ="adresse1" placeholder="Adresse" >
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label  style="font-weight:bold">Complément d'Adresse</label>
+                            <div class="col-sm-12">
+                                 <input type="text" size ="60" name = "adresse2" placeholder="Complément d'Adresse" >
+                            </div>
+                          </div >
+                            <label class="col-sm-10 col-sm-2" style="font-weight:bold">Ville</label>
+                            <div class="col-sm-10">
+                                  <input type="text" name ="ville_adresse" size ="30">
+                            </div>
+                            <label class="col-sm-10 col-sm-2 control-label " style="font-weight:bold">Code Postal</label>
+                            <div class="col-sm-10">
+                                   <input type="number"  name = "code_postal" size = "5">
+                            </div>
+                                 </br></br>
+                            </div>
+                      </div>
+                      <div class="form-saisie">
+
+                            <div >
+                                <div class="col-sm-10">
+                                    </br>
+
+                                </div>
+
+                                  <label class="col-sm-10 col-sm-2 control-label label-color">Début contrat</label>
+                                  <div class="col-sm-10">
+                                    <input type="date" name ="date_deb_contrat"  >
+                                  </div>
+                                  <label class="col-sm-10 col-sm-2 control-label label-color">Fin contrat</label>
+
+                                  <div class="col-sm-10">
+                                   <input type="date" name ="date_fin_contrat" >
+                                  </div>
+
+                                  <label class="col-sm-10 col-sm-2 label-color">Lieu de travail</label>
+                                  <div class="col-sm-10">
+                                    <input type="number" name ="id_lieu_travail" size ="2">
+                                  </div>
+                                   <label class="col-sm-10 col-sm-2 control-label label-color">Code Postal</label>
+                                   <div class="col-sm-10">
+                                     <input type="text"  id = "lieu">
+                                   </div>
+                                   </br></br>
+                              </div>
+                          </div>
+                           <button  type="submit" value="Envoyer">Valider</button>
+                           <button  type="reset" value="annuler" >Annuler</button><br>
+
+                     </form>
+                   </div>
+                   <!-- /col-lg-8 -->
+                 </div>
+                 <!-- /row -->
+               </div>
+               <!-- /tab-pane -->
+             </div>
+             <!-- /tab-content -->
+           </div>
+           <!-- /panel-body -->
+         </div>
+         <!-- /col-lg-12 -->
+       </div>
+       <!-- /row -->
+     </div>
+     <!-- /container -->
+
+   <!-- /wrapper -->
+ </section>
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "maitre.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<section>
+<div id="login-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <br/>
+                <h2 class="text-center">{{titre}}</h2>
+                <form  method="POST" onSubmit="return accepter()" action="{{ path_for('insertdetailtypedemarche') }}">
+
+                    <label for="typesortie"><b>Nouveau Détail type de démarche</b></label></br>
+                    {% for demarche in demarches %}
+                      <div class="btn btn-info " style ="width : 250px ">
+
+                          <span class=" dropdown-menu btn btn-info btn-sm"  id="dropdownMenuButton" >
+                            {{demarche.demarche}}
+                          </span>
+                             {% for typedemarche in typedemarches %}
+                                {% if typedemarche.iddemar == demarche.iddemarche %}
+                                      <input type = "hidden" name = "iddem" value = {{typedemarche.iddemar}}></input>
+                                      <input class=" dropdown-item btn btn-info" type="radio" name="idtypedemarche" id="idtypedemarche" value='{{typedemarche.idtypedemarche}}'> {{typedemarche.typedemarche}}</input>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+
+                    {% endfor %}
+
+                  </br></br></br>
+                    <input type="text" class="form-control" name="detailtypedemarche" id="detailtypedemarche" placeholder="Nouveau détail type de démarche"></input>
+                    {{csrf()}}
+
+                  <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                  <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

@@ -1,0 +1,653 @@
+
+{% extends "maitre.twig" %}
+
+
+
+{% block title %}{{titre}}{% endblock %}
+
+{% block content %}
+<style type="text/css">
+      .fond input[type="radio"] {
+        display: none;
+      }
+      .fond input[type="checkbox"] {
+        display: none;
+      }
+     
+
+      .toolbar label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+       .toolbar1 label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+
+      .toolbar input[type="radio"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+       .toolbar input[type="checkbox"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+      
+      .toolbar1 input[type="radio"]:checked+label {
+        background-color: red;
+        color : white;
+      }
+    
+   
+</style>
+<div class ="container">
+    <form method="POST" onSubmit="return accepter()" action="{{path_for('insertsal')}}">
+
+                        <h3 style ="color : blue">{{titre}}</h3>
+
+                        <!---début boite de saisie-->
+                        <h5 style ="color : #A52A2A; text-decoration : underline">Etat-civil et Administratif</h5>
+                        <div class = "container" id="etat" style ="display : flex; background-color :	#D3D3D3;align : center ">
+
+                          <div class="form-saisie " style = " width : 50%">
+                        <!--<div id="etat" style ="width:45%">-->
+                            <div class="col-sm-10">
+                                <input  type ="hidden" class="form-control" name="id_user" placeholder= $id_user >
+                                <label style="font-weight : bold " for="nom">Matricule </label>
+                                <input type="text" name ="matricule" id ="matricule"/></br></br>
+                                <label style="font-weight : bold " >Civilité </label>
+                                
+                                      <div class ="fond toolbar label">
+
+                                            <input type="radio" id="radio1" name="genre" value="Mr" >
+                                            <label class =" d-grid gap-2 col-2 mx-auto btn btn-light" for="radio1">Mr.</label>
+                                      
+                                            <input type = "radio" name ="genre" id = "radio2" value ="Mme" > 
+                                            <label class =" d-grid gap-2 col-2 mx-auto btn btn-light" for="radio2">Mme</label>
+                                           
+                                      </div>
+                          
+                                                         
+                                                              
+                            </div>
+                            <div class="form-group ">
+                              <label style="font-weight : bold " for="nom">Nom </label>
+                              <div class="col-sm-12">
+                                <input type="text" size = "50" name="nom" id ="nom" placeholder= "Nom">
+                              {{csrf()}}
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight : bold " for="prenom">Prénom</label>
+                              <div class="col-sm-12">
+                                <input type="text" size = "50" name="prenom" id ="prenom" placeholder="Prénom " >
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight : bold" for="datenaissance">Date de naissance  </label></br>
+                              <div class="col-sm-12">
+                                <input type="date" name ="datenaissance"  >
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label  style="font-weight : bold" for="lieunaissance">Lieu de naissance</label>
+                              <div class="col-sm-12">
+                                <input type="text" size =" 50" name="lieunaissance" id ="lieunaissance" placeholder="Lieu de naissance">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight : bold " for="dptnaissance" >Département de naissance</label>
+                              <div class="col-sm-12">
+                                <input type="int" size =" 2px" name="dptnaissance" id ="dptnaissance" placeholder="00">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight:bold" for="paysnaissance">Pays de naissance</label>
+                              <div class="col-sm-12">
+                                <input type="text" size ="20" name ="paysnaissance" id="paysnaissance" placeholder="Pays de naissance" >
+                              </div>
+                            </div>
+                          <div class="form-group">
+                            <label  style="font-weight:bold" for ="nationalite">Nationalité</label>
+                            <div class="col-sm-12">
+                                 <input type="text" size ="50" name = "nationalite" id ="nationalite2" placeholder="Nationalité" >
+                            </div>
+                          </div >
+                          <div class="form-group">
+                            <label  style="font-weight:bold" for ="titre">Pièce d'identité</label>
+                            <div class="col-sm-12">
+                              {% for titre in titres %}
+                                      <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "titre" id='{{titre.titre}}' value ='{{titre.idtitre}}' > 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{titre.titre}}'>{{titre.titre}}</label>
+                                       </div> 
+                                 
+                              {% endfor %}
+
+                            </div>
+                          </div >
+
+                          <div class="form-group">
+                            <label style="font-weight:bold" for="datesejour)">Date d'Expiration </label>
+                            <div class="col-sm-10">
+                                  <input type="date" name ="datesejour" id="datesejour" >
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label  style="font-weight:bold" for ="contact">Personne à contacter en cas d'urgence</label>
+                            <div class="col-sm-10">
+                                   <input type="text" size = "50" name = "contact" id="contact" placeholder="Saisir le nom et le téléphone " >
+                            </div>
+
+                          </div>
+                    </div><!--form-saisise-->
+
+                    <div class="form-saisie" style = "width : 50%">
+
+                        <div class="col-sm-10">
+                        </br>
+                        </div>
+                        <div class="form-group ">
+                          <label style="font-weight : bold " for="telephone">Téléphone </label>
+                          <div class="col-sm-12">
+                            <input type="text" size = "20" name="telephone" id ="telephone" placeholder="Numéro salarié " >
+                          </div>
+                        </div>
+                        <div class="form-group ">
+                          <label style="font-weight : bold " for="mailsalarie">Adresse Mail du salarié </label>
+                          <div class="col-sm-12">
+                            <input type="text" size = "40" name="mailsalarie" id ="mailsalarie" placeholder="Mail du salarié " >
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label style="font-weight : bold " for="adresse1">Adresse</label>
+                          <div class="col-sm-12">
+                            <input type="text" size = "45" name="adresse1" id ="adresse1" placeholder="Adresse du salarié" >
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label style="font-weight : bold" for="adresse2">Complément Adresse</label></br>
+                          <div class="col-sm-12">
+                            <input type="text" size = "45" name ="adresse2" id ="adresse2" placeholder="Complément Adresse">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label style="font-weight : bold" for="codepostaladresse">Code Postal Adresse</label>
+                          <div class="col-sm-12">
+                            <input type="text" size =" 5" name="codepostaladresse" id ="codepostaladresse" placeholder="Code Postal Adresse">
+                          </div>
+                        </div>
+                        <div class="form-group ">
+                          <label style="font-weight : bold " for="villeadresse">Ville</label>
+                          <div class="col-sm-12">
+                            <input type="text" size = "15" name="villeadresse" id ="villeadresse" placeholder="Ville">
+                          </div>
+                        </div>
+                      <div class="form-group">
+                        <label style="font-weight:bold" for="securitesociale">Numéro Sécurité sociale</label>
+                        <div class="col-sm-12">
+                          <input type="text" size ="50" name ="securitesociale" id ="securitesociale" placeholder="Numéro Sécurité sociale" >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label  style="font-weight:bold" for ="numcaf">Numéro caf</label>
+                        <div class="col-sm-12">
+                             <input type="text" size ="50" name = "numcaf" id="numcaf" placeholder="Numéro caf" >
+                        </div>
+                      </div >
+                      <div class="form-group">
+                        <label style="font-weight:bold" for ="situfamiliale">Situation familiale</label>
+                        <div class="col-sm-10">
+                            {% for situation in situations %}
+                                      <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "situfamiliale" id='{{situation.situation}}' value ='{{situation.idsitu}}' > 
+                                          <label class ="d-grid gap-2 col-8 mx-auto btn btn-light" for='{{situation.situation}}'>{{situation.situation}}</label>
+                                      </div> 
+                              
+                            {% endfor %}
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label  style="font-weight:bold" for ="enfants">Nombre d'Enfants</label>
+                        <div class="col-sm-10">
+                               <input type="number" size = "5" name = "enfants" id = "enfants" placeholder="Enfants à charge" >
+                        </div>
+
+                      </div>
+                      <div class="form-group">
+                        <label  style="font-weight:bold" for ="titre">Tranche d'âges</label>
+                        <div class="col-sm-12">
+                          {% for tranche in tranches %}
+                              <div class =" fond toolbar label" >
+                                          <input type="radio"  name = "tranche" id='{{tranche.tranche}}' value ='{{tranche.idage}}' > 
+                                          <label class =" d-grid gap-2 col-4 mx-auto btn btn-light" for='{{tranche.tranche}}'>{{tranche.tranche}}</label>
+                              </div> 
+                              
+                          {% endfor %}
+
+                            <!--  <input type="radio" name = "idtitre" id="idtitre"value = '{{idtitre}}' > <input type="text" name = "titre" id="titre" placeholder =" Autres pièces"></input></input></br>-->
+
+                              <!--<p id="newtitre"><input type="radio" name = "titre" id="titre" > A saisir</input></br></p>-->
+                        </div>
+                      </div >
+                </div><!--form-saisise-->
+              </div><!--etat-->
+
+              </br>
+              <div class = "container" id="etat" style ="display : flex; background-color :	#D3D3D3;align : center ">
+
+                <div class="form-saisie" style = "width : 50%">
+                    <div class="form-group ">
+                        <label style="font-weight : bold " for="prescripteur">Organisme Prescripteur </label>
+                        <div class="col-sm-12">
+                        <input type="text" size = "50" name="prescripteur" id ="prescripteur" placeholder= "Organisme Prescripteur">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label style="font-weight : bold " for="referent">Nom du référent</label>
+                    <div class="col-sm-12">
+                      <input type="text" size = "50" name="referent" id ="referent" placeholder="Nom du référent" >
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label style="font-weight : bold" for="telreferent">Numéro téléphone du référent </label></br>
+                    <div class="col-sm-12">
+                      <input type="text" size ="13px" name ="telreferent" id ="telreferent" placeholder="Numéro téléphone du référent">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label  style="font-weight : bold" for="mailreferent">Email du référent</label>
+                    <div class="col-sm-12">
+                      <input type="mail" size =" 30px" name="mailreferent" id ="mailreferent" placeholder="Email du référent">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label style="font-weight : bold " for="adressereferent" >Adresse du référent</label>
+                    <div class="col-sm-12">
+                      <input type="text" size ="50" name="adressereferent" id ="adressereferent" placeholder="Adresse du référent">
+                    </div>
+                  </div>
+
+                <div class="form-group">
+                  <label  style="font-weight:bold" for ="ressources">Ressources</label>
+                  <div class="col-sm-10">
+                      {% for ressource in ressources %}
+                        <div class =" fond toolbar label" >
+                                          <input type="radio"  name = "ressources" id='{{ressource.ressources}}' value ='{{ressource.idressources}}' > 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{ressource.ressources}}'>{{ressource.ressources}}</label>
+                        </div> 
+                         
+                      {% endfor %}
+                  </div>
+                </div>
+
+                <div class="form-group ">
+                    <label style="font-weight : bold " for="poleemploi">Inscription Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                     <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                        <div class ="fond toolbar" style =" display : flex">
+                            <input type="radio" id="radio5" name="poleemploi" value="1" >
+                            <label class =" sw-right" for="radio5">OUI</label>
+                        </div> 
+                        <div class ="fond toolbar1" style =" display : flex">   
+                            <input type = "radio" name ="poleemploi" id = "radio6" value ="0" > 
+                            <label class =" sw-left" for="radio6">NON</label>
+                        </div>
+                    </div>  
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight : bold " for="datepoleemploi">Date d'Inscription Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                        <input type="date" name="datepoleemploi" id ="datepoleemploi" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight : bold" for="idpole">Identifiant Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                        <input type="text" name ="idpole" id ="idpole" placeholder="Identifiant Pôle-Emploi ">
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label style="font-weight : bold" for="idagrement">Numéro Agrément Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                        <input type="text" name ="idagrement" id ="idagremnt">
+                    </div>
+                </div>
+
+
+          </div><!--form-saisise-->
+
+          <div class="form-saisie" style = "width : 50%">
+            </br>
+              <div class="form-group">
+                <label style="font-weight : bold" for="qpv">ZONE</label>
+                <div class="col-sm-12">
+                  {% for zone in zones %}
+                     
+                      <div class ="fond toolbar label d-grid mx-auto" >
+                                          <input type="radio"  name = "qpv" id='{{zone.zone}}' value ='{{zone.idzone}}'> 
+                                          <label class =" d-grid gap-2 col-2 mx-auto btn btn-light" for='{{zone.zone}}' style ="width 20%":>{{zone.zone}}</label>
+                      </div> 
+                          
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="form-group ">
+                <label style="font-weight : bold " >RQTH</label>
+                <div class="col-sm-12">
+                       <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                        <div class ="fond toolbar" style =" display : flex">
+
+                            <input type="radio" id="radio3" name="rqth" value="1" >
+                            <label class =" sw-right" for="radio3">OUI</label>
+                        </div>
+                        <div class ="fond toolbar1" style =" display : flex">    
+                            <input type = "radio" name ="rqth" id = "radio4" value ="0" > 
+                            <label class =" sw-left" for="radio4">NON</label>
+                        </div>
+
+                       
+                      </div>
+                </div>
+              </div>
+
+            <div class="form-group">
+              <label  style="font-weight:bold" for ="permis">Permis (Choix Multiple)</label>
+              <div class="col-sm-12">
+                  {% for permi in permis %}
+                      <div class="col-sm-12">
+                          <div class ="fond toolbar label" >
+                                              <input type="checkbox"  name = "permis[]" id='{{permi.permis}}' value ='{{permi.idpermis}}' > 
+                                              <label class =" d-grid gap-2 col-4 mx-auto btn btn-light" for='{{permi.permis}}'>{{permi.permis}}</label>
+                          </div> 
+                          
+                      </div>
+                  {% endfor %}
+                  </br>
+                  <input type ="text" size ="30px" name = "obspermis" id = "obspermis" placeholder = "Observation sur le permis"></input>
+              </div>
+            </div >
+            <div class="form-group">
+              <label style="font-weight:bold" for ="locomotion">Moyen de Locomotion (Choix Multiple)</label>
+              <div class="col-sm-12">
+                  {% for locomotion in locomotions %}
+                      <div class="col-sm-12">
+                            <div class ="fond toolbar label" >
+                                              <input type="checkbox"  name = "locomotion[]" id='{{locomotion.locomotion}}' value ='{{locomotion.id}}' > 
+                                              <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{locomotion.locomotion}}'>{{locomotion.locomotion}}</label>
+                            </div> 
+                          
+                         
+                      </div>
+                  {% endfor %}
+              </div>
+            </div>
+            <div class="form-group">
+              <label  style="font-weight:bold" for ="dureechomage">Durée du Chômage</label>
+              <div class="col-sm-12">
+                  {% for duree in durees %}
+                      <div class="col-sm-12">
+                        <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "dureechomage" id='{{duree.duree}}' value ='{{duree.idchomage}}' > 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{duree.duree}}'>{{duree.duree}}</label>
+                        </div> 
+                          
+                      </div>
+                  {% endfor %}
+              </div>
+            </div>
+      </div><!--form-saisise-->
+
+  </div><!--etat-->
+
+  </br>
+    <div class = "container" id="etat" style ="display : flex; background-color :	#D3D3D3;align : center ">
+
+      <div class="form-saisie" style = "width : 50%">
+
+    </br>
+        <div class="form-group ">
+          <label style="font-weight : bold " for="id_lieu_travail">Chantier</label>
+          {% for chantier in chantiers %}
+              <div class="col-sm-12">
+                  <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "id_lieu_travail" id='{{chantier.lieu}}' value ='{{chantier.idlieu}}' > 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{chantier.lieu}}'>{{chantier.lieu}}</label>
+                  </div> 
+                  
+              </div>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          <label  style="font-weight:bold" for ="dateametra">Date AMETRA</label>
+          <div class="col-sm-12">
+               <input type="date" name = "dateametra" id ="dateametra">
+          </div>
+        </div >
+        <div class="form-group">
+          <label style="font-weight : bold " for="datedebcontrat">Date début de contrat</label>
+          <div class="col-sm-12">
+            <input type="date" name="datedebcontrat" id ="datedebcontrat" >
+          </div>
+        </div>
+        <div class="form-group">
+          <label style="font-weight : bold" for="datefininitial">Date Fin de Contrat Initial</label></br>
+          <div class="col-sm-12">
+            <input type="date" name ="datefininitial" id ="datefininitial" >
+          </div>
+        </div>
+        <div class="form-group">
+          <label  style="font-weight : bold" for="dpae">Date DPAE URSSAF</label>
+          <div class="col-sm-12">
+            <input type="date" name="dpae" id ="dpae" >
+          </div>
+        </div>
+        <div class="form-group">
+          <label style="font-weight : bold " for="numurssaf" >Numéro Déclaration URSSAF</label>
+          <div class="col-sm-12">
+            <input type="text" size =" 50" name="numurssaf" id ="numurssaf" placeholder="Numéro Déclaration URSSAF ">
+          </div>
+        </div>
+        <div class="form-group border border-danger">
+          <label style="font-weight : bold; color : red; text-decoration : underline "  >DROIT A L'IMAGE</label></br>
+         
+          <span style="font-weight : bold; color : black; text-decoration : underline ; margin : 15px"> Autorisation : </span>
+          <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+          
+                        <div class ="fond toolbar" style =" display : flex">
+                            <input type="radio" id="radio13" name="droitimage" value="1" >
+                            <label class =" sw-right" for="radio13">OUI</label>
+                        </div> 
+                        <div class ="fond toolbar1" style =" display : flex">   
+                            <input type = "radio" name ="droitimage" id = "radio14" value ="0" > 
+                            <label class =" sw-left" for="radio14">NON</label>
+                        </div>                               
+           </div>
+            
+        </div>
+
+
+
+</div><!--form-saisise-->
+
+<div class="form-saisie" style = "width : 50%">
+
+    <div class="col-sm-10">
+    </br>
+    </div>
+    <div class="form-group">
+      <label  style="font-weight:bold" for ="niveauetude">Niveau d'études</label>
+      <div class="col-sm-10">
+          {% for niveau in niveaux %}
+                <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "niveauetude" id='{{niveau.niveau}}' value ='{{niveau.idetude}}' > 
+                                          <label class =" d-grid gap-2 col-8 mx-auto btn btn-light" for='{{niveau.niveau}}'>{{niveau.niveau}}</label>
+                </div> 
+           
+          {% endfor %}
+      </div>
+
+    </div>
+    <div class="form-group ">
+      <label style="font-weight : bold " for="cartebtp">Carte BTP</label>
+      <div class="col-sm-12">
+       <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+            <div class ="fond toolbar" style =" display : flex">
+                <input type="radio" id="radio7" name="cartebtp" value="1" >
+                <label class =" sw-right" for="radio7">OUI</label>
+            </div> 
+            <div class ="fond toolbar1" style =" display : flex">   
+                            <input type = "radio" name ="cartebtp" id = "radio8" value ="0" > 
+                            <label class =" sw-left" for="radio8">NON</label>
+            </div>                               
+        </div>
+    
+      </div>
+    </div>
+
+    <div class="form-group border ">
+      <label style="font-weight : bold; text-decoration-line : underline " for="datemutuelle">Mutuelle</label></br>
+      <label style="font-weight : bold " for="datemutuelle">Validité Justificatif de dispenses (CSS ou Mutuelle)</label>
+      <div class="col-sm-12">
+        <input type="date" name="datemutuelle" id ="datemutuelle" value ='{{datemutuelle}}'>
+      </div>
+     <label style="font-weight : bold " for="mutuelle">Adhésion à la Mutuelle de Force</label>
+      <div class="col-sm-12">
+         <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+            <div class ="fond toolbar" style =" display : flex">
+
+                <input type="radio" id="radio9" name="mutuelle" value="1" >
+                 <label class =" sw-right" for="radio9">OUI</label>
+            </div>
+            <div class ="fond toolbar1" style =" display : flex">     
+                            <input type = "radio" name ="mutuelle" id = "radio10" value ="0" > 
+                            <label class =" sw-left" for="radio10">NON</label>
+            </div>                                
+        </div>
+    
+      </div>
+    
+     
+       <label style="font-weight : bold " for="portabilite">Portabilité</label>
+      <div class="col-sm-12">
+         <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+            <div class ="fond toolbar" style =" display : flex">
+                <input type="radio" id="radio11" name="portabilite" value="1" >
+                <label class =" sw-right" for="radio11">OUI</label>
+            </div>
+            <div class ="fond toolbar1" style =" display : flex">
+                <input type = "radio" name ="portabilite" id = "radio12" value ="0" > 
+                <label class =" sw-left" for="radio12">NON</label>
+            
+                                           
+        </div>
+  
+      </div>
+
+     <div class="form-group ">
+      <label style="font-weight : bold " for="datefse">Date saisie FSE</label>
+      <div class="col-sm-12">
+        <input type="date" name="datefse" id ="datefse" value ='{{datefse}}'>
+      </div>
+    </div>
+     <div class="form-group ">
+      <label style="font-weight : bold " for="idfse">Id FSE</label>
+      <div class="col-sm-12">
+        <input type="text" name="idfse" id ="idfse" value ='{{idfse}}'>
+      </div>
+    </div>
+        <div class="form-group ">
+      <label style="font-weight : bold " for="idfse">Id EXTRANET</label>
+      <div class="col-sm-12">
+        <input type="text" name="idextranet" id ="idextranet" value ='{{idextranet}}'>
+      </div>
+    </div>
+    <div id = 'liste' style =" visibility : hidden">
+    
+      {
+    
+    </div>
+
+
+
+</br></br>
+  &nbsp <button class="btn btn btn-primary" type="submit" value="Envoyer">Valider</button>
+  <a href="{{ path_for('salarie')}}" class="btn btn-secondary">Annuler</a>
+
+</div><!--form-saisise-->
+
+</div>
+</div>                   <!--<button  type="submit" value="Envoyer">Valider</button>
+                   <button  type="reset" value="annuler" >Annuler</button><br>-->
+
+
+   <!-- /wrapper -->
+ <!--</section>-->
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+                var vprenom = document.getElementById('prenom').value   
+                var vnom = document.getElementById('nom').value
+                
+                if ((vnom!= "") && (vprenom != ""))
+                     
+                {
+                               
+                  var datedeb  = document.getElementById('datedebcontrat').value
+                  var datefin  = document.getElementById('datefininitial').value
+                  if ((datedeb != "") || (datefin != "") )
+                    
+                  { 
+                        var accueil2 =  "Validation pour "+{{vnom}}+" "+{{vprenom}}
+                        alert(accueil2)
+                        return true
+                  } else 
+                  {
+                       var listsals ={{salaries}}
+                        listsals.forEach(nom => console.log(nom));
+                        debbuger
+
+                        var vnom = document.getElementById('nom').value
+                        var vprenom = document.getElementById('prenom').value   
+                        var accueil2 =  'Veuillez saisir la Date début contrat ou la Date fin de contrat'
+                        alert(accueil2)
+                        return false
+                  }
+                      
+                
+
+                   
+                } else {
+
+                     var accueil2 = "Veuillez saisir le nom et le prénom"
+                     alert (accueil2);
+                     return false
+
+                }
+
+         }
+           // function myFunction() {
+           //   document.getElementById("newtitre").innerHTML = "Hello World";
+           //   return
+           // }
+        //}
+
+
+  </script>
+
+{% endblock %}

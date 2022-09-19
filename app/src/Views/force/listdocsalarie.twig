@@ -1,0 +1,39 @@
+{% extends "maitre.twig" %}
+
+{% block content %}
+
+
+  <span style = "margin-top : 35px; font-size :20px;text-decoration: underline"><b> {{lieu}} Liste des Documents manquants à fournir le {{vdatein }} </span></br></br>
+ 
+
+{% for ligne in lignes %}
+
+ {% set count = 0%}
+ 
+  {% for doc in docs %} 
+   
+      {% if ligne.id == doc.idsalarie %}
+          {% if count == 0 %}
+            <span style = "font-size :15px;text-decoration: underline"> {{ligne.nom}} {{ligne.prenom}}</span></br>
+              {% set count = 1 %}
+          {% endif %}             
+            <span style ="font-size :15px;margin-left :15px" class="fa fa-square-o">&nbsp {{doc.documents|capitalize}}</span></br>
+      {% endif %}
+  {% endfor %}
+
+{% endfor %}
+
+               
+                
+           
+            
+
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  <script src="js/chart-master/Chart.js"></script>
+</script>
+{% endblock %}

@@ -1,0 +1,907 @@
+{% extends "maitre.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<style type="text/css">
+      .fond input[type="radio"] {
+        display: none;
+      }
+      .fond input[type="checkbox"] {
+        display: none;
+      }
+     
+
+      .toolbar label {
+        display: inline-block;
+        background-color: 	#FFDEAD;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+       .toolbar1 label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+
+      .toolbar input[type="radio"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+       .toolbar input[type="checkbox"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+      
+      .toolbar1 input[type="radio"]:checked+label {
+        background-color: red;
+        color : white;
+      }
+    
+   #etat{
+     background-color : #FFDEAD;
+
+   }
+
+
+</style>
+    <form method="POST" onSubmit="return accepter()" action="{{path_for('updatesal')}}">
+
+                        <h3 style ="color : blue">{{titre}}</h3>
+
+                        <!---début boite de saisie-->
+                        <h5 style ="color : #A52A2A; text-decoration : underline">Etat-civil et Administratif</h5>
+                        <div id="etat" style ="display : flex; align : center ">
+
+                          <div class="form-saisie">
+                        <!--<div id="etat" style ="width:45%">-->
+                            <div class="col-sm-10">
+                                <input  type ="hidden" class="form-control" name="id_user" value = '{{id_user}}' >
+                                <input  type ="hidden" class="form-control" name="idsalarie" value = '{{idsalarie}}' >
+                                <label style="font-weight : bold " for="nom">Matricule </label>
+                                <input type="text" name ="matricule" id ="matricule" value ='{{matricule}}'/></br></br>
+                                {% if genre == "Mr" %}
+                                 <div class ="fond toolbar label">
+
+                                            <input type="radio" id="radio1" name="genre" value="Mr"checked >
+                                            <label class =" d-grid gap-2 col-2 mx-auto btn btn-light" for="radio1" >Mr.</label>
+                                      
+                                            <input type = "radio" name ="genre" id = "radio2" value ="Mme" > 
+                                            <label class =" d-grid gap-2 col-2 mx-auto btn btn-light" for="radio2">Mme</label>
+                                           
+                                 </div>
+                          
+                                 
+                                {% else %}
+                                    <div class ="fond toolbar label">
+
+                                            <input type="radio" id="radio1" name="genre" value="Mr" >
+                                            <label class =" d-grid gap-2 col-2 mx-auto btn btn-light" for="radio1">Mr.</label>
+                                      
+                                            <input type = "radio" name ="genre" id = "radio2" value ="Mme" checked> 
+                                            <label class =" d-grid gap-2 col-2 mx-auto btn btn-light" for="radio2">Mme</label>
+                                           
+                                      </div>
+                          
+                                {% endif %}
+                            </div>
+                            <div class="form-group ">
+                              <label style="font-weight : bold " for="nom">Nom </label>
+                              <div class="col-sm-12">
+                                <input type="text" size = "50" name="nom" id ="nom" value= "{{nom}}">
+                              {{csrf()}}
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight : bold " for="prenom">Prénom</label>
+                              <div class="col-sm-12">
+                                <input type="text" size = "50" name="prenom" id ="prenom" value= "{{prenom}}" >
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight : bold" for="datenaissance">Date de naissance  </label></br>
+                              <div class="col-sm-12">
+                                <input type="date" name ="datenaissance" value= "{{datenaissance}}" >
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label  style="font-weight : bold" for="lieunaissance">Lieu de naissance</label>
+                              <div class="col-sm-12">
+                                <input type="text" size =" 50" name="lieunaissance" id ="lieunaissance" value= "{{lieunaissance}}">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight : bold " for="dptnaissance" >Département de naissance</label>
+                              <div class="col-sm-12">
+                                <input type="int" size =" 2px" name="dptnaissance" id ="dptnaissance" value= "{{dptnaissance}}">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight:bold" for="paysnaissance">Pays de naissance</label>
+                              <div class="col-sm-12">
+                                <input type="text" size ="20" name ="paysnaissance" id="paysnaissance" value= "{{paysnaissance}}" >
+                              </div>
+                            </div>
+                          <div class="form-group">
+                            <label  style="font-weight:bold" for ="nationalite">Nationalité</label>
+                            <div class="col-sm-12">
+                                 <input type="text" size ="50" name = "nationalite" id ="nationalite2" value= "{{nationalite}}" >
+                            </div>
+                          </div >
+                          <div class="form-group">
+                            <label  style="font-weight:bold" for ="titre">Pièce d'identité</label>
+                               <div class="col-sm-12">
+                          
+                            </div>
+                            <div class="col-sm-12">
+                              {% for titre in titres %}
+                                  {% if (title == titre.idtitre) %}
+                                        <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "titre" id='{{titre.titre}}' value ='{{titre.idtitre}}' checked> 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{titre.titre}}'>{{titre.titre}}</label>
+                                       </div> 
+                                  {% else %}
+                                       <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "titre" id='{{titre.titre}}' value ='{{titre.idtitre}}'> 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{titre.titre}}'>{{titre.titre}}</label>
+                                       </div>
+                                  {% endif %}
+                              {% endfor %}
+
+                            </div>
+                          </div >
+
+                          <div class="form-group">
+                            <label style="font-weight:bold" for="datesejour)">Date d'Expiration </label>
+                            <div class="col-sm-10">
+
+                                  <input type ="date" name ="datesejour" id="datesejour" value ="{{datesejour}}">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label  style="font-weight:bold" for ="contact">Personne à contacter en cas d'urgence</label>
+                            <div class="col-sm-10">
+                                   <input type="text" size = "50" name = "contact" id="contact" value ='{{contact}}' >
+                            </div>
+
+                          </div>
+                    </div><!--form-saisise-->
+
+                    <div class="form-saisie" >
+
+                        <div class="col-sm-10">
+                        </br>
+                        </div>
+                        <div class="form-group ">
+                          <label style="font-weight : bold " for="telephone">Téléphone </label>
+                          <div class="col-sm-12">
+                            <input type="text" size = "20x" name="telephone" id ="telephone" value ='{{telephone}}' >
+                          </div>
+                        </div>
+                        <div class="form-group ">
+                          <label style="font-weight : bold " for="mailsalarie">Adresse Mail du salarié </label>
+                          <div class="col-sm-12">
+                            <input type="text" size = "40x" name="mailsalarie" id ="mailsalarie" value ='{{mailsalarie}}' >
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label style="font-weight : bold " for="adresse1">Adresse</label>
+                          <div class="col-sm-12">
+                            <input type="text" size = "50" name="adresse1" id ="adresse1" value ='{{adresse1}}' >
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label style="font-weight : bold" for="adresse2">Complément Adresse</label></br>
+                          <div class="col-sm-12">
+                            <input type="text" size = "50" name ="adresse2" id ="adresse2" value ='{{adresse2}}'>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label style="font-weight : bold" for="codepostaladresse">Code Postal Adresse</label>
+                          <div class="col-sm-12">
+                            <input type="text" size =" 5px" name="codepostaladresse" id ="codepostaladresse" value ='{{codepostaladresse}}'>
+                          </div>
+                        </div>
+                        <div class="form-group ">
+                          <label style="font-weight : bold " for="villeadresse">Ville</label>
+                          <div class="col-sm-12">
+                            <input type="text" size = "50x" name="villeadresse" id ="villeadresse" value ='{{villeadresse}}'>
+                          </div>
+                        </div>
+                      <div class="form-group">
+                        <label style="font-weight:bold" for="securitesociale">Numéro Sécurité sociale</label>
+                        <div class="col-sm-12">
+                          <input type="text" size ="50" name ="securitesociale" id ="securitesociale" value ='{{securitesociale}}' >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label  style="font-weight:bold" for ="numcaf">Numéro caf</label>
+                        <div class="col-sm-12">
+                             <input type="text" size ="50" name = "numcaf" id="numcaf" value ='{{numcaf}}' >
+                        </div>
+                      </div >
+                      <div class="form-group">
+                        <label style="font-weight:bold" for ="situfamiliale">Situation familiale</label>
+                        <div class="col-sm-10">
+                            {% for situation in situations %}
+                                {% if (situfamiliale == situation.idsitu) %}
+                                    <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "situfamiliale" id='{{situation.situation}}' value ='{{situation.idsitu}}' checked > 
+                                          <label class ="d-grid gap-2 col-8 mx-auto btn btn-light" for='{{situation.situation}}'>{{situation.situation}}</label>
+                                    </div> 
+                              
+                                {% else %}
+                                   <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "situfamiliale" id='{{situation.situation}}' value ='{{situation.idsitu}}' > 
+                                          <label class ="d-grid gap-2 col-8 mx-auto btn btn-light" for='{{situation.situation}}'>{{situation.situation}}</label>
+                                    </div> 
+                              
+                                {% endif %}
+
+                            {% endfor %}
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label  style="font-weight:bold" for ="enfants">Nombre d'enfants</label>
+                        <div class="col-sm-10">
+                               <input type="number" size = "5" name = "enfants" id = "enfants" value ='{{enfants}}' >
+                        </div>
+
+                      </div>
+                      <div class="form-group">
+                        <label  style="font-weight:bold" for ="titre">Tranche d'âges</label>
+                        <div class="col-sm-12">
+                          {% for tranche in tranches %}
+                                {% if (age == tranche.idage) %}
+                                     <div class =" fond toolbar label" >
+                                          <input type="radio"  name = "tranche" id='{{tranche.tranche}}' value ='{{tranche.idage}}' checked> 
+                                          <label class =" d-grid gap-2 col-4 mx-auto btn btn-light" for='{{tranche.tranche}}'>{{tranche.tranche}}</label>
+                                     </div> 
+                                {% else %}
+                                        <div class =" fond toolbar label" >
+                                          <input type="radio"  name = "tranche" id='{{tranche.tranche}}' value ='{{tranche.idage}}' > 
+                                          <label class =" d-grid gap-2 col-4 mx-auto btn btn-light" for='{{tranche.tranche}}'>{{tranche.tranche}}</label>
+                                        </div> 
+                                {% endif %}
+                          {% endfor %}
+
+                        </div>
+                      </div >
+                </div><!--form-saisise-->
+              </div><!--etat-->
+
+              </br>
+              <div id="etat" style ="display : flex;align : center ">
+
+                <div class="form-saisie">
+                    <div class="form-group ">
+                        <label style="font-weight : bold " for="prescripteur">Organisme Prescripteur </label>
+                        <div class="col-sm-12">
+                        <input type="text" size = "50" name="prescripteur" id ="prescripteur" value ='{{prescripteur}}'>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label style="font-weight : bold " for="referent">Nom du référent</label>
+                    <div class="col-sm-12">
+                      <input type="text" size = "50" name="referent" id ="referent" value ='{{referent}}' >
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label style="font-weight : bold" for="telreferent">Numéro téléphone du référent </label></br>
+                    <div class="col-sm-12">
+                      <input type="text" size ="13px" name ="telreferent" id ="telreferent" value ='{{telreferent}}'>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label  style="font-weight : bold" for="mailreferent">Email du référent</label>
+                    <div class="col-sm-12">
+                      <input type="mail" size =" 30px" name="mailreferent" id ="mailreferent" value ='{{mailreferent}}'>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label style="font-weight : bold " for="adressereferent" >Adresse du référent</label>
+                    <div class="col-sm-12">
+                      <input type="text" size =" 50" name="adressereferent" id ="adressereferent" value ='{{adressereferent}}'>
+                    </div>
+                  </div>
+
+                <div class="form-group">
+                  <label  style="font-weight:bold" for ="ressources">Ressources</label>
+                  <div class="col-sm-10">
+                      {% for ressource in ressources %}
+                            {% if (ress == ressource.idressources) %}
+                                <div class =" fond toolbar label" >
+                                          <input type="radio"  name = "ressources" id='{{ressource.ressources}}' value ='{{ressource.idressources}}'checked > 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{ressource.ressources}}'>{{ressource.ressources}}</label>
+                                </div>
+                            {% else %}
+                                 <div class =" fond toolbar label" >
+                                          <input type="radio"  name = "ressources" id='{{ressource.ressources}}' value ='{{ressource.idressources}}' > 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{ressource.ressources}}'>{{ressource.ressources}}</label>
+                                 </div>
+                            {% endif %}
+                      {% endfor %}
+                  </div>
+                </div>
+
+                <div class="form-group ">
+                    <label style="font-weight : bold " for="poleemploi">Inscription Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                          {% if poleemploi == 1 %}
+                          <div class="col-sm-12">
+                     <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                        <div class ="fond toolbar" style =" display : flex">
+                            <input type="radio" id="radio5" name="poleemploi" value="1" checked>
+                            <label class =" sw-right" for="radio5">OUI</label>
+                        </div> 
+                        <div class ="fond toolbar1" style =" display : flex">   
+                            <input type = "radio" name ="poleemploi" id = "radio6" value ="0" > 
+                            <label class =" sw-left" for="radio6">NON</label>
+                        </div>
+                    </div>  
+                    </div>
+                        {% elseif poleemploi == 0 %}
+                           <div class="col-sm-12">
+                     <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                        <div class ="fond toolbar" style =" display : flex">
+                            <input type="radio" id="radio5" name="poleemploi" value="1" >
+                            <label class =" sw-right" for="radio5">OUI</label>
+                        </div> 
+                        <div class ="fond toolbar1" style =" display : flex">   
+                            <input type = "radio" name ="poleemploi" id = "radio6" value ="0" checked > 
+                            <label class =" sw-left" for="radio6">NON</label>
+                        </div>
+                    </div>  
+                    </div>
+                          {% else %}
+                         <div class="col-sm-12">
+                     <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                        <div class ="fond toolbar" style =" display : flex">
+                            <input type="radio" id="radio5" name="poleemploi" value="1" >
+                            <label class =" sw-right" for="radio5">OUI</label>
+                        </div> 
+                        <div class ="fond toolbar1" style =" display : flex">   
+                            <input type = "radio" name ="poleemploi" id = "radio6" value ="0" > 
+                            <label class =" sw-left" for="radio6">NON</label>
+                        </div>
+                    </div>  
+                    </div>
+                          {% endif %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight : bold " for="datepoleemploi">Date d'Inscription Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                        <input type="date" name="datepoleemploi" id ="datepoleemploi" value ='{{datepoleemploi}}'>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight : bold" for="idpole">Identifiant Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                        <input type="text" name ="idpole" id ="idpole" value ='{{idpole}}'>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight : bold" for="numagrementpole">Numéro d'Agrément Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                        <input type="text" name ="numagrementpole" id ="numagrementpole" value ='{{numagrementpole}}'>
+                    </div>
+                </div>
+
+          </div><!--form-saisise-->
+
+          <div class="form-saisie" >
+            </br>
+              <div class="form-group">
+                <label style="font-weight : bold" for="qpv">ZONE</label>
+                <div class="col-sm-12">
+                 {% for zone in zones %}
+                      {% if qpv == zone.idzone %}
+                          <div class ="fond toolbar label d-grid mx-auto" >
+                                          <input type="radio"  name = "qpv" id='{{zone.zone}}' value ='{{zone.idzone}}' checked> 
+                                          <label class =" d-grid gap-2 col-2 mx-auto btn btn-light" for='{{zone.zone}}' style ="width 20%":>{{zone.zone}}</label>
+                          </div> 
+                      {% else %}
+                         <div class ="fond toolbar label d-grid mx-auto" >
+                                          <input type="radio"  name = "qpv" id='{{zone.zone}}' value ='{{zone.idzone}}'> 
+                                          <label class =" d-grid gap-2 col-2 mx-auto btn btn-light" for='{{zone.zone}}' style ="width 20%":>{{zone.zone}}</label>
+                        </div> 
+                      {% endif %}
+                    
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="form-group ">
+                <label style="font-weight : bold " >RQTH</label>
+                <div class="col-sm-12">
+                
+                    {% if rqth == 1 %}
+                    <div class="col-sm-12">
+                       <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                        <div class ="fond toolbar" style =" display : flex">
+
+                            <input type="radio" id="radio3" name="rqth" value="1" checked>
+                            <label class =" sw-right" for="radio3">OUI</label>
+                        </div>
+                        <div class ="fond toolbar1" style =" display : flex">    
+                            <input type = "radio" name ="rqth" id = "radio4" value ="0" > 
+                            <label class =" sw-left" for="radio4">NON</label>
+                        </div>
+
+                       
+                      </div>
+                   </div>
+
+                    {% elseif rqth == 0 %}
+                   <div class="col-sm-12">
+                       <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                        <div class ="fond toolbar" style =" display : flex">
+
+                            <input type="radio" id="radio3" name="rqth" value="1" >
+                            <label class =" sw-right" for="radio3">OUI</label>
+                        </div>
+                        <div class ="fond toolbar1" style =" display : flex">    
+                            <input type = "radio" name ="rqth" id = "radio4" value ="0" checked> 
+                            <label class =" sw-left" for="radio4">NON</label>
+                        </div>
+
+                       
+                      </div>
+                </div>
+                    {% else %}
+                    <div class="col-sm-12">
+                       <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                        <div class ="fond toolbar" style =" display : flex">
+
+                            <input type="radio" id="radio3" name="rqth" value="1" >
+                            <label class =" sw-right" for="radio3">OUI</label>
+                        </div>
+                        <div class ="fond toolbar1" style =" display : flex">    
+                            <input type = "radio" name ="rqth" id = "radio4" value ="0" > 
+                            <label class =" sw-left" for="radio4">NON</label>
+                        </div>
+
+                       
+                      </div>
+                </div>
+                    {% endif %}
+                </div>
+              </div>
+
+            <div class="form-group">
+              <label  style="font-weight:bold" for ="permis">Permis</label>
+              <div class="col-sm-12">
+                {% for permi in permis %}
+                      {% if permi.coche == idsalarie %}
+                          <div class ="fond toolbar label" >
+                                              <input type="checkbox"  name = "permis[]" id='{{permi.permis}}' value ='{{permi.idpermis}}' checked > 
+                                              <label class =" d-grid gap-2 col-4 mx-auto btn btn-light" for='{{permi.permis}}'>{{permi.permis}}</label>
+                          </div> 
+
+                      {% else %}
+                           <div class ="fond toolbar label" >
+                                              <input type="checkbox"  name = "permis[]" id='{{permi.permis}}' value ='{{permi.idpermis}}' > 
+                                              <label class =" d-grid gap-2 col-4 mx-auto btn btn-light" for='{{permi.permis}}'>{{permi.permis}}</label>
+                          </div> 
+                      {% endif %}
+
+                {% endfor %}
+                      <br/>
+                      <label style="font-weight : bold" for="obspermis">Observation permis</label><br/>
+                        <input type ="text" size ="30px" name = "obspermis" id = "obspermis" placeholder="Observation permis" value = '{{obspermis}}' ></input>
+
+              </div>
+            </div >
+            <div class="form-group">
+              <label style="font-weight:bold" for ="locomotion">Moyen de Locomotion</label>
+               <div class="col-sm-12">
+                {% for loco in locomotion %}
+                      {% if loco.coche == idsalarie %}
+                            
+                            <div class ="fond toolbar label" >
+                                              <input type="checkbox"  name = "locomotion[]" id='{{loco.locomotion}}' value ='{{loco.id}}'checked > 
+                                              <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{loco.locomotion}}'>{{loco.locomotion}}</label>
+                            </div> 
+                          
+                         
+                      {% else %}
+                        <div class ="fond toolbar label" >
+                                              <input type="checkbox"  name = "locomotion[]" id='{{loco.locomotion}}' value ='{{loco.id}}' > 
+                                              <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{loco.locomotion}}'>{{loco.locomotion}}</label>
+                            </div> 
+
+                      {% endif %}
+
+                {% endfor %}
+
+             </div>
+            </div> 
+
+
+              
+                     
+             
+          
+            <div class="form-group">
+              <label  style="font-weight:bold" for ="dureechomage">Durée du Chômage</label>
+              <div class="col-sm-12">
+                  {% for chomage in chomages %}
+                      <div class="col-sm-12">
+                          {% if (duree == chomage.idchomage) %}
+                             <div class="col-sm-12">
+                             <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "dureechomage" id='{{chomage.duree}}' value ='{{chomage.idchomage}}' checked> 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{chomage.duree}}'>{{chomage.duree}}</label>
+                           </div> 
+                          
+                           </div>
+                          {% else %}
+                               <div class="col-sm-12">
+                             <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "dureechomage" id='{{chomage.duree}}' value ='{{chomage.idchomage}}' > 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{chomage.duree}}'>{{chomage.duree}}</label>
+                           </div> 
+                          
+                           </div>
+                          {% endif %}
+                      </div>
+                  {% endfor %}
+              </div>
+            </div>
+      </div><!--form-saisise-->
+
+  </div><!--etat-->
+
+  </br>
+    <div id="etat" style ="display : flex;align : center ">
+
+      <div class="form-saisie">
+
+    </br>
+        <div class="form-group ">
+          <label style="font-weight : bold " for="id_lieu_travail">Chantier</label></br>
+          <div class="col-sm-12">
+          {% for chantier in chantiers %}
+                {% if (id_lieu_travail == chantier.idlieu) %}
+                    <div class="col-sm-12">
+                         <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "id_lieu_travail" id='{{chantier.lieu}}' value ='{{chantier.idlieu}}' checked> 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{chantier.lieu}}'>{{chantier.lieu}}</label>
+                         </div> 
+                  
+                    </div>
+                {% else %}
+                    <div class="col-sm-12">
+                         <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "id_lieu_travail" id='{{chantier.lieu}}' value ='{{chantier.idlieu}}' > 
+                                          <label class =" d-grid gap-2 col-6 mx-auto btn btn-light" for='{{chantier.lieu}}'>{{chantier.lieu}}</label>
+                         </div> 
+                  
+                   </div>
+                 {% endif %}  
+
+          {% endfor %}
+        </div>
+        </div>
+        <div class="form-group">
+          <label  style="font-weight:bold" for ="dateametra" >Date AMETRA</label>
+          <div class="col-sm-12">
+               <input type="date" name = "dateametra" id ="dateametra" value ='{{dateametra}}'>
+          </div>
+        </div >
+        <div class="form-group">
+          <label style="font-weight : bold " for="datedebcontrat">Date début de contrat</label>
+          <div class="col-sm-12">
+            <input type="date" name="datedebcontrat" id ="datedebcontrat" value ='{{datedebcontrat}}' >
+          </div>
+        </div>
+        <div class="form-group">
+          <label style="font-weight : bold" for="datefininitial">Date Fin de Contrat Initial</label></br>
+          <div class="col-sm-12">
+            <input type="date" name ="datefininitial" id ="datefininitial" value ='{{datefininitial}}' >
+          </div>
+        </div>
+        <div class="form-group">
+          <label  style="font-weight : bold" for="dpae">Date DPAE URSSAF</label>
+          <div class="col-sm-12">
+            <input type="date" name="dpae" id ="dpae" value ='{{dpae}}'>
+          </div>
+        </div>
+        <div class="form-group">
+          <label style="font-weight : bold " for="numurssaf" >Numéro Déclaration URSSAF</label>
+          <div class="col-sm-12">
+            <input type="text" size =" 50" name="numurssaf" id ="numurssaf" value ='{{numurssaf}}'>
+          </div>
+        </div>
+          <div class="form-group border border-danger">
+          <label style="font-weight : bold; color : red; text-decoration : underline "  >DROIT A L'IMAGE</label></br>
+         
+          <span style="font-weight : bold; color : black; text-decoration : underline ; margin : 15px"> Autorisation : </span>
+          <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+              {% if droitimage == 1 %}          
+                        <div class ="fond toolbar" style =" display : flex">
+                            <input type="radio" id="radio13" name="image" value=1 checked>
+                            <label class =" sw-right" for="radio13">OUI</label>
+                        </div> 
+                        <div class ="fond toolbar1" style =" display : flex">   
+                            <input type = "radio" name ="image" id = "radio14" value =0 > 
+                            <label class =" sw-left" for="radio14">NON</label>
+                        </div>    
+              {% elseif droitimage == 0 %}  
+                         <div class ="fond toolbar" style =" display : flex">
+                            <input type="radio" id="radio13" name="image" value=1 >
+                            <label class =" sw-right" for="radio13">OUI</label>
+                        </div> 
+                        <div class ="fond toolbar1" style =" display : flex">   
+                            <input type = "radio" name ="image" id = "radio14" value =0 checked > 
+                            <label class =" sw-left" for="radio14">NON</label>
+                        </div>  
+               {% else %}  
+                         <div class ="fond toolbar" style =" display : flex">
+                            <input type="radio" id="radio13" name="image" value=1 >
+                            <label class =" sw-right" for="radio13">OUI</label>
+                        </div> 
+                        <div class ="fond toolbar1" style =" display : flex">   
+                            <input type = "radio" name ="image" id = "radio14" value =0  > 
+                            <label class =" sw-left" for="radio14">NON</label>
+                        </div> 
+              {% endif %}                               
+
+          </div>
+          
+        </div>
+
+
+
+</div><!--form-saisise-->
+
+<div class="form-saisie" >
+
+    <div class="col-sm-10">
+    </br>
+    </div>
+    <div class="form-group">
+      <label  style="font-weight:bold" for ="niveauetude">Niveau d'études</label>
+      <div class="col-sm-10">
+          {% for niveau in niveaux %}
+                {% if (etude == niveau.idetude) %}
+                   <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "niveauetude" id='{{niveau.niveau}}' value ='{{niveau.idetude}}' checked > 
+                                          <label class =" d-grid gap-2 col-8 mx-auto btn btn-light" for='{{niveau.niveau}}'>{{niveau.niveau}}</label>
+                   </div> 
+                {% else %}
+                 <div class ="fond toolbar label" >
+                                          <input type="radio"  name = "niveauetude" id='{{niveau.niveau}}' value ='{{niveau.idetude}}' > 
+                                          <label class =" d-grid gap-2 col-8 mx-auto btn btn-light" for='{{niveau.niveau}}'>{{niveau.niveau}}</label>
+                  </div> 
+                {% endif %}
+
+          {% endfor %}
+      </div>
+
+    </div>
+    <div class="form-group ">
+      <label style="font-weight : bold " >Carte BTP</label>
+    
+      {% if btp == 1 %}
+        <div class="col-sm-12">
+           <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                <div class ="fond toolbar" style =" display : flex">
+                    <input type="radio" id="radio7" name="cartebtp" value="1" checked>
+                    <label for="radio7">OUI</label>
+                </div> 
+         
+
+               
+                <div class ="fond toolbar1" style =" display : flex">   
+                                <input type = "radio" name ="cartebtp" id = "radio8" value ="0" > 
+                                <label  for="radio8">NON</label>
+                </div>
+             </div>    
+          </div>          
+      {% elseif btp == 0 %}
+        <div class="col-sm-12">
+          <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+           <div class ="fond toolbar" >
+                <input type="radio" id="radio7" name="cartebtp" value="1" >
+                <label  for="radio7">OUI</label>
+            </div> 
+        
+            <div class ="fond toolbar1" >   
+                            <input type = "radio" name ="cartebtp" id = "radio8" value ="0" checked> 
+                            <label  for="radio8">NON</label>
+            </div>  
+          </div>
+        </div>  
+      {% else %}
+        <div class="col-sm-12">
+          <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+            <div class ="fond toolbar" >
+                <input type="radio" id="radio7" name="cartebtp" value="1" >
+                <label  for="radio7">OUI</label>
+            </div> 
+            <div class ="fond toolbar1" >   
+                  <input type = "radio" name ="cartebtp" id = "radio8" value ="0" > 
+                  <label  for="radio8">NON</label>
+            </div>
+          </div>     
+        </div>     
+      {% endif %}
+     
+    </div>
+
+    <div class="form-group border ">
+      <label style="font-weight : bold; text-decoration-line : underline " for="dateportabilite">Mutuelle</label></br>
+      <label style="font-weight : bold " for="datemutuelle">Validité Justificatif de dispenses (CSS ou Mutuelle)</label>
+      <div class="col-sm-12">
+        <input type="date" name="datemutuelle" id ="datemutuelle" value ='{{datemutuelle}}'>
+      </div>
+     <label style="font-weight : bold " for="mutuelle">Adhésion à la Mutuelle de Force</label>
+
+      {% if mutuelle == "1" %}
+        <div class="col-sm-12">
+          <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+            <div class ="fond toolbar" >
+              <input type="radio" name="mutuelle" id = "radio9" value =1 checked></input>
+              <label  for="radio9">OUI</label>
+            </div>
+            <div class ="fond toolbar1" >  
+               <input type="radio" name="mutuelle" id = "radio10" value =0 ></input>
+              <label  for="radio10">NON</label>
+            </div> 
+          </div>
+        </div>     
+        
+      {% elseif mutuelle  == "0" %}
+          <div class="col-sm-12">
+          <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+            <div class ="fond toolbar" >
+              <input type="radio" name="mutuelle" id = "radio11" value =1 ></input>
+              <label  for="radio11">OUI</label>
+            </div>
+            <div class ="fond toolbar1" >  
+               <input type="radio" name="mutuelle" id = "radio12" value =0 checked></input>
+              <label  for="radio12">NON</label>
+            </div> 
+          </div>
+        </div>    
+       {% else %}
+          <div class="col-sm-12">
+          <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+            <div class ="fond toolbar" >
+              <input type="radio" name="mutuelle" id = "radio13" value =1 ></input>
+              <label  for="radio13">OUI</label>
+            </div>   
+            <div class ="fond toolbar1" >
+               <input type="radio" name="mutuelle" id = "radio14" value =0 ></input>
+              <label  for="radio14">NON</label>
+            </div> 
+          </div>
+        </div>    
+        {% endif %}
+
+     
+      <label style="font-weight : bold " for="mutuelle">Portabilité</label></br>
+      
+      {% if portabilite == 1 %}
+        <div class="col-sm-12">
+          <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+            <div class ="fond toolbar" >
+              <input type="radio" name="portabilite" value ="1" id = "radio15" checked></input>
+              <label  for="radio15">OUI</label>
+            </div>   
+            <div class ="fond toolbar1" >
+              <input type="radio" name="portabilite" value ="0" id = "radio16"> 
+              <label  for="radio16">NON</label>
+          </div>
+        </div>  
+      {% elseif mutuelle  == 0 %}
+        <div class="col-sm-12">
+          <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+            <div class ="fond toolbar" >
+              <input type="radio" name="portabilite" value ="1" id = "radio17" ></input>
+              <label  for="radio17">OUI</label>
+            </div>   
+            <div class ="fond toolbar1" > 
+              <input type="radio" name="portabilite" value ="0" id = "radio18"checked> 
+              <label  for="radio18">NON</label>
+          </div>
+        </div>  
+       {% else %}
+          <div class="col-sm-12">
+          <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+            <div class ="fond toolbar" >
+              <input type="radio" name="portabilite" value ="1" id = "radio19" ></input>
+              <label  for="radio19">OUI</label>
+            </div>   
+            <div class ="fond toolbar1" >  
+              <input type="radio" name="portabilite" value ="0" id = "radio20"> 
+              <label  for="radio20">NON</label>
+          </div>
+        </div>  
+        {% endif %}
+
+    
+
+     <div class="form-group ">
+      <label style="font-weight : bold " for="datefse">Date entrée FSE</label>
+      <div class="col-sm-12">
+        <input type="date" name="datefse" id ="datefse" value ='{{datefse}}'>
+      </div>
+    </div>
+       <div class="form-group ">
+      <label style="font-weight : bold " for="datefse">Date sortie FSE</label>
+      <div class="col-sm-12">
+        <input type="date" name="datesortiefse" id ="datesortiefse" value ='{{datesortiefse}}'>
+      </div>
+    </div>
+     <div class="form-group ">
+      <label style="font-weight : bold " for="idfse">Id FSE</label>
+      <div class="col-sm-12">
+        <input type="text" name="idfse" id ="idfse" value ='{{idfse}}'>
+      </div>
+    </div>
+        <div class="form-group ">
+      <label style="font-weight : bold " for="idfse">Id EXTRANET</label>
+      <div class="col-sm-12">
+        <input type="text" name="idextranet" id ="idextranet" value ='{{idextranet}}'>
+      </div>
+    </div>
+
+</br></br>
+  &nbsp <button class="btn btn btn-primary" type="submit" value="Envoyer">Valider</button>
+  <a href="{{ path_for('salarie')}}" class="btn btn-secondary">Annuler</a>
+
+</div><!--form-saisise-->
+
+</div>
+                   <!--<button  type="submit" value="Envoyer">Valider</button>
+                   <button  type="reset" value="annuler" >Annuler</button><br>-->
+
+
+   <!-- /wrapper -->
+ <!--</section>-->
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+                     var accueil2 =  "Validation de la saisie ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir le nom et le prénom");
+                     return false
+
+                 }
+
+         }
+           // function myFunction() {
+           //   document.getElementById("newtitre").innerHTML = "Hello World";
+           //   return
+           // }
+        //}
+
+
+  </script>
+
+{% endblock %}

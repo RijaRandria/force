@@ -1,0 +1,513 @@
+{% extends "fichesalarie1.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+
+    <form method="POST" onSubmit="return accepter()" action="{{path_for('updatesal')}}">
+
+                        <h3 style ="color : blue">{{titre}}</h3>
+
+                        <!---début boite de saisie-->
+                        <h5 style ="color : #A52A2A; text-decoration : underline">Etat-civil et Administratif</h5>
+                        <div id="etat" style ="display : flex; background-color :#E7A7B6;align : center ">
+
+                          <div class="form-saisie">
+                        <!--<div id="etat" style ="width:45%">-->
+                            <div class="col-sm-10">
+                                <input  type ="hidden" class="form-control" name="id_user" value = '{{id_user}}' >
+                                <input  type ="hidden" class="form-control" name="idsalarie" value = '{{idsalarie}}' >
+                                {% if genre == "Mr" %}
+                                    <input type= "radio" name="genre" id ="genre" value="Mr" checked style ="background-color : green"/> Mr.
+                                    <input type= "radio" name="genre" id ="genre" value="Mme" /> Mme.
+                                {% else %}
+                                    <input type= "radio" name="genre" id ="genre" value="Mr" /> Mr.
+                                    <input type= "radio" name="genre" id ="genre" value="Mme" checked style ="color : green"/> Mme.
+                                {% endif %}
+                            </div>
+                            <div class="form-group ">
+                              <label style="font-weight : bold " for="nom">Nom </label>
+                              <div class="col-sm-12">
+                                <input type="text" size = "60px" name="nom" id ="nom" value= "{{nom}}">
+                              {{csrf()}}
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight : bold " for="prenom">Prénom</label>
+                              <div class="col-sm-12">
+                                <input type="text" size = "60px" name="prenom" id ="prenom" value= "{{prenom}}" >
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight : bold" for="datenaissance">Date de naissance  </label></br>
+                              <div class="col-sm-12">
+                                <input type="date" name ="datenaissance" value= "{{datenaissance}}" >
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label  style="font-weight : bold" for="lieunaissance">Lieu de naissance</label>
+                              <div class="col-sm-12">
+                                <input type="text" size =" 60px" name="lieunaissance" id ="lieunaissance" value= "{{lieunaissance}}">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight : bold " for="dptnaissance" >Département de naissance</label>
+                              <div class="col-sm-12">
+                                <input type="int" size =" 2px" name="dptnaissance" id ="dptnaissance" value= "{{dptnaissance}}">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-weight:bold" for="paysnaissance">Pays de naissance</label>
+                              <div class="col-sm-12">
+                                <input type="text" size ="20" name ="paysnaissance" id="paysnaissance" value= "{{paysnaissance}}" >
+                              </div>
+                            </div>
+                          <div class="form-group">
+                            <label  style="font-weight:bold" for ="nationalite">Nationalité</label>
+                            <div class="col-sm-12">
+                                 <input type="text" size ="60" name = "nationalite" id ="nationalite2" value= "{{nationalite}}" >
+                            </div>
+                          </div >
+                          <div class="form-group">
+                            <label  style="font-weight:bold" for ="titre">Pièce d'identité</label>
+                            <div class="col-sm-12">
+                              {% for titre in titres %}
+                                  {% if (title == titre.idtitre) %}
+                                        <input type="radio"  name = "titre" id="titre" value ='{{titre.idtitre}}' checked> {{titre.titre}}</input></br>
+                                  {% else %}
+                                        <input type="radio"  name = "titre" id="titre" value ='{{titre.idtitre}}' > {{titre.titre}}</input></br>
+                                  {% endif %}
+                              {% endfor %}
+
+                            </div>
+                          </div >
+
+                          <div class="form-group">
+                            <label style="font-weight:bold" for="datesejour)">Date d'Expiration </label>
+                            <div class="col-sm-10">
+
+                                  <input type ="date" name ="datesejour" id="datesejour" value ="{{datese}}">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label  style="font-weight:bold" for ="contact">Personne à contacter en cas d'urgence</label>
+                            <div class="col-sm-10">
+                                   <input type="text" size = "60" name = "contact" id="contact" value ='{{contact}}' >
+                            </div>
+
+                          </div>
+                    </div><!--form-saisise-->
+
+                    <div class="form-saisie" >
+
+                        <div class="col-sm-10">
+                        </br>
+                        </div>
+                        <div class="form-group ">
+                          <label style="font-weight : bold " for="telephone">Téléphone </label>
+                          <div class="col-sm-12">
+                            <input type="text" size = "20x" name="telephone" id ="telephone" value ='{{telephone}}' >
+                          </div>
+                        </div>
+                        <div class="form-group ">
+                          <label style="font-weight : bold " for="mailsalarie">Adresse Mail du salarié </label>
+                          <div class="col-sm-12">
+                            <input type="email" size = "40x" name="mailsalarie" id ="mailsalarie" value ='{{mailsalarie}}' >
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label style="font-weight : bold " for="adresse1">Adresse</label>
+                          <div class="col-sm-12">
+                            <input type="text" size = "60px" name="adresse1" id ="adresse1" value ='{{adresse1}}' >
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label style="font-weight : bold" for="adresse2">Complément Adresse</label></br>
+                          <div class="col-sm-12">
+                            <input type="text" size = "60px" name ="adresse2" id ="adresse2" value ='{{adresse2}}'>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label style="font-weight : bold" for="codepostaladresse">Code Postal Adresse</label>
+                          <div class="col-sm-12">
+                            <input type="text" size =" 5px" name="codepostaladresse" id ="codepostaladresse" value ='{{codepostaladresse}}'>
+                          </div>
+                        </div>
+                        <div class="form-group ">
+                          <label style="font-weight : bold " for="villeadresse">Ville</label>
+                          <div class="col-sm-12">
+                            <input type="text" size = "60x" name="villeadresse" id ="villeadresse" value ='{{villeadresse}}'>
+                          </div>
+                        </div>
+                      <div class="form-group">
+                        <label style="font-weight:bold" for="securitesociale">Numéro Sécurité sociale</label>
+                        <div class="col-sm-12">
+                          <input type="text" size ="60" name ="securitesociale" id ="securitesociale" value ='{{securitesociale}}' >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label  style="font-weight:bold" for ="numcaf">Numéro caf</label>
+                        <div class="col-sm-12">
+                             <input type="text" size ="60" name = "numcaf" id="numcaf" value ='{{numcaf}}' >
+                        </div>
+                      </div >
+                      <div class="form-group">
+                        <label style="font-weight:bold" for ="situfamiliale">Situation familiale</label>
+                        <div class="col-sm-10">
+                            {% for situation in situations %}
+                                {% if (situfamiliale == situation.id) %}
+                                    <input type="radio"  name = "situfamiliale" id="situfamiliale" value ="{{situation.id}}" checked> {{situation.situation}}</input></br>
+                                {% else %}
+                                    <input type="radio"  name = "situfamiliale" id="situfamiliale" value ="{{situation.id}}"> {{situation.situation}}</input></br>
+                                {% endif %}
+
+                            {% endfor %}
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label  style="font-weight:bold" for ="enfants">Enfants à charge</label>
+                        <div class="col-sm-10">
+                               <input type="number" size = "5" name = "enfants" id = "enfants" value ='{{enfants}}' >
+                        </div>
+
+                      </div>
+                      <div class="form-group">
+                        <label  style="font-weight:bold" for ="titre">Tranche d'âges</label>
+                        <div class="col-sm-12">
+                          {% for tranche in tranches %}
+                                {% if (age == tranche.idage) %}
+                                      <input type="radio"  name = "tranche" id="tranche" value ='{{tranche.idage}}' checked> {{tranche.tranche}}</input></br>
+                                {% else %}
+                                      <input type="radio"  name = "tranche" id="tranche" value ='{{tranche.idage}}' > {{tranche.tranche}}</input></br>
+                                {% endif %}
+                          {% endfor %}
+
+                        </div>
+                      </div >
+                </div><!--form-saisise-->
+              </div><!--etat-->
+
+              </br>
+              <div id="etat" style ="display : flex; background-color :#E7A7B6;align : center ">
+
+                <div class="form-saisie">
+                    <div class="form-group ">
+                        <label style="font-weight : bold " for="prescripteur">Organisme Prescripteur </label>
+                        <div class="col-sm-12">
+                        <input type="text" size = "60px" name="prescripteur" id ="prescripteur" value ='{{prescripteur}}'>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label style="font-weight : bold " for="referent">Nom du référent</label>
+                    <div class="col-sm-12">
+                      <input type="text" size = "60px" name="referent" id ="referent" value ='{{referent}}' >
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label style="font-weight : bold" for="telreferent">Numéro téléphone du référent </label></br>
+                    <div class="col-sm-12">
+                      <input type="text" size ="13px" name ="telreferent" id ="telreferent" value ='{{telreferent}}'>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label  style="font-weight : bold" for="mailreferent">Email du référent</label>
+                    <div class="col-sm-12">
+                      <input type="mail" size =" 30px" name="mailreferent" id ="mailreferent" value ='{{mailreferent}}'>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label style="font-weight : bold " for="adressereferent" >Adresse du référent</label>
+                    <div class="col-sm-12">
+                      <input type="text" size =" 60px" name="adressereferent" id ="adressereferent" value ='{{adressereferent}}'>
+                    </div>
+                  </div>
+
+                <div class="form-group">
+                  <label  style="font-weight:bold" for ="ressources">Ressources</label>
+                  <div class="col-sm-10">
+                      {% for ressource in ressources %}
+                            {% if (ress == ressource.id) %}
+                                <input type="radio"  name = "ressources" id="ressources" value ='{{ressource.id}}' checked > {{ressource.ressources}}</input></br>
+                            {% else %}
+                                <input type="radio"  name = "ressources" id="ressources" value ='{{ressource.id}}' > {{ressource.ressources}}</input></br>
+                            {% endif %}
+                      {% endfor %}
+                  </div>
+                </div>
+
+                <div class="form-group ">
+                    <label style="font-weight : bold " for="poleemploi">Inscription Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                          {% if poleemploi == "O" %}
+                          <input type="radio"  name = "poleemploi" id="poleemploi" value ="O" checked> OUI</input>
+                          <input type="radio"  name = "poleemploi" id="poleemploi" value ="N" > NON</input></br>
+                        {% elseif poleemploi == "N" %}
+                          <input type="radio"  name = "poleemploi" id="poleemploi" value ="O" > OUI</input>
+                          <input type="radio"  name = "poleemploi" id="poleemploi" value ="N" checked> NON</input></br>
+                          {% else %}
+                            <input type="radio"  name = "poleemploi" id="poleemploi" value ="O" > OUI</input>
+                            <input type="radio"  name = "poleemploi" id="poleemploi" value ="N" > NON</input></br>
+                          {% endif %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight : bold " for="datepoleemploi">Date d'Inscription Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                        <input type="date" name="datepoleemploi" id ="datepoleemploi" value ='{{datepoleemploi}}'>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight : bold" for="idpole">Identifiant Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                        <input type="text" name ="idpole" id ="idpole" value ='{{idpole}}'>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight : bold" for="numagrementpole">Numéro d'Agréement Pôle-Emploi</label>
+                    <div class="col-sm-12">
+                        <input type="text" name ="numagrementpole" id ="numagrementpole" value ='{{numagrementpole}}'>
+                    </div>
+                </div>
+
+          </div><!--form-saisise-->
+
+          <div class="form-saisie" >
+            </br>
+              <div class="form-group">
+                <label style="font-weight : bold" for="qpv">QPV / ZRR</label>
+                <div class="col-sm-12">
+                    {% if qpv == "OUI" %}
+                    <input type="radio" name = "qpv" id="qpv" value ="O" checked> OUI</input>
+                    <input type="radio"  name = "qpv" id="qpv" value ="N" > NON</input></br>
+                  {% elseif qpv == "NON" %}
+                    <input type="radio"  name = "qpv" id="qpv" value ="O" > OUI</input>
+                    <input type="radio"  name = "qpv" id="qpv" value ="N" checked> NON</input></br>
+                    {% else %}
+                      <input type="radio"  name = "qpv" id="qpv" value ="O" > OUI</input>
+                      <input type="radio"  name = "qpv" id="qpv" value ="N" > NON</input></br>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="form-group ">
+                <label style="font-weight : bold " for="rqth">RQTH</label>
+                <div class="col-sm-12">
+                    {% if rqth == "OUI" %}
+                    <input type="radio"  name = "rqth" id="rqth" value ="O" checked> OUI</input>
+                    <input type="radio"  name = "rqth" id="rqth" value ="N" > NON</input></br>
+                    {% elseif rqth == "NON" %}
+                    <input type="radio"  name = "rqth" id="rqth" value ="O" > OUI</input>
+                    <input type="radio"  name = "rqth" id="rqth" value ="N" checked> NON</input></br>
+                    {% else %}
+                      <input type="radio"  name = "rqth" id="rqth" value ="O" > OUI</input>
+                      <input type="radio"  name = "rqth" id="rqth" value ="N" > NON</input></br>
+                    {% endif %}
+                </div>
+              </div>
+
+            <div class="form-group">
+              <label  style="font-weight:bold" for ="permis">Permis</label>
+              <div class="col-sm-12">
+                  {% for permi in permis %}
+                        {% if (perm == permi.idpermis) %}
+                            <input type="checkbox"  name = "permis[]" id="permis" value = '{{permi.idpermis}}' checked> {{permi.permis}}</input></br>
+                        {% else %}
+                            <input type="checkbox"  name = "permis[]" id="permis" value = '{{permi.idpermis}}'> {{permi.permis}}</input></br>
+                        {% endif %}
+                  {% endfor %}
+                  {% if (obspermis != null) %}
+                      <input type ="text" size ="30px" name = "obspermis" id = "obspermis" value = '{{obspermis}}' ></input>
+                  {% else %}
+                      <input type ="text" size ="30px" name = "obspermis" id = "obspermis" placeholder = "Observation sur le permis" ></input>
+                  {% endif %}
+              </div>
+            </div >
+            <div class="form-group">
+              <label style="font-weight:bold" for ="locomotion">Moyen de Locomotion</label>
+              <div class="col-sm-12">
+                  {% for locomotion in locomotions %}
+                      <div class="col-sm-12">
+                            {% if (loc == locomotion.id) %}
+                                <input type="checkbox"  name = "locomotion[]" id="locomotion" value = '{{locomotion.id}}' checked> {{locomotion.locomotion}} </input></br>
+                            {% else %}
+                                <input type="checkbox"  name = "locomotion[]" id="locomotion" value = '{{locomotion.id}}'> {{locomotion.locomotion}}</input></br>
+                            {% endif %}
+                      </div>
+                  {% endfor %}
+              </div>
+            </div>
+            <div class="form-group">
+              <label  style="font-weight:bold" for ="dureechomage">Durée du Chômage</label>
+              <div class="col-sm-12">
+                  {% for chomage in chomages %}
+                      <div class="col-sm-12">
+                          {% if (duree == chomage.id) %}
+                              <input type="radio"  name = "dureechomage" id="dureechomage" value = '{{chomage.id}}' checked> {{chomage.duree}}</input></br>
+                          {% else %}
+                              <input type="radio"  name = "dureechomage" id="dureechomage" value = '{{chomage.id}}'> {{chomage.duree}}</input></br>
+                          {% endif %}
+                      </div>
+                  {% endfor %}
+              </div>
+            </div>
+      </div><!--form-saisise-->
+
+  </div><!--etat-->
+
+  </br>
+    <div id="etat" style ="display : flex; background-color :#E7A7B6;align : center ">
+
+      <div class="form-saisie">
+
+    </br>
+        <div class="form-group ">
+          <label style="font-weight : bold " for="id_lieu_travail">Chantier</label></br>
+          <div class="col-sm-12">
+          {% for chantier in chantiers %}
+                {% if (id_lieu_travail == chantier.idlieu) %}
+                    <input type="radio"  name = "id_lieu_travail" id="id_lieu_travail" value = '{{chantier.idlieu}}' checked> {{chantier.lieu}}</input></br>
+                {% else %}
+                    <input type="radio"  name = "id_lieu_travail" id="id_lieu_travail" value = '{{chantier.idlieu}}'> {{chantier.lieu}}</input></br>
+                {% endif %}
+
+          {% endfor %}
+        </div>
+        </div>
+        <div class="form-group">
+          <label  style="font-weight:bold" for ="dateametra" >Date AMETRA</label>
+          <div class="col-sm-12">
+               <input type="date" name = "dateametra" id ="dateametra" value ='{{dateametra}}'>
+          </div>
+        </div >
+        <div class="form-group">
+          <label style="font-weight : bold " for="datedebcontrat">Date début de contrat</label>
+          <div class="col-sm-12">
+            <input type="date" name="datedebcontrat" id ="datedebcontrat" value ='{{datedebcontrat}}' >
+          </div>
+        </div>
+        <div class="form-group">
+          <label style="font-weight : bold" for="datefininitial">Date Fin de Contrat Initial</label></br>
+          <div class="col-sm-12">
+            <input type="date" name ="datefininitial" id ="datefininitial" value ='{{datefininitial}}' >
+          </div>
+        </div>
+        <div class="form-group">
+          <label  style="font-weight : bold" for="datefinreelle">Date Fin de Contrat Effective</label>
+          <div class="col-sm-12">
+            <input type="date" name="datefinreelle" id ="datefinreelle" >
+          </div>
+        </div>
+        <div class="form-group">
+          <label style="font-weight : bold " for="motiffincontrat" >Motif de Fin de Contrat</label>
+          <div class="col-sm-12">
+            <input type="text" size =" 60px" name="motiffincontrat" id ="motiffincontrat" placeholder="Motif de Fin de Contrat">
+          </div>
+        </div>
+      <div class="form-group">
+        <label style="font-weight:bold" for="situfincontrat">Situation en Fin de Contrat</label>
+        <div class="col-sm-12">
+          <input type="int" size ="60px" name ="situfincontrat" id="situfincontrat" placeholder="Situation en Fin de Contrat" >
+        </div>
+      </div>
+      <div class="form-group">
+        <label style="font-weight:bold" for="contratpendantperiode">Contrat Pendant la Période</label>
+        <div class="col-sm-10">
+              <input type="text" size ="30" name ="contratpendantperiode" id="contratpendantperiode" placeholder="Contrat Pendant la Période">
+        </div>
+      </div>
+
+
+</div><!--form-saisise-->
+
+<div class="form-saisie" >
+
+    <div class="col-sm-10">
+    </br>
+    </div>
+    <div class="form-group">
+      <label  style="font-weight:bold" for ="niveauetude">Niveau d'études</label>
+      <div class="col-sm-10">
+          {% for niveau in niveaux %}
+                {% if (etude == niveau.id) %}
+                    <input type="radio"  name = "niveauetude" id="niveauetude" value ='{{niveau.id}}' checked> {{niveau.niveau}}</input></br>
+                {% else %}
+                    <input type="radio"  name = "niveauetude" id="niveauetude" value ='{{niveau.id}}' > {{niveau.niveau}}</input></br>
+                {% endif %}
+
+          {% endfor %}
+      </div>
+
+    </div>
+    <div class="form-group ">
+      <label style="font-weight : bold " for="cartebtp">Carte BTP</label>
+      <div class="col-sm-12">
+      {% if btp == "OUI" %}
+        <input type="radio"  name = "cartebtp" id="cartebtp" value ="O" checked> OUI</input>
+        <input type="radio"  name = "cartebtp" id="cartebtp" value ="N" > NON</input></br>
+      {% elseif btp == "NON" %}
+        <input type="radio"  name = "cartebtp" id="cartebtp" value ="O" > OUI</input>
+        <input type="radio"  name = "cartebtp" id="cartebtp" value ="N" checked> NON</input></br>
+      {% else %}
+        <input type="radio"  name = "cartebtp" id="cartebtp" value ="O" > OUI</input>
+        <input type="radio"  name = "cartebtp" id="cartebtp" value ="N" > NON</input></br>
+      {% endif %}
+      </div>
+    </div>
+
+    <div class="form-group ">
+      <label style="font-weight : bold " for="datemutuelle">Validité mutuelle</label>
+      <div class="col-sm-12">
+        <input type="date" name="datemutuelle" id ="datemutuelle" value ='{{datemutuelle}}'>
+      </div>
+    </div>
+
+
+</br></br></br></br></br>
+  &nbsp <button class="btn btn btn-primary" type="submit" value="Envoyer">Valider</button>
+  &nbsp<button  class="btn btn btn-secondary" type="reset" value="annuler" >Annuler</button><br>
+
+</div><!--form-saisise-->
+
+</div>
+                   <!--<button  type="submit" value="Envoyer">Valider</button>
+                   <button  type="reset" value="annuler" >Annuler</button><br>-->
+
+
+   <!-- /wrapper -->
+ <!--</section>-->
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+           // function myFunction() {
+           //   document.getElementById("newtitre").innerHTML = "Hello World";
+           //   return
+           // }
+        //}
+
+
+  </script>
+
+{% endblock %}

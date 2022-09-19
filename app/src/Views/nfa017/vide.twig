@@ -1,0 +1,13 @@
+{% extends "maitre.twig" %}
+
+{% block content %}
+<h1 id="vehicules">{{titre}}</h1>
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  alert("Page vide...");
+</script>
+{% endblock %}

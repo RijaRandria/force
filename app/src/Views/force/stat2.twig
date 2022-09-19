@@ -1,0 +1,511 @@
+{% extends "maitre.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<section>
+</div>
+<div id="login-page">
+
+    <h2 class="text-center">{{titre}}</h2>
+
+            <h4 style ="text-align : center">Ressources</h4>
+            </br>
+              <div id ="affichage">
+              </br></br>
+              {% set lieutrav = " " %}
+              {% for lieu in lieux %}
+
+                  {% set lieutrav = lieu.lieu %}
+                  <div class="col-12 form-stat">
+                  <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+                    {% for ressource in ressources %}
+                        {% set count = 0  %}
+                        {% set pcount = 0 %}
+                        {% for salarie in salaries %}
+                              {% if salarie.ressources == ressource.id and salarie.id_lieu_travail == lieu.idlieu %}
+                                    {% set count = count + 1 %}
+                              {% endif %}
+                        {% endfor %}
+                        <table class="table table-striped ">
+                              <tr>
+                                <td>{{ressource.ressources}}</td>
+                                <td>{{count}}</td>
+                              </tr>
+                        </table>
+                    {% endfor %}
+                  </div>
+              {% endfor %}
+              </div>
+              </br>
+
+              <h4 style ="text-align : center">Parité</h4>
+            </br>
+              <div id ="affichage">
+              </br></br>
+              {% set lieutrav = " " %}
+              {% for lieu in lieux %}
+                  {% set lieutrav = lieu.lieu %}
+                  <div class="col-12 form-stat">
+                  <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+                        {% set count = 0  %}
+                        {% set pcount = 0 %}
+                        {% for salarie in salaries %}
+                              {% if salarie.genre =="Mme" and salarie.id_lieu_travail == lieu.idlieu %}
+                                    {% set count = count + 1 %}
+                              {% elseif salarie.genre =="Mr" and salarie.id_lieu_travail == lieu.idlieu %}
+                                    {% set pcount = pcount + 1 %}
+                              {% endif %}
+                        {% endfor %}
+                        <table class="table table-striped ">
+                              <tr>
+                                <td>Femme</td>
+                                <td>{{count}}</td></br>
+                                <td>Homme</td>
+                                <td>{{pcount}}</td></br>
+                              </tr>
+                        </table>
+                  </div>
+              {% endfor %}
+              </div>
+              </br>
+
+            <h4 style ="text-align : center">Tranche d'âges</h4>
+          </br>
+            <div id ="affichage">
+            {% set lieutrav = " " %}
+            {% for lieu in lieux %}
+
+                {% set lieutrav = lieu.lieu %}
+                <div class="col-12 form-stat">
+                <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+                {% for trancheage in trancheages %}
+                    {% set niv = 0  %}
+                    {% set pcount = 0 %}
+                    {% for salarie in salaries %}
+                          {% if salarie.trancheage == trancheage.idage and salarie.id_lieu_travail == lieu.idlieu %}
+                                {% set niv = niv + 1 %}
+                          {% endif %}
+                          {% set pcount = (count * 100) / tout %}
+                    {% endfor %}
+                    <table class="table table-striped ">
+                          <tr>
+                            <td>{{trancheage.tranche}}</td>
+                            <td>{{niv}}</td>
+                          </tr>
+                    </table>
+
+                {% endfor %}
+                </div>
+
+            {% endfor %}
+            </div>
+            </br>
+
+            <h4 style ="text-align : center">Situation familiale </h4>
+          </br>
+            <div id ="affichage">
+            </br></br>
+            {% set lieutrav = " " %}
+            {% for lieu in lieux %}
+
+                {% set lieutrav = lieu.lieu %}
+                <div class="col-12 form-stat">
+                <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+                  {% for situfamiliale in situfamiliales %}
+                      {% set count = 0  %}
+                      {% set pcount = 0 %}
+                      {% for salarie in salaries %}
+                            {% if salarie.situfamiliale == situfamiliale.id and salarie.id_lieu_travail == lieu.idlieu %}
+                                  {% set count = count + 1 %}
+                            {% endif %}
+                      {% endfor %}
+                      <table class="table table-striped ">
+                            <tr>
+                              <td>{{situfamiliale.situation}}</td>
+                              <td>{{count}}</td>
+                            </tr>
+                      </table>
+                  {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+            </br>
+
+            <h4 style ="text-align : center">Niveaux d'études</h4>
+          </br>
+            <div id ="affichage">
+            {% set lieutrav = " " %}
+            {% for lieu in lieux %}
+            {% set lieutrav = lieu.lieu %}
+            <div class="col-12 form-stat">
+            <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+            {% for niveau in niveaux %}
+                {% set niv = 0  %}
+                {% set pcount = 0 %}
+                {% for salarie in salaries %}
+                      {% if salarie.niveauetude == niveau.id and salarie.id_lieu_travail == lieu.idlieu %}
+                            {% set niv = niv + 1 %}
+                      {% endif %}
+                      {% set pcount = (count * 100) / tout %}
+                {% endfor %}
+                <table class="table table-striped ">
+                      <tr>
+                        <td>{{niveau.niveau}}</td>
+                        <td>{{niv}}</td>
+                      </tr>
+                </table>
+
+            {% endfor %}
+            </div>
+          {% endfor %}
+
+          </div>
+        </br>
+            <h4 style ="text-align : center">Moyens de Locomotion</h4>
+              </br>
+              <div id ="affichage">
+              {% set lieutrav = " " %}
+              {% for lieu in lieux %}
+                  {% set lieutrav = lieu.lieu %}
+                  <div class="col-12 form-stat">
+                  <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+                  {% for locomotion in locomotions %}
+
+                      {% set niv = 0  %}
+                      {% set pcount = 0 %}
+                      {% for locomotionsalarie in locomotionsalaries %}
+                            {% if locomotionsalarie.idlocomotion == locomotion.id and locomotionsalarie.idtravail == lieu.idlieu and locomotionsalarie.idsal > 0 %}
+                                  {% set niv = niv + 1 %}
+                            {% endif %}
+
+                      {% endfor %}
+                      <table class="table table-striped ">
+                            <tr>
+                              <td>{{locomotion.locomotion}}</td>
+                              <td>{{niv}}</td>
+                            </tr>
+                      </table>
+
+                  {% endfor %}
+                  </div>
+              {% endfor %}
+
+                </div>
+                </br>
+
+            <h4 style ="text-align : center">Données mobilité</h4>
+          </br>
+                <div id ="affichage">
+                {% set lieutrav = " " %}
+                {% for lieu in lieux %}
+                      {% set lieutrav = lieu.lieu %}
+                      <div class="col-12 form-stat">
+                      <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+                      {% for permi in permis %}
+
+                          {% set niv = 0  %}
+                          {% set pcount = 0 %}
+                          {% for permissalarie in permissalaries %}
+                                {% if permissalarie.idperm == permi.idpermis and permissalarie.idtravail == lieu.idlieu and permissalarie.idsal > 0 %}
+                                      {% set niv = niv + 1 %}
+                                {% endif %}
+
+                          {% endfor %}
+                          <table class="table table-striped">
+                                <tr>
+                                  <td>{{permi.permis}}</td>
+                                  <td>{{niv}}</td>
+                                </tr>
+                          </table>
+
+                      {% endfor %}
+                  </div>
+                {% endfor %}
+              </div>
+              </br>
+              <h4 style ="text-align : center">Durée de chômage</h4>
+            </br>
+                  <div id ="affichage">
+                  {% set lieutrav = " " %}
+                  {% for lieu in lieux %}
+                        {% set lieutrav = lieu.lieu %}
+                        <div class="col-12 form-stat">
+                        <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+                        {% for chomage in chomages %}
+                        {% set niv = 0  %}
+                        {% set pcount = 0 %}
+                        {% for salarie in salaries %}
+                              {% if salarie.dureechomage == chomage.id and salarie.id_lieu_travail == lieu.idlieu %}
+                                    {% set niv = niv + 1 %}
+                              {% endif %}
+                              {% set pcount = (count * 100) / tout %}
+                        {% endfor %}
+                        <table class="table table-striped ">
+                          <thead class="thead-light ">
+                              <tr >
+                                <td>{{chomage.duree}}</td>
+                                <td>{{niv}}</td>
+                              </tr>
+                          </thead>
+                        </table>
+
+                    {% endfor %}
+                    </div>
+                  {% endfor %}
+                </div>
+                </br>
+            <h4 style ="text-align : center">Objectifs</h4>
+              </br>
+              <div id ="affichage">
+              {% set lieutrav = " " %}
+              {% for lieu in lieux %}
+                  {% set lieutrav = lieu.lieu %}
+                  <div class="col-12 form-stat">
+                  <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+                  {% for objectif in objectifs %}
+
+                      {% set niv = 0  %}
+                      {% set pcount = 0 %}
+                      {% for objectifsal in objectifsalarie %}
+                            {% if objectifsal.idobj == objectif.idobjectif and objectifsal.idtravail == lieu.idlieu and objectifsal.idsalarie > 0 %}
+                                  {% set niv = niv + 1 %}
+                            {% endif %}
+
+                      {% endfor %}
+                      <table class="table table-striped ">
+                            <tr>
+                              <td>{{objectif.objectif}}</td>
+                              <td>{{niv}}</td>
+                            </tr>
+                      </table>
+
+                  {% endfor %}
+                  </div>
+              {% endfor %}
+
+                </div>
+                </br>
+
+            <h4 style ="text-align : center">Projets</h4>
+          </br>
+                <div id ="affichage">
+                {% set lieutrav = " " %}
+                {% for lieu in lieux %}
+                      {% set lieutrav = lieu.lieu %}
+                      <div class="col-12 form-stat">
+                      <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+                       {% set niv = 0  %}
+                      {% for projet in projets %}
+
+                         
+                          {% set pcount = 0 %}
+                          {% for projetsal in projetsalarie %}
+                                {% if projet.idprojet == projetsal.idproj and projetsal.idtravail == lieu.idlieu and projetsal.idsalarie > 0 %}
+                                      {% set niv = niv + 1 %}
+                                {% endif %}
+
+                          {% endfor %}
+                          <table class="table table-striped">
+                                <tr>
+                                  <td>{{projet.projet}}</td>
+                                  <td>{{niv}}</td>
+                                </tr>
+                          </table>
+                        {% set niv = 0  %}
+                      {% endfor %}
+                  </div>
+                {% endfor %}
+              </div>
+              </br>
+            <h4 style ="text-align : center">Démarches </h4>
+          </br>
+                <div id ="affichage">
+                {% set lieutrav = " " %}
+                {% for lieu in lieux %}
+                      {% set lieutrav = lieu.lieu %}
+                      <div class="col-12 form-stat">
+                      <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+                      {% for demarche in demarches %}
+                          {% set count = 0 %}    
+                          {% set niv = 0  %}
+                         
+                          {% for typedemarche in typedemarches %}
+                                    {% set pcount = 0 %}
+                                    {% for demarchesal in demarchesalarie %}
+                                          {% if demarche.iddemarche == demarchesal.iddemarche and  lieu.idlieu == demarchesal.idlieu %}
+                                                {% set niv = niv + 1 %}
+                                          {% endif %}
+                                          {% if demarchesal.idtypedemarsal == typedemarche.idtypedemarche and typedemarche.iddemar == demarche.iddemarche and lieu.idlieu == demarchesal.idlieu %}
+                                                {% set pcount = pcount + 1 %}
+                                          {% endif %}
+
+
+                                    {% endfor %}
+                                          {% if count == 0 %}
+                                                <table>
+                                                            <td style ="text-decoration: underline "><b>{{demarche.demarche}}</b> : </td>
+                                                            <td><b>{{niv}}</b></td>
+                                                 </table>
+                                                {% set count = 1 %}
+                                          {% endif %}      
+                                         
+                                          {% if typedemarche.iddemar == demarche.iddemarche %}
+                                                 <table class="table table-striped ">
+                                                      <tr>
+                                                      <td>{{typedemarche.typedemarche}} :  </b></td>
+                                                      <td> {{pcount}}</td>
+                                                      </tr>
+                                                 </table>     
+                                          {% endif %}            
+                                          
+                          {% endfor %}
+
+                     
+
+                      {% endfor %}
+                  </div>
+                {% endfor %}
+              </div>
+              </br>
+
+           <h4 style ="text-align : center">Motifs Sorties </h4>
+          </br>
+            <div id ="affichage">
+            </br></br>
+            {% set lieutrav = " " %}
+            {% for lieu in lieux %}
+
+                {% set lieutrav = lieu.lieu %}
+                <div class="col-12 form-stat">
+                <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+                  {% for motifsortie in motifsorties %}
+                      {% set count = 0  %}
+                      {% set pcount = 0 %}
+                      {% for salarie in salaries %}
+                            {% if salarie.motifsortie == motifsortie.idmotif and salarie.id_lieu_travail == lieu.idlieu %}
+                                  {% set count = count + 1 %}
+                            {% endif %}
+                      {% endfor %}
+                      <table class="table table-striped ">
+                            <tr>
+                              <td>{{motifsortie.motifsortie}}</td>
+                              <td>{{count}}</td>
+                            </tr>
+                      </table>
+                  {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+            </br>
+           <h4 style ="text-align : center">Situation à la Sortie </h4>
+          </br>
+            <div id ="affichage">
+            </br></br>
+            {% set lieutrav = " " %}
+            {% for lieu in lieux %}
+
+                {% set lieutrav = lieu.lieu %}
+                <div class="col-12 form-stat">
+                <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+              
+                  {% for typesortie in typesorties %}
+                      {% set count = 0  %}
+                      {% set pcount = 0 %}
+                      {% for salarie in salaries %}
+                            {% if salarie.typesortie == typesortie.idtypesortie and salarie.id_lieu_travail == lieu.idlieu %}
+                                  {% set count = count + 1 %}
+                            {% endif %}
+                      {% endfor %}
+                      <table class="table table-striped ">
+                            <tr>
+                              <td>{{typesortie.typesortie}}</td>
+                              <td>{{count}}</td>
+                            </tr>
+                      </table>
+                  {% endfor %}
+               
+                </div>
+            {% endfor %}
+            </div>
+            </br>
+          <h4 style ="text-align : center">Sortie </h4>
+          </br>
+            <div id ="affichage">
+            </br></br>
+            {% set lieutrav = " " %}
+            {% for lieu in lieux %}
+
+                {% set lieutrav = lieu.lieu %}
+                <div class="col-12 form-stat">
+                <span style ="text-decoration: underline "><b>{{lieutrav}}</b></span></br></br>
+              
+                  {% for sortie in sorties %}
+                      {% set count = 0  %}
+                      {% set pcount = 0 %}
+                      {% for salarie in salaries %}
+                            {% if salarie.idsortie == sortie.idsortie and salarie.id_lieu_travail == lieu.idlieu %}
+                                  {% set count = count + 1 %}
+                                 
+                            {% endif %}
+                      {% endfor %}
+                       <table class="table table-striped">
+                            <tr>
+                              <td>{{sortie.sortie}}</td>
+                              <td>{{count}}</td>
+                            </tr>
+                      </table>
+                    
+                  
+                  {% endfor %}
+                   
+                  
+                
+                </div>
+            {% endfor %}
+            </div>
+            </br>
+
+
+
+
+
+
+
+ 
+
+</div>
+</section>
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

@@ -1,0 +1,338 @@
+{% extends "maitre.twig" %}
+
+{% block content %}
+<style type="text/css">
+      .fond input[type="radio"] {
+        display: none;
+      }
+      .fond input[type="checkbox"] {
+        display: none;
+      }
+     
+
+      .toolbar label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+       .toolbar1 label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+
+      .toolbar input[type="radio"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+      .toolbar input[type="checkbox"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+
+      .toolbar1 input[type="radio"]:checked+label {
+        background-color: red;
+        color : white;
+      }
+     .toolbar1 input[type="checkbox"]:checked+label {
+        background-color: red;
+        color : white;
+      }  
+    
+   
+</style>
+
+  {% block fiche %}
+      {% include './force/basefiche.twig' %} 
+  {% endblock %}
+  </div>
+  </br>
+  <div id="experience" style ="display : flex;width : 100%" >
+       <div style ="width :50%">
+            <form id = "entretien" method="post" action="{{ path_for('insertentretien') }}">
+                             <label>1er Entretien et Diagnostic </label>
+                                      <span><b> {{nom}} {{prenom}}</b> <label>  Le : </label><input  type="date" name ="vdate" ></input>
+                                      <a href="{{path_for('entretiensalarie',{'idsalarie'         : idsalarie})}}"class="btn btn-success">Suivi</a>
+                                      <a href="{{path_for('demarchesalarie',{'idsalarie'         : idsalarie})}}"class="btn btn-primary">Démarche</a>
+                                      </br> 
+                                      Chantier : {{lieutravail}}</span>
+                                      
+                                      &nbsp</br>
+                                      <div class="col-md-12 detailed">
+                                         <h4>Expériences Professionnelles</h4>
+                                         <div class="input-group mb-5">
+                                                <input type="hidden" name="idsalarie" value={{idsalarie}}>
+                                                <textarea rows ="6" cols="70" class="form-control" name="experience" id ="experience" placeholder ="Saisie Expérience"></textarea>
+                                                {{csrf()}}
+                                          </div>
+                                      </div>
+                                     
+                                      <div class="col-md-12 detailed">
+                                                        <h4>Diagnostics</h4>
+                                                        <input type="hidden" name ="idsalarie" value ={{idsalarie}}> </input>&nbsp
+                                                        <div class="input-group mb-3">
+                                                            <textarea rows ="6" cols="70" class="form-control" name="diagnostic" id ="diagnostic" placeholder ="Saisie Diagnostic"></textarea>
+
+                                                       </div>
+                                      </div>
+                                      <div class="col-md-12 detailed">
+                                                       <h4>Compétence</h4>
+                                                       <div class="input-group mb-3">
+                                                           <textarea rows ="6" cols="70" class="form-control" name="competence" id ="competence" placeholder ="Saisie compétence"></textarea>
+                                                           {{csrf()}}
+                                                       </div>
+                                      </div>
+
+            <button type="submit" class="btn btn-primary" style =" margin-left : 150px">Valider</button>&nbsp;&nbsp;
+            <a href="{{ path_for('salarie')}}" class="btn btn-secondary">Annuler</a>
+            </form>
+                   
+        </div>
+         <div style ="width :50%">
+           <div class="col-lg-12 detailed border rounded-3 border-secondary"> </br>
+            
+                {% for experience in experiences %}
+                  {% if experience.idsalarie != null %}
+                      {% set xdate = experience.vdate %}
+                       <a href="{{path_for('supprentretien',{'identretien' : experience.identretien,'idsala' : experience.idsalarie})  }}"><button type="button" class ="btn btn-outline-danger" title = " Suppression">Suppr</button></a> <span>  
+                       <a href="{{path_for('modifentretien',{'identretien' : experience.identretien,'idsala' : experience.idsalarie})  }}"><button type="button" class ="btn btn-outline-dark" title = " Modif">Modif</button></a> <span>  <u>1er entretien du</u> <b>{{xdate|date("d/m/Y", "Europe/Paris")}}</b></span></br>                     
+                    
+                   {% endif %}
+                    {% if experience.experience != null %} 
+                       <b><U>Expériences</b></u></br>
+                      <span>
+                         {{experience.experience}}
+                      </span>
+                    </br></br>
+                  {% endif %}
+                    
+                      {% if experience.diagnostic != null %}
+                            <b><U> Diagnostic</b></u></br>   
+                          <span>
+                            {{experience.diagnostic}}
+                          </span></br></br>
+                      {% endif %}
+                      {% if experience.competence != null %}
+                         <b><U>Compétences</b></u></br>
+                                     <span>
+                             {{experience.competence}}
+                          </span></br></br>
+                      {% endif %}
+                {% endfor %}
+
+             
+            </div>
+         </div>
+
+   
+
+  </div>
+  <div id="experience" style ="display : flex;width : 100%" >
+     <div style ="width :60%">
+         <div class="col-md-12 detailed">                                
+                                    </br>
+                                    <form id = "entretien" method="post"  action="{{ path_for('projetsalarie') }}">
+                                      <div class="col-md-8 border border-primary">
+                                          <h4>Projets  {{nom}} {{prenom}}</h4>
+
+                                          <input type="hidden" name ="idsalarie" value ="{{idsalarie}}"> </input>&nbsp
+                                          <input type="hidden" name ="idlieu" value ={{id_lieu_travail}}> </input>&nbsp
+
+                                          {% for projet in projets %}
+                                                    
+                                                    <div class="col-lg-12">
+                                                      <div class ="fond toolbar label" >
+                                                          <input type="checkbox" name ="checkprojets[]" id='{{projet.projet}}' value ="{{projet.idprojet}}" >
+                                                          <label class =" d-grid gap-3 col-12 mx-auto btn btn-light" for='{{projet.projet}}'>{{projet.projet}}</label></br>
+                                                      </div>    
+                                                    </div>
+
+                                              
+                                          {% endfor %}
+                                        </br>
+                                        <textarea name="obsProjet" row ="5" cols = "65" placeholder ="Observations sur le Projet"></textarea>
+                                        </br>
+                                        <button type="submit" class="btn btn-primary" style =" margin-left : 150px">Valider</button>&nbsp;&nbsp;
+                                        <a href="{{ path_for('salarie')}}" class="btn btn-secondary">Annuler</a>
+                                      </div>
+                                    </form>
+                                   
+         </div>
+      </div>
+
+      <div style ="width :60%">                       
+        <div class="col-md-12 detailed"> 
+  
+                                  
+           
+          
+                {% for projsal in projsals %}
+
+                  {% if projsal.projet != null %}
+                      <div class="col-md-12 detailed border rounded-3 border-secondary">
+                        <u><b>Projets</u></b></br>
+
+                        
+                        <a href="{{path_for('supprprojet',{'idprojsal' : projsal.idprojsal,'idsala' : idsalarie})  }}"><button type="button" class ="btn btn-outline-danger" title = " Suppression">Suppr</button></a>
+                        </br>
+                        <span >&nbspdate de saisie : {{projsal.datesaisie|date("d/m/Y", "Europe/Paris")}} => {{projsal.projet}}</span></br>
+                      </div>
+                      </br>
+                  {% endif %}
+
+                {% endfor %}
+
+                                          
+         
+         </div>
+      </div> 
+  </div>
+  <div id="experience" style ="display : flex;width : 100%" >
+
+
+      <div style ="width :60%">                       
+        <div class="col-md-12 detailed "> 
+  
+                                    <form id = "entretien" method="post"  action="{{ path_for('objectifsalarie') }}">
+                                    </br>
+                                       <div class="col-md-8 border border-primary">
+                                          <h4>Objectifs {{nom}} {{prenom}}</h4>
+
+                                          <input type="hidden" name ="idsalarie" value ="{{idsalarie}}"> </input>&nbsp
+                                          <input type="hidden" name ="idlieu" value ={{id_lieu_travail}}> </input>&nbsp
+                                          {% for objectif in objectifs %}
+                                                    <div class="col-lg-12">
+                                                      <div class ="fond toolbar label" >
+                                                          <input type="checkbox" name ="checkobjectifs[]" id='{{objectif.objectif}}' value ="{{objectif.idobjectif}}" >
+                                                          <label class =" d-grid gap-3 col-12 mx-auto btn btn-light" for='{{objectif.objectif}}'>{{objectif.objectif}}</label></br>
+                                                      </div>    
+                                                    </div>
+                                                                                      
+
+                                          {% endfor %}
+                                       
+                                          </br>
+                                          <textarea name="obsobj" row ="5" cols = "65" placeholder ="Observations sur l'Objectif"></textarea>
+                                          </br>       
+                                        <button type="submit" class="btn btn-primary" style =" margin-left : 150px">Valider</button>&nbsp;&nbsp;
+                                        <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                                        </div>
+                                      </form>
+        </div>                           
+        
+      </div> 
+      <div style ="width :60%">                       
+        <div class="col-md-12 detailed"> 
+               </div>
+                                          
+                  {% for objsal in objsals %}
+                    <div class="col-md-12 detailed  border rounded-3 border-secondary">
+                     <input type="hidden" name ="idsal" value ="{{idsalarie}}"> </input>&nbsp
+                     {{idsalarie}}
+                      <u><b>Objectifs</u></b></br> 
+                      <a href="{{path_for('supprobjectif',{'idobjsal' : objsal.idobjsal,'idsala' : idsalarie})  }}"><button type="button" class ="btn btn-outline-danger" title = " Suppression">Suppr</button></a>
+                      </br>
+                      <span >&nbspDate de saisie : {{objsal.datesaisie|date("d/m/Y", "Europe/Paris")}} => {{objsal.objectif}}</span></br>
+                    </div>  
+                  {% endfor %}
+                  </br>
+                                    
+                                     
+        </div>
+      </div> 
+
+
+   </div>
+  <div id="experience" style ="display : flex;width : 100%" >    
+
+      <div style ="width :60%">                       
+        <div class="col-md-12 detailed"> 
+                                   
+                              
+                                 
+
+                                    <form id = "entretien" method="post" class = "form-login" action="{{ path_for('freinsalarie') }}">
+                                      <div class="col-md-12 detailed">
+                                          <h4>Freins à l'entrée dans l'action</h4>
+
+                                          <input type="hidden" name ="idsalarie" value ={{idsalarie}}> </input>&nbsp
+                                          <input type="hidden" name ="idlieu" value ={{id_lieu_travail}}> </input>&nbsp
+                                          {% for site in sites %}
+
+                                              
+                                                {% if site.coche == idsalarie %}
+                                                    
+                                                    <div class="col-lg-12">
+                                                      <div class ="fond toolbar1 label" >
+                                                          <input type="checkbox" name ="check[]" id='{{site.libelle}}' value ="{{site.idfrein}}" checked ></input>
+                                                          <label class =" d-grid gap-3 col-12 mx-auto btn btn-light" for='{{site.libelle}}'>{{site.libelle}}</label></br>
+                                                      </div>  
+                                                    </div>
+
+                                                {% else %}
+                                                  <div class="col-lg-12">
+                                                      <div class ="fond toolbar1 label" >
+                                                          <input type="checkbox" name ="check[]" id='{{site.libelle}}' value ="{{site.idfrein}}"></input>
+                                                          <label class =" d-grid gap-3 col-12 mx-auto btn btn-light" for='{{site.libelle}}'>{{site.libelle}}</label></br>
+                                                      </div>  
+                                                    </div>
+
+                                                {% endif %}
+
+                                          {% endfor %}
+                                        </br>
+                                        <button type="submit" class="btn btn-primary" style =" margin-left : 150px">Valider</button>&nbsp;&nbsp;
+                                        <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                                      </form>
+                                  </div>
+         </div>
+      </div>   
+
+              
+    
+</div>
+{% endblock %}
+
+
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

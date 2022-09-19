@@ -1,0 +1,31 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<div class="container text-center">
+  <h3 ><i class="fa fa-user"></i>&nbsp;{{titre}}&nbsp;
+    <a class="btn btn-outline-success btn-sm" href="{{path_for('formajoutuser')}}"><i class="fa fa-user-plus"></i>&nbsp;Nouvel usager</a>
+  </h3>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Usagers</th>
+      <th scope="col">Type Usager</th>
+      <th scope="col">Dernière Connexion</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for usager in usagers %}
+      <tr>
+        <td> {{usager.name}}</td>
+        <td>  {{usager.typeuser}}
+        <td>  {{usager.connected}}
+      </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+{% endblock %}
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+{% endblock %}

@@ -1,0 +1,257 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<h5 id="fichesalarie" class="fa fa-2x fa-angle-right"style ="color :#007BFF">{{titre}}</h5>
+<section id="main-content" style ="display : flex; background : #0092C7; box-shadow: 15px 15px 8px 1px #DCDCDC">
+  <!--  <section class="wrapper site-min-height">-->
+      <div class="col-md-4 profile-text">
+        <div class="profile-pic">
+          <p><img src="img/ui-sam.jpg" class="img-circle"></p>
+        </div>
+        <div class="form-group ">
+            <label style="font-weight : bold " >Civilité : </label>
+            <div class="col-lg-24">
+                <span>{{civilite}}</span>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label style="font-weight : bold " >Nom : </label>
+            <div class="col-lg-24">
+                <span>{{nom}}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label style="font-weight : bold " >Prénom :</label>
+            <div class="col-sm-18">
+                <span>{{prenom}}</span >
+            </div>
+        </div>
+        <div class="form-group">
+            <label style="font-weight:bold" >Date et lieu de naissance :</label>
+            <div class="col-sm-18">
+                <span>{{datenaissance|date("d/m/Y", "Europe/Paris")}} -</span >
+                <span>{{lieunaissance}}</span >
+                <span>({{dptnaissance}})</span >
+            </div>
+        </div>
+        <div class="form-group">
+            <label style="font-weight:bold" >Situation familiale :</label>
+            <div class="col-sm-18">
+                <span>{{situfamiliale}}</span >
+            </div>
+        </div>
+        <div class="form-group">
+            <label  style="font-weight:bold">Enfants à charge :</label>
+            <div class="col-sm-18">
+                    {% if '{{enfants}}' != null  %}
+                      <span>{{enfants}}</span >
+                    {% endif %}
+            </div>
+        </div>
+        <div class="form-group">
+            <label  style="font-weight:bold">Nationalité :</label>
+            <div class="col-sm-18">
+                      <span>{{nationalite}}</span >
+            </div>
+        </div>
+        <div class="form-group">
+            <label  style="font-weight:bold" >Date AMETRA :</label>
+            <div class="col-lg-18">
+                <span >{{dateametra|date("d/m/Y", "Europe/Paris")}}</span>
+            </div>
+        </div >
+      </div>
+      <div class="col-md-4 profile-text">
+                    <div class="form-group ">
+                        <label style="font-weight : bold ">CHANTIER :</label>
+                        <div class="col-sm-18">
+                        <span>{{lieutravail}}</span>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight : bold " >Date du contrat :</label>
+                        <div class="col-lg-18">
+                            <span>
+                              <tr >
+                                  <td >Du {{datedebcontrat|date("d/m/Y", "Europe/Paris")}}</td>
+                                  <td >Au {{datefininitial|date("d/m/Y", "Europe/Paris") }}</td></br>
+                              </tr>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label  style="font-weight:bold" >Renouvellement :</label>
+                        <div class="col-sm-18">
+                            {% set datefin = 0 %}
+                            {% for renew in renouvellement %}
+                              <span>
+                                <tr >
+                                  <td >Du {{ renew.newdebdate|date("d/m/Y", "Europe/Paris") }}</td>
+                                  <td >Au {{ renew.nouvelle_date|date("d/m/Y", "Europe/Paris") }}</td></br>
+                                </tr>
+                              </span>
+                              {% set datefin = renew.nouvelle_date %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight : bold" >Date Fin de Contrat :</label></br>
+                        <div class="col-sm-18">
+                          <span>{{datefin|date("d/m/Y", "Europe/Paris")}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label style="font-weight : bold " >RQTH :</label>
+                        <div class="col-sm-18">
+                            <span>{{rqth}}</span >
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label style="font-weight : bold " >QPV / ZRR :</label>
+                        <div class="col-sm-18">
+                            <span>{{qpv}}</span >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  style="font-weight:bold">Niveau d'études :</label>
+                        <div class="col-sm-18">
+                                  <span>{{niveauetude}}</span >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  style="font-weight:bold">Moyen de locomotion :</label>
+                        <div class="col-sm-18">
+                                  <span>{{locomotion}}</span >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  style="font-weight:bold">Permis:</label>
+                        <div class="col-sm-18">
+                                  <span>{{perm}}</span >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  style="font-weight:bold">Carte BTP:</label>
+                        <div class="col-sm-18">
+                                  <span>{{btp}}</span >
+                        </div>
+                    </div>
+
+
+                </div> <!---form-group-->
+            <!--</div>-->
+            <!--</div>
+          </div>-->
+    <!--</section>
+    <section class="wrapper site-min-height">-->
+      <div class="col-md-4 profile-text ">
+            <div class="form-group">
+                <label style="font-weight : bold" >Téléphone :</label>
+                <div class="col-sm-18">
+                    <span>{{telephone}}</span >
+                </div>
+            </div>
+            <div class="form-group">
+                <label style="font-weight : bold" >Adresse :</label></br>
+                <div class="col-sm-18">
+                    <span>{{adresse1}} - </span >
+                    <span>{{adresse2}}</span >
+                </div>
+            </div>
+              <div class="form-group">
+                  <label style="font-weight : bold" >Ville :</label>
+                  <div class="col-sm-18">
+                      <span>{{villeadresse}} - {{codepostaladresse}}</span >
+                  </div>
+              </div>
+              <!--<div class="form-group ">
+                  <label style="font-weight : bold " >Ville :</label>
+                  <div class="col-sm-18">
+                      <span>{{villeadresse}}</span >
+                  </div>
+              </div>-->
+
+                <div class="form-group">
+                    <label style="font-weight:bold" >Numéro Sécurité sociale :</label>
+                    <div class="col-sm-18">
+                        <span>{{securitesociale}}</span >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  style="font-weight:bold" >Numéro caf :</label>
+                    <div class="col-sm-18">
+                        <span>{{numcaf}}</span >
+                    </div>
+                </div >
+                <div class="form-group">
+                    <label  style="font-weight:bold" >Id. Pôle Emploi :</label>
+                    <div class="col-sm-18">
+                        <span>{{idpole}}</span >
+                    </div>
+                </div >
+                <div class="form-group">
+                    <label  style="font-weight:bold" >N° d'agrément Pôle Emploi :</label>
+                    <div class="col-sm-18">
+                        <span>{{numagrementpole}}</span >
+                    </div>
+                </div >
+                <div class="form-group">
+                    <label  style="font-weight:bold" >Personne à contacter en cas d'urgence :</label>
+                    <div class="col-sm-18">
+                        <span>{{contact}}</span >
+                    </div>
+                </div >
+                <div class="form-group" >
+                    <label  style="font-weight:bold" >Prescripteur :</label>
+                    <div class="col-sm-18">
+                        <span>{{prescripteur}}</span >
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label  style="font-weight:bold" >Ressources :</label>
+                    <div class="col-sm-18">
+                        <span>{{ressources}}</span >
+                    </div>
+                </div>
+
+      </div>
+
+      </section>
+
+
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

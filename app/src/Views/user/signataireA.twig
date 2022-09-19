@@ -1,0 +1,56 @@
+{% extends "maitre.twig" %}
+
+{% block title %}Identification{% endblock %}
+{% block content %}
+<link href="img/favicon.png" rel="icon">
+<link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+<!--<link href="../assets/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
+  <!--external css-->
+  <!--<link href="../js/font-awesome/css/font-awesome.css" rel="stylesheet" />-->
+  <!-- Custom styles for this template -->
+  <link href="../..assets/css/dashio/style.css" rel="stylesheet">
+  <link href="../../assets/css/dashio/style-responsive.css" rel="stylesheet">
+
+
+
+    <div class="container">
+  
+     
+      <form class="form-login" id="auth" role="form" method="POST" action="{{ path_for('avenant',{'idsalarie' : idsalarie}) }}">
+        <h2 class="form-login-heading">Signataire </h2>
+       <input type ="hidden" name ="newdebdate" value = {{newdebdate}}></input>
+       <input type ="hidden" name ="newfin" value = {{newfin}}></input>
+        {% for signataire in signataires %}
+         
+          <input type ="radio" name ="idsignataire" value = "{{signataire.idsignataire}}"></input>
+          <label>{{signataire.prenom}} {{signataire.nom}}</label>
+          </br>
+        {% endfor %}      
+          <div class="form-check text-center">
+              <button class="btn btn btn-secondary" href="index.html" type="submit"><i class="fa fa-lock"></i> VALIDER</button>
+              <a href="{{ path_for('home') }}" class="btn btn-secondary">Annuler</a>
+          </div>
+
+      </form>
+    </div>
+ 
+
+  {% block javascript %}
+  <script src="..assets/js/jquery/jquery.min.js"></script>
+  <script src="..assets/js/bootstrap/js/bootstrap.min.js"></script>
+  {% endblock %}
+  <!-- js placed at the end of the document so the pages load faster -->
+
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="..assets/js/jquery.backstretch.min.js"></script>
+  <script>
+    $.backstretch("img/login-bg.jpg", {
+      speed: 500
+    });
+  </script>
+
+
+{% endblock %}
+{% block scripts %}
+{% endblock %}

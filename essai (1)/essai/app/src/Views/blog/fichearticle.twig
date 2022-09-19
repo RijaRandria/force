@@ -1,0 +1,29 @@
+{% extends "maitre.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <br/>
+                <h2 class="text-center">{{titre}}</h2>
+                <form method="POST" action="{{ path_for('ajouterarticle') }}">
+                  <div class="form-group">
+                    <label for="title">Titre de l'article</label>
+                    <input type="text" class="form-control" name="title" placeholder="Titre de l'article">
+                    <input type="hidden" name="sousfamille" value="{{idsousfamille}}">
+                  </div>
+                  <div class="form-group">
+                    <label for="content">Contenu</label>
+                    <textarea class="form-control" name="content" rows="3" placeholder="Votre article"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-info">Valider</button>&nbsp;&nbsp;
+                  <a href="{{ path_for('article', {'id': idsousfamille}) }}" class="btn btn-secondary">Annuler</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

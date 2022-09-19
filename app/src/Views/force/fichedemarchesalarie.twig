@@ -1,0 +1,156 @@
+{% extends "maitre.twig" %}
+{% block content %}
+  {% block fiche %}
+    </div>
+      {% include './force/basefiche.twig' %} 
+  {% endblock %}
+    </div>
+  </br>
+  <div id="experience" style ="display : flex;width : 100%" >
+    <div class="col-lg-12 mt">
+        <div class="panel-body">
+            <section>
+                <br/>
+
+                <form id = "entretien" method="post"action="{{ path_for('insertdemarchesalarie') }}">
+
+        <h4>Liste des Démarches</h4>
+                    </br>
+                    <!--<div class="panel-heading">-->
+                    <div class="row content-panel">
+                      <input type="hidden" name="idsalarie" value ={{idsalarie}}></input>
+                      <input type="hidden" name="idlieu" value ={{id_lieu_travail}}></input>
+                      <!--<div class="panel-heading">-->
+
+                            {% for demarche in demarches %}
+                              <div style ="margin-left : 10px">
+                                <span class="btn btn-primary" >&nbsp {{demarche.demarche}}</span>&nbsp&nbsp</br>
+                                
+                                {% for typedemarche in typedemarches %}
+                                    {% set vardetail = 0 %}
+                                    {% if demarche.iddemarche == typedemarche.iddemar %}
+                                        {% for detailtypedemarche in detailtypedemarches %}
+
+                                              {% if detailtypedemarche.idtypedemar == typedemarche. idtypedemarche %}
+                                                    <span style ="color : #4169E1">  {{typedemarche.typedemarche}} </br></span>
+                                                    &nbsp&nbsp&nbsp<input type="checkbox" name ="checkdetail[]" value ="{{detailtypedemarche.iddetailtype}}" >  &nbsp{{detailtypedemarche.detailtypedemarche}} &nbsp&nbsp</br></label>
+                                              {% else %}    
+                                                  {% if vardetail == 0 %}                                               
+                                                    <input type="checkbox" name ="checktype[]" value="{{typedemarche.idtypedemarche}}"style ="color : #4169E1">  &nbsp{{typedemarche.typedemarche}} &nbsp&nbsp</br></input>
+                                                    {% set vardetail = vardetail + 1 %}
+                                                  {% endif %}
+                                              {% endif %}          
+                                        {% endfor %}                 
+                                    {% endif %}
+                                {% endfor %}
+                              </div>
+                            {% endfor %}
+
+
+                    </div>
+                    <button type="submit" class="btn btn-primary" style =" margin-left : 150px">Valider</button>
+                    <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                    <a href="{{path_for('suivisalarie',{'idsalarie'         : idsalarie})}}"class="btn btn-info">1er entretien</a>
+                     <a href="{{path_for('entretiensalarie',{'idsalarie'         : idsalarie})}}"class="btn btn-success">Suivi</a>
+            </form>
+            
+
+ 
+
+            </section>    
+          </div>
+    </div>
+ </div>
+
+  </br>
+  <div id="experience" style ="display : flex;width : 100%" >
+    <div class="col-lg-12 mt">
+        <div class="panel-body">
+            <section>
+                <br/>
+
+                    <h4>{{nom}} {{prenom}} Démarches effectuées</h4>
+                    </br>                                                                           
+                            {% for demarchee in demarchees %}
+                                {% set vdemar = "" %}
+                                {% set vtypedemar = "" %}
+                                {% set vdetaildemar = "" %}
+                                {% set vdate = demarchee.datesaisie %}
+                                <a href="{{path_for('supprdemarchesal',{'iddemsal' : demarchee.iddemsal,'idsala' : idsalarie})  }}"><button type="button" class ="btn btn-outline-danger" title = " Suppression">Suppr</button></a>
+                                {% for Ademarche in Ademarches %}
+                                    {% if demarchee.iddemarche == Ademarche.iddemarche %}
+                                        {% set vdemar = Ademarche.demarche %}
+                                       
+                                    {% endif %}
+                                {% endfor %}
+                                {% for Atypedemarche in Atypedemarches %}
+                                    {% if demarchee.idtypedemarsal == Atypedemarche.idtypedemarche %}
+                                        {% set vtypedemar = Atypedemarche.typedemarche %}
+                                       
+                                    {% endif %}
+                                {% endfor %}
+                               
+                                {% if demarchee.iddetailtypesal > 0 %}
+                                    {% for Adetailtype in Adetailtypes %}
+                                        {% if demarchee.iddetailtypesal == Adetailtype.iddetailtype %}
+                                              {% set vdetaildemar = Adetailtype.detailtypedemarche %}
+                                              <span> {{vdate|date("d/m/Y", "Europe/Paris")}} : {{vdemar}} => {{vtypedemar}} => {{vdetaildemar}}</span></br>  
+                                         
+                                        {% endif %}
+
+                                    {% endfor %}
+                                {% else %}
+                                              <span> {{vdate|date("d/m/Y", "Europe/Paris")}} : {{vdemar}} => {{vtypedemar}}  </span></br>
+                                {% endif %}
+                          {% endfor %}
+                      
+  </br>
+  </br>
+                         
+                             
+                                  
+                      
+                      
+      
+              </section>    
+          </div>
+    </div>
+ </div>
+
+
+
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

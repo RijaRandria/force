@@ -1,0 +1,22 @@
+TYPE_BASE = 'mysql'
+
+# Database development
+HOST_DEV = 'localhost'
+USER_DEV = 'force'
+PW_DEV = '&Khirdo45'
+PORT_DEV = '3306'
+BASE_DEV = 'force'
+
+# Database production
+HOST_PROD = 'localhost'
+USER_PROD = 'force'
+PW_PROD = '&Khirdo45'
+PORT_PROD = '3306'
+BASE_PROD = 'force'
+
+# Environment mode
+# ("dev" or "prod")
+ENV = "dev"
+
+# Cache twig
+CACHE = false

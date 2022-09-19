@@ -1,0 +1,38 @@
+{% extends "maitre.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<section class="text-center">
+  <h1>Carrousel des photos</h1>
+  <div id="demo" class="carousel slide" data-ride="carousel">
+
+    <ul class="carousel-indicators">
+      {% set indice = 0 %}
+      {% for image in images %}
+      <li data-target="#demo" data-slide-to="{{indice}}" {% if indice==0 %}class="active"{% endif %}></li>
+      {% set indice = indice + 1 %}
+      {% endfor %}
+    </ul>
+
+    <div class="carousel-inner">
+      {% set indice = 0 %}
+      {% for image in images %}
+      <div class="carousel-item{% if indice==0 %} active{% endif %}">
+        <img src="{{image.url}}" alt="{{image.caption}}" width="1100" height="500">
+        {% set indice = indice + 1 %}
+      </div>
+      {% endfor %}
+    </div>
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+  <br/>
+  <a href="{{ path_for('article', {'id': images[0].id_subfamily }) }}" class="btn btn-primary">Retour</a>
+</section>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

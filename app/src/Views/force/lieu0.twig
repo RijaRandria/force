@@ -1,0 +1,54 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<h4 id="lieu" class="fa fa-2x fa-angle-right" style ="color :#007BFF">{{titre}}</h4>
+<a class="{% if is_current_path('newchantier') %}active{% endif %}" href="{{path_for('newchantier')}}">
+<img src ="../../assets/images/batiment.png" style ="width : 100px; height : 100px" title = "Saisie Nouveau Chantier"></br></img></a>
+</br>
+<div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+            <div class="adv-table">
+            <table class ="table table-hover table-bordered " id="hidden-table-info">
+            <!--<table>-->
+              <thead class="thead-light">
+                  <tr class="gradeA centre">
+                    <th class=" center hidden-phone">Chantiers FSE</th>
+                    <th class=" center hidden-phone">Lieu de travail</th>
+                    <th class=" center hidden-phone">Encadrant</th>
+                    <th class=" center hidden-phone">Département</th>
+                    <th class=" center hidden-phone"></th>
+                    <th class=" center hidden-phone">Liste salariés</th>
+                    <th class=" center hidden-phone">Modification</th>
+
+
+                  <tr/>
+                  {% for ligne in lignes %}
+                    <tr class="hidden-phone centre">
+                      {% if ligne.fse != null %}
+                          <td class=" center hidden-phone"><img src ="../../assets/images/check.png " width = 40px, heigth = 40px > </img></td>
+                      {% else %}
+                            <td class=" center hidden-phone"></td>
+                      {% endif %}
+                      <input  type ="hidden" class="form-control" name="idlieu" value = '{{ ligne.idlieu }}' >
+                      <td class=" center hidden-phone">{{ ligne.lieu }}</td>
+                      <td class=" center hidden-phone">{{ ligne.encadrant }}</td>
+                      <td class=" center hidden-phone">{{ ligne.departement }}</td>
+                      <td ><a href="{{path_for('cqpchantier',{'idlieu' : ligne.idlieu},{'lieu' : ligne.lieu}) }}"><p class="btn btn-info" style ="text-align:justify-all" >FORMATION</p></a></td>
+                      <td ><a href="{{path_for('salariechantier',{'idlieu' : ligne.idlieu},{'lieu' : ligne.lieu},{'intitule' : "cqp"}) }}"><p class="fa fa-folder-open" style ="text-align:justify-all; color : blue" title = "Liste des Salariés du chantier de {{ ligne.lieu }}"></p></a></td>
+                      <!--<td ><a href="{{path_for('modifchantier',{'idlieu' : ligne.idlieu})  }}"> <p class="fa fa-folder-open text-success" style ="text-align:justify-all" "></p></a></td>-->
+
+                    </tr>
+                  {% endfor %}
+                </table>
+            </div>
+          </div>
+</div>
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  // alert("Coucou les auditeurs !");
+</script>
+{% endblock %}

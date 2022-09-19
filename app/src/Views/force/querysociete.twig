@@ -1,0 +1,39 @@
+{% extends "maitre.twig" %}
+{% block content %}
+
+
+<div class="row mb">
+
+<section>
+<div id="login-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <br/>
+                <h4 class="text-center">{{titre}}</h4>
+                <form class="form-login" method="POST" onSubmit="return accepter()" action="{{ path_for('trisociete') }}">
+                  <div class="form-group">
+                    <label> Veuillez saisir</label>
+                    <input type="text" class="form-control" name="cherche" id="Cherche" placeholder="Ville, N° département, Entreprise, Activité">
+                    {{csrf()}}
+                  </div>
+                  <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                  <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+
+</div>
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  // alert("Coucou les auditeurs !");
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<div class="container text-center">
+  <h1 >Thématique {{famille.name}}</h1>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ path_for('home') }}">Accueil</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{famille.name}}</li>
+    </ol>
+  </nav>
+  <div class="row">
+  {% for sousfamille in sousfamilles %}
+    <div class="card col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+      <a href="{{ path_for('article', {'id': sousfamille.id}) }}">
+        <img class="card-img-top" src="http://lorempixel.com/400/200/{{famille.imagebank}}/{{ random(1,10) }}" alt="{{famille.name}}" style="width:100%">
+      </a>
+      <div class="card-body">
+        <h4 class="card-title">{{sousfamille.name}}</h4>
+        <p class="card-text text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <a href="{{ path_for('article', {'id': sousfamille.id}) }}" class="btn btn-primary stretched-link">Voir les articles</a>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+</script>
+{% endblock %}

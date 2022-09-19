@@ -1,0 +1,501 @@
+{% extends "maitre.twig" %}
+{% block content %}
+  {% block fiche %}
+      {% include './force/basefiche.twig' %} 
+  {% endblock %}
+<style type="text/css">
+      .fond input[type="radio"] {
+        display: none;
+      }
+      .fond input[type="checkbox"] {
+        display: none;
+      }
+     
+
+      .toolbar label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+       .toolbar1 label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+
+      .toolbar input[type="radio"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+      .toolbar input[type="checkbox"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+
+      .toolbar1 input[type="radio"]:checked+label {
+        background-color: red;
+        color : white;
+      }
+     .toolbar1 input[type="checkbox"]:checked+label {
+        background-color: red;
+        color : white;
+      }  
+    
+   
+</style>
+    <div class="col-lg-12 mt">
+          <div class="row content-panel">
+            <!--<div class="panel-heading">-->
+            {% set typecontrat1 = "contrat.twig" %}
+            {% set typecontrat2 = "avenant.twig" %}
+            {{typecontrat1}}
+             {{typecontrat2}}
+              <nav class="nav nav-justified nav-pills " style = " width :100%; background-color :#1E90FF " >
+                <a href="{{path_for('sanctionsalarie',{'idsalarie' : idsalarie})  }}"<button type="button" class ="btn btn-danger" title = " Lien vers la saisie de sanction">SANCTION</button></a>          
+                <a href="{{path_for('editsalarie',{'idsalarie' : idsalarie})  }}"<button type="button" class ="btn btn-warning" title = " Lien vers la modification">MODIFICATION</button></a>          
+                <a href="{{path_for('sortiesalarie',{'idsalarie' : idsalarie})  }}"<button type="button" class ="btn btn-secondary" title = " Lien vers la saisie de sortie">SORTIE</button></a>          
+                <a href="{{path_for('signataireC',{'idsalarie' : idsalarie,'typecontrat' : typecontrat1})  }}"<button type="button" class ="btn btn-success" title = " Lien vers la saisie de sortie">CONTRAT</button></a>          
+
+            </nav>
+          </div>
+            <!-- /panel-heading renouvellement-->
+              <div class="panel-body">
+             
+                <div id="détailrenouvellement" class="tab-pane active">
+                 
+                   
+                      <input type="hidden" name="idsalarie" value='{{idsalarie}}'>
+                      <input type ="hidden" name"idlieu" value='{{idlieu}}'>
+                      <section>
+                      <div id="login-page">
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col-12">
+                                      <br/>
+                                      <div class="col-md-12 detailed">
+                                         <h4> AJOUT PHOTO {{nom}} {{prenom}}</h4>
+                                      </div>
+                                      <form size ="350 px" class="form-login" method="POST"  action="{{ path_for('photo',{'idsalarie':idsalarie,'file':file}) }} " enctype="multipart/form-data" style="box-shadow: 15px 15px 8px 1px #DCDCDC">
+                                            <label for="file">Choix de la photo </label></br>
+                                            <input type="file" name="file"></br></br>
+                                            <input type="hidden" name="idsalarie" value='{{idsalarie}}'></input>
+                                        &nbsp <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                                        <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                                      </form>
+                                      </br></br>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      </section>
+                    </div>
+            <div class="panel-body">
+              <div class="tab-content">
+                <div id="détailrenouvellement" class="tab-pane active">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <input type="hidden" name="idsalarie" value='{{idsalarie}}'>
+                      <input type ="hidden" name"idlieu" value='{{idlieu}}'>
+                      <section>
+                      <div id="login-page">
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col-12">
+                                      <br/>
+                                      <div class="col-md-12 detailed">
+                                         <h4>{{civilite}} {{nom}} {{prenom}} RENOUVELLEMENT</h4>
+                                      </div>
+                                      <form size ="350 px" class="form-login" method="POST"  action="{{ path_for('insertrenouv') }} "style="box-shadow: 15px 15px 8px 1px #DCDCDC">
+                                        <div class="form-group">
+                                          <input type="hidden" name="idsalarie" value='{{idsalarie}}'>
+                                         <label><b>Date de début renouvellement</b></label>
+                                          <input type="date" class="form-control" name="newdatedeb" id ="newdatedeb">
+                                          <label><b>Date de fin renouvellement</b></label>
+                                          <input type="date" class="form-control" name="newdatefin" id ="newdatefin">
+                                           <label><b>Contrat d'engagement</b></label></br>
+                                      
+                                          <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                                              <div class ="fond toolbar " style =" display : flex">
+
+                                                <input type="radio" id="radio1" name="engagement" value="1" >
+                                                <label  for="radio1">OUI</label>
+                                              </div>  
+                                               <div class ="fond toolbar1" style =" display : flex">
+                                                <input type = "radio" name ="engagement" id = "radio2" value ="0" > 
+                                                <label class =" sw-left" for="radio2">NON</label>
+                                              </div>
+                                           </div>  
+                                          </br>  
+                                          <textarea style ="white-space : preline" class="form-control" name="observation" id ="observation" placeholder ="Observation"></textarea>
+                                          {{csrf()}}
+                                        </div>
+
+                                        &nbsp <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                                        <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                                      </form>
+                                      </br></br>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      </section>
+                    </div>
+                    <!-- /col-md-6 -->
+                    <div class="col-md-6 detailed">
+                    </br>
+                      <h4>Détails renouvellement</h4>
+                      {% for renews in renouvellement %}
+                    <div class="border rounded bg-light border-secondary ">
+                            </br>
+                            &nbsp <a href="{{path_for('modifrenewsal',{'idrenewsal' : renews.idrenewsal,'idsalarie' : renews.idsalarie})  }}"><button type="button" class ="btn btn-outline-dark" title = " Modif">Modif</button></a>                     
+                            &nbsp <a href="{{path_for('supprrenewsal',{'idrenewsal' : renews.idrenewsal,'idsalarie' : renews.idsalarie})  }}"<button type="button" class ="btn btn-outline-danger" title = " Suppression">Suppr</button></a>          
+                            &nbsp <a href="{{path_for('avenant',{'idsalarie' : renews.idsalarie,'idrenewsal' : renews.idrenewsal} ) }}"<button type="button" class ="btn btn-outline-success" title = " Avenant">Avenant</button></a>          
+                            
+                            Du <b>{{ renews.newdebdate|date("d/m/Y", "Europe/Paris") }}</b>
+                            Au <b>{{ renews.nouvelle_date|date("d/m/Y", "Europe/Paris") }}</b>
+                            {% if renews.engagement == 1 %}
+                                <td>/ Engagement = Oui
+                            {% else %}
+                                <td>/ Engagement = Non
+                            {% endif %}</br></br>
+                            &nbspObs : {{ renews.observation }}
+                         
+                       
+                        </div>
+                        </br>
+                      {% endfor %}
+
+                    </div>
+                    <!-- /col-md-6 -->
+                  </div>
+                  <!-- /OVERVIEW -->
+                </div>
+                <!-- /tab-pane -->
+
+              </div>
+              <!-- /tab-content -->
+            </div>
+            <!-- /panel-body fin renouvellement-->
+            <!-- /panel-body documents à fournir-->
+            <div class="panel-body">
+              <div class="tab-content">
+                <div id="documentfourni" class="tab-pane active">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <section>
+                      <div id="login-page">
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col-12">
+                                      <br/>
+                                      <div class="col-lg-12 detailed">
+                                         <h4>Documents à fournir {{nom}} {{prenom}}</h4>
+                                      </div>
+                                      <form class = " border border-primary" style ="width : 500px" size ="500 px"  method="post" action="{{ path_for('docsalarie') }}"style="box-shadow: 15px 15px 8px 1px #DCDCDC">
+                                        <div >
+                                          
+                                          <div class="input-group">
+                                                <input type="hidden" name="idsalarie" value='{{idsalarie}}'>
+
+                                                {% for doc in docs %}
+                                                       
+                                                      {% if doc.coche == idsalarie %}
+                                                      
+                                                          <div class ="fond toolbar1 label col-12" >
+                                                              <input type="checkbox" name ="check[]" id='{{doc.documents}}' value ="{{doc.iddoc}}" checked></input>
+                                                              <label class =" d-grid gap-2 col-12 mx-auto btn btn-light" for='{{doc.documents}}'>{{doc.documents}}</label>
+                                                          </div>
+                                                          </br>
+                                                      {% else %}
+                                                          <div class ="fond toolbar1 label col-12" >
+                                                            <input type="checkbox" name ="check[]" id='{{doc.documents}}' value ="{{doc.iddoc}}" ></input>
+                                                            <label class =" d-grid gap-2 col-12 mx-auto btn btn-light" for='{{doc.documents}}'>{{doc.documents}}</label>
+                                                          </div>
+                                                          </br>
+                                                      {% endif %}
+                                                {% endfor %}
+
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                                        <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                                      </form>
+                                      </br></br>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      </section>
+                    </div>
+                    <!-- /col-md-6 -->
+                    <div class="col-md-6 detailed">
+                    </br>
+                
+
+
+                    </div>
+                    <!-- /col-md-6 -->
+                  </div>
+                  <!-- /OVERVIEW -->
+                </div>
+                <!-- /tab-pane -->
+
+              </div>
+              <!-- /tab-content -->
+            </div>
+            <!-- /panel-body fin documents fournis-->
+            <!-- /panel-body formation-->
+            <div class="panel-body">
+     
+                
+                  
+                    <div id="cqpsst" class="col-md-12 detailed" style ="display : flex">
+                     
+                              
+                                      <br/>
+                                      <div class="col-6">
+                                         <h4> {{nom}} {{prenom}} FORMATION</h4>
+                                     
+                                           <form class="col-lg-10 detailed" method="post" action="{{ path_for('inserttablecqp') }}"style="box-shadow: 15px 15px 8px 1px #DCDCDC">
+                                       
+                                          <label ><b>Formation : {{lieutravail}}</b></label>
+                                         
+                                          <div class="col-md-10 detailed ">
+                                           
+                                              <input type="hidden" name="idsalarie" value='{{idsalarie}}'>
+                                              <input type="hidden" name="idlieu" value='{{id_lieu_travail}}'>
+                                              {% for date in datechantier %}
+                                                 <div class ="fond toolbar label col-10 " >
+                                                  <input type ="radio" name="iddate" id="{{date.iddatechant}}" value='{{date.iddatechant}}'>
+                                                  <label class =" d-grid gap-2 col-12 mx-auto btn btn-light " for="{{date.iddatechant}}"> Du {{date.datedeb|date("d/m/Y", "Europe/Paris")}} au {{date.datefin|date("d/m/Y", "Europe/Paris")}}></br><b>{{date.formation}}</b></br>
+                                                  Une formation de {{date.heures}} heures . </br> Par : {{date.organisme}}. N° Devis : {{date.deviscert}}</label>
+                                               
+                                                  
+                                                  
+                                                  <input type="hidden" name="idformation" id= "idformation" value="{{date.idformation}}">
+                                                </div>
+                                                  
+                                              {% endfor %}
+                                            </br>
+
+                                   
+                                          </div>
+                                        
+                                      
+
+                                        <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                                        <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                                          </div>
+                                      </form>
+                      
+                    
+
+                                  <!-- /col-md-6 -->
+                                  <div class="col-md-6 detailed">
+                                  </br>
+                                    <h4>INscription</h4>
+                                    {% for doss in dossier %}
+                                    <div class=" col-md-10 detailed border rounded bg-light border-secondary ">
+                                    </br>
+                                      
+                                      &nbsp <a href="{{path_for('supprformationsal',{'idcqp' : doss.idcqp,'idsalarie' : doss.idsalarie})  }}"<button type="button" class ="btn btn-outline-danger" title = " Suppression">Suppr</button></a>          
+                                      {% set vdatedeb = doss.datedeb %}
+                                      {% set vdatefin = doss.datefin %}
+                                      {% set validation = " " %}
+                                      {% if doss.validation == 'O' %}
+                                        {% set validation = " Validation : OUI" %}
+                                      {% elseif doss.validation == 'N' %}
+                                        {% set validation = " Validation : NON" %}
+                                      {% endif %}
+
+                                      <span>
+                                      
+                                        Formation : <b>{{doss.formation}}</b>.<b>{{doss.heures}}</b> Heures .</br> Du <b>{{doss.datedeb|date("d/m/Y", "Europe/Paris")}}</b> au <b>{{doss.datefin|date("d/m/Y", "Europe/Paris")}}</b> </br>
+                                        Organisme chargé de la formation : <b>{{doss.organisme}}</b>. N° devis :<b>{{doss.deviscert}} </b> 
+                                      <!--en <b>{{doss.jours}}</b> jours -->
+                                      </span>
+                                      
+                                    </div>
+                                    </br>
+                                    {% endfor %}
+
+                                  </div>  
+            </div>
+                      
+        </div>       
+
+            
+              <!-- /tab-content -->
+            
+            <!-- /panel-body fin formation-->
+            <!-- /panel-body PMSMP-->
+            <div class="panel-body">
+              <div class="tab-content">
+                <div id="cqpsst" class="tab-pane active">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <section>
+                      <div id="login-page">
+                              <div class="col-12">
+                                      <br/>
+                                      <div class="col-md-12 detailed">
+                                         <h4> PMSMP de {{civilite}} {{nom}} {{prenom}}</h4>
+                                      </div>
+                                      <form size ="350 px" class="form-login" method="post" action="{{ path_for('insertpmsmp') }}"style="box-shadow: 15px 15px 8px 1px #DCDCDC">
+                                        <div >
+                                          <label ><b>PMSMP  : </b></label>
+                                          <div class="input-group mb-3" >
+                                          <div class="input-group-prepend">
+                                            <div class="form-group">
+                                              <input type="hidden" name="idsalarie" value='{{idsalarie}}'>
+                                              <p>Du <input type="date" name ="datedeb" id= "datedeb"> au <input type="date" name ="datefin" id= "datefin"></p>
+                                              <input type="number" name="nbreh" id= "nbreh"  placeholder =" Nombre d'heures"> </br>
+                                              <label>Prolongation </label>
+                                              
+                                           <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                                              <div class ="fond toolbar " style =" display : flex">
+
+                                                <input type="radio" id="radio3" name="prolongation" value="1" >
+                                                <label class =" sw-right" for="radio3">OUI</label>
+                                              </div>  
+                                               <div class ="fond toolbar1" style =" display : flex">
+                                                <input type = "radio" name ="prolongation" id = "radio4" value ="0" > 
+                                                <label class =" sw-left" for="radio4">NON</label>
+                                              </div>
+                                          </div>  
+                                          </br>  
+                                  
+                                              <input type ="text" size ="45" name ="entreprise" id= "entreprise" placeholder="Entreprise" ></input>
+                                              <input type ="text" size ="45" name ="siret" id= "siret" placeholder="Siret" ></input>
+                                              <input type ="text" size ="45" name ="activite" id= "activite" placeholder="Activité" ></input>
+                                              <input type ="text" size ="45" name ="contact" id= "contact" placeholder="Contact" ></input>
+                                              <input type ="text" size ="13" name ="telephone" id= "telephone" placeholder="Téléphone" ></input>
+                                              <input type ="mail" size ="45" name ="mail" id= "mail" placeholder="Adresse Mail  " ></input>
+                                              <input type ="text" size ="45" name ="ville" id= "ville" placeholder="Ville" ></input>
+                                              <input type ="number" min ="00" max ="99" name ="dpt" id= "dpt" placeholder ="Dépt" ></input>
+                                              <br/><br/>
+                                              <textarea name ="bilan" id= "bilan" placeholder="Bilan" rows="5" cols="45"></textarea>
+                                              {{csrf}}
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                                        <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                                      </form>
+                                    </div>
+                                      </br></br>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                    <!-- /col-md-6 -->
+                    <div class="col-md-6 detailed">
+                    </br>
+                      <h4>PMSMP</h4>
+                      {% for pmsmp in pmsmps %}
+                        <div class="col-md-12 detailed border rounded bg-white border-secondary">
+                         <a href="{{path_for('modifpmsmp',{'id' : pmsmp.id,'idsalarie' : pmsmp.idsalarie})  }}"><button type="button" class ="btn btn-outline-dark" title = " Modif">Modif</button></a>   
+                         <a href="{{path_for('supprpmsmp',{'id' : pmsmp.id,'idsalarie' : pmsmp.idsalarie})  }}"><button type="button" class ="btn btn-outline-danger" title = " Suppression">Suppr</button></a>
+                          <span>Du <b>{{pmsmp.datedeb|date("d/m/Y", "Europe/Paris")}}</b> au <b> {{pmsmp.datefin|date("d/m/Y", "Europe/Paris")}}</b>
+                          {% if pmsmp.prolongation == 1 %}
+                             => <b>Prolongation</b>
+                          {% endif %}    
+                          </br>
+                            {% if pmsmp.nbheures > 0 %}
+                                Oui
+                                 Nombre d'heures :
+                                <b>{{pmsmp.nbheures}}h</b>
+                            {% endif %}    
+                            
+                           
+                               
+                              
+                          </span><br/>
+
+                          <span>Société : <b>{{pmsmp.entreprise}}</b> Siret :<b> {{pmsmp.siret}}</b></br>
+                                Activité : <b>{{pmsmp.activite}}</b></br>
+                                Ville   : <b>{{pmsmp.ville}} - {{pmsmp.departement}}</b></br>
+                                Contact : <b>{{pmsmp.contactpmsmp}} </br> {{pmsmp.telephone}}</b>
+                                          <b>{{pmsmp.mail}} </b><br/></br>
+                                Bilan :  {{pmsmp.bilan}}</br></br>
+
+                          </span>
+                         
+                        </div>
+                         </br>
+        
+
+                      {% endfor %}
+                    
+
+
+                    </div>
+                    <!-- /col-md-6 -->
+                  </div>
+                  <!-- /OVERVIEW -->
+                </div>
+                <!-- /tab-pane -->
+
+              </div>
+              <!-- /tab-content -->
+            </div>
+            <!-- /panel-body fin formation-->
+
+      </div>
+              <!-- /tab-content -->
+    </div>
+  </div>
+        <!-- /col-lg-12 -->
+  </div>
+        <!-- /row -->
+</div>
+      <!-- /container -->
+    <!--</section>-->
+    <!-- /wrapper -->
+  </section>
+
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

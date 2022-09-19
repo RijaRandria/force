@@ -1,0 +1,285 @@
+{% extends "maitre.twig" %}
+
+{% block content %} 
+<style type="text/css">
+      .fond input[type="radio"] {
+        display: none;
+      }
+      .fond input[type="checkbox"] {
+        display: none;
+      }
+     
+
+      .toolbar label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+       .toolbar1 label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+
+      .toolbar input[type="radio"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+      .toolbar input[type="checkbox"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+
+      .toolbar1 input[type="radio"]:checked+label {
+        background-color: red;
+        color : white;
+      }
+     .toolbar1 input[type="checkbox"]:checked+label {
+        background-color: red;
+        color : white;
+      }  
+    
+   
+</style>   
+    <div class="col-lg-12 mt">
+         
+            <!-- /panel-heading -->
+
+
+            <form id = "modif" method="post" action="{{ path_for('inmodifsalform',{'idcqp' : idcqp}) }}">
+            <div class="panel-body">
+              <div class="tab-content">
+                <div id="experience" class="tab-pane active">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <section>
+                        <div id="login-page">
+                          <div class="container">
+                              <div class="row">
+                                 
+                                      <br/>
+                                     <div class="col-md-12 detailed ">
+                                      <h4>Mise à jour heures effectives sur une formation</h4>
+                                      
+                                             
+                                              <input type="hidden" name ="idsalarie" value ={{idsalarie}}> </input></br>
+                                              <input type="hidden" name ="idcqp" value ={{idcqp}}></input>
+                                            
+                                          </br>
+
+                                          {% for cqp in cqps %}
+                                           <div class="col-lg-12 bg-secondary text-white">
+                                            <span> Lieu de formation : {{cqp.lieu}}</span>
+                                            <span> du {{cqp.datedeb|date ("d/m/Y")}} au {{cqp.datefin|date ("d/m/Y")}}</span></br></br>
+                                            <span class="col-md-12 detailed border rounded border-dark "> {{cqp.formation}} par  {{cqp.organisme}} durée :  {{cqp.heures}}h </span>
+                                            <div class="col-md-12 detailed border rounded  ">
+                                            </br>
+                                            <label>Le salarié a suivi la formation</label></br>
+                                                <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                                                  {% if cqp.inscrit == 1 %}
+                                            
+                                                      <div class ="fond toolbar " style =" display : flex">
+
+                                                        <input type="radio" id="radio1" name="inscrit" value="1" checked>
+                                                        <label  for="radio1">OUI</label>
+                                                      </div>  
+                                                      <div class ="fond toolbar1" style =" display : flex">
+                                                        <input type = "radio" name ="inscrit" id = "radio2" value ="0" > 
+                                                        <label  for="radio2">NON</label>
+                                                      </div>
+                                                  
+                                                   {% elseif cqp.inscrit == 0 %}
+
+                                                    <div class ="fond toolbar " style =" display : flex">
+
+                                                        <input type = "radio" name ="inscrit" id = "radio3" value =1  >
+                                                        <label  for="radio3">OUI</label>
+                                                    </div>    
+                                                    <div class ="fond toolbar1 " style =" display : flex">    
+                                                        <input type = "radio" name ="inscrit" id = "radio4" value =0 checked>
+                                                        <label  for="radio4">NON</label>
+                                                    </div>
+                                                 {% else %}
+                                                    <div class ="fond toolbar " style =" display : flex">
+
+                                                        <input type = "radio" name ="inscrit" id = "radio5" value =1 > 
+                                                        <label  for="radio5">OUI</label>
+                                                    </div>    
+                                                    <div class ="fond toolbar1 " style =" display : flex">                                            
+                                                          <input type = "radio" name ="inscrit" id = "radio6" value =0 > 
+                                                        <label  for="radio6">NON</label>
+                                                    </div>
+
+                                                  {% endif %}
+
+                                                </div>
+                                            </br>  
+                                            <label>Si non, le motif</label>  
+                                            </br>
+                                              <input type ="text" size = "50" name ="motifnon" value = {{cqp.motifnon}}    > </input>
+                                              </br>
+                                              <label>Nombre d'heures effectuées</label>  
+                                              </br>  
+                                              <input type= "number" size = "4"name ="nbheures" value = {{cqp.nbheures}} ></input>
+                                              </br> 
+                                              <label>Validation</label>  
+                                               <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                                                  {% if cqp.inscrit == 1 %}
+                                            
+                                                      <div class ="fond toolbar " style =" display : flex">
+
+                                                        <input type="radio" id="valid1" name="validation" value="1" checked>
+                                                        <label  for="valid1">OUI</label>
+                                                      </div>  
+                                                      <div class ="fond toolbar1" style =" display : flex">
+                                                        <input type = "radio" name ="validation" id = "valid2" value ="0" > 
+                                                        <label  for="valid2">NON</label>
+                                                      </div>
+                                                  
+                                                   {% elseif cqp.inscrit == 0 %}
+
+                                                    <div class ="fond toolbar " style =" display : flex">
+
+                                                        <input type = "radio" name ="validation" id = "valid3" value =1  >
+                                                        <label  for="valid3">OUI</label>
+                                                    </div>    
+                                                    <div class ="fond toolbar1 " style =" display : flex">    
+                                                        <input type = "radio" name ="validation" id = "valid4" value =0 checked>
+                                                        <label  for="valid4">NON</label>
+                                                    </div>
+                                                 {% else %}
+                                                    <div class ="fond toolbar " style =" display : flex">
+
+                                                        <input type = "radio" name ="validation" id = "valid5" value =1 > 
+                                                        <label  for="valid5">OUI</label>
+                                                    </div>    
+                                                    <div class ="fond toolbar1 " style =" display : flex">                                            
+                                                          <input type = "radio" name ="validation" id = "valid6" value =0 > 
+                                                        <label  for="valid6">NON</label>
+                                                    </div>
+
+                                                  {% endif %}
+
+                                                </div>
+
+                                               <label>Date du jury</label>  
+                                              </br>  
+                                              <input type= "date" name ="datejury" value = {{cqp.datejury}} placeholder = "{{cqp.datejury}}"></input>
+                                              </br>
+                                                <label>Observation </label>  
+                                            </br>
+                                              <input type ="text" size ="50"name ="observation" value = {{cqp.observation}} > </input>
+                                              </br>
+                                              </br>
+                                          {% endfor %}
+                                       
+                                      </div>
+                                       </br>
+
+                                                                   
+
+                                  </div>
+
+                              </div>
+                          </div>
+                      </div>
+                   </section>
+                  </br>
+                <button type="submit" class="btn btn-success" style =" margin-left : 75px">Valider</button>&nbsp;&nbsp;
+                <a href="{{ path_for('salarie')}}" class="btn btn-secondary">Annuler</a>
+               
+                <!--<a href="{{ path_for('home')}}" class="btn btn-success">Démarches</a>-->
+              </form>
+        
+             
+              </div>
+  
+               
+
+              <!-- /col-md-6 -->
+                    <!-- /OVERVIEW -->
+            </div>
+                  <!-- /tab-pane -->
+          </div>
+                <!-- /tab-content -->
+        </div>
+              <!-- /panel-body -->
+      </div>
+              <!-- /tab-content -->
+    </div>
+  </div>
+        <!-- /col-lg-12 -->
+  </div>
+
+
+
+        <!-- /row -->
+</div>
+      <!-- /container -->
+    <!--</section>-->
+    <!-- /wrapper -->
+  </section>
+  
+
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('idsuivi').value != "") &&
+                    (document.getElementById('idsalarie').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+   <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="lib/jquery.scrollTo.min.js"></script>
+    <script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
+    <!--common script for all pages-->
+    <script src="lib/common-scripts.js"></script>
+    <!--script for this page-->
+    <script src="lib/jquery-ui-1.9.2.custom.min.js"></script>
+    <!--custom switch-->
+    <script src="lib/bootstrap-switch.js"></script>
+    <!--custom tagsinput-->
+    <script src="lib/jquery.tagsinput.js"></script>
+    <!--custom checkbox & radio-->
+    <script type="text/javascript" src="lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-daterangepicker/date.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+    <script src="lib/form-component.js"></script>
+
+{% endblock %}

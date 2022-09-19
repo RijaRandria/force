@@ -1,0 +1,97 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<style type="text/css">
+       #essai:checked + label > img {
+        color : green;
+      }  
+        .tsyhita{
+        visibility : hidden;
+      }
+    
+   
+</style>
+<h4 id="lieu" class="fa fa-2x fa-angle-right" style ="color :#007BFF">{{titre}}</h4>
+<div id="essai" style = "display : flex" >
+ <a href="{{path_for('newchantier')}}" onclick="bouton()" style ="width :70px; height :70x;display:table-cell;vertical-align:middle;text-align:center" role="button" id ="newchantier">
+      <label style ="position : absolute"  id = "orange" for ="newchantier"><img  src ="../../assets/images/new chantier.png" style ="width :120px; height :110px; position : absolute" class =" btn btn-outline-warning rounded-circle" title = "Saisie Nouveau Salarié"   role="button"></br></img></i></label>
+      <label class ="tsyhita" style ="position : relative" id = "vert" for ="newchantier"><img src ="../../assets/images/chantier ok.png" style ="width :120px; height :110px; position : relative"  title = "Saisie Nouveau Salarié"  role="button"></br></img></i></label>
+  
+</a>  
+</div>
+
+</br>
+<div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+            <div class="adv-table">
+            <table class ="table table-hover table-bordered " id="hidden-table-info">
+            <!--<table>-->
+              <thead class="thead-light">
+                  <tr class="gradeA centre">
+                    <th class=" center hidden-phone">Chantiers FSE</th>
+                    <th class=" center hidden-phone">Lieu de travail</th>
+                    <th class=" center hidden-phone">Encadrant</th>
+                    <th class=" center hidden-phone">Département</th>
+                     <th class=" center hidden-phone">Contrat Initial</th>
+                    <th class=" center hidden-phone"> Salaire Brut </th>
+                    <th class=" center hidden-phone">Période d'Essai</th>
+
+                    <th class=" center hidden-phone"></th>
+                    <th class=" center hidden-phone">Liste salariés</th>
+                    <th class=" center hidden-phone">Documents à fournir</th>
+                    <th class=" center hidden-phone"></th>
+
+
+                  <tr/>
+                  {% for ligne in lignes %}
+                    <tr class="hidden-phone centre">
+                      {% if ligne.fse > 0 %}
+                          <td class=" center hidden-phone"><img src ="../../assets/images/check.png " width = 40px, heigth = 40px > </img></td>
+                      {% else %}
+                            <td class=" center hidden-phone"></td>
+                      {% endif %}
+                      <input  type ="hidden" class="form-control" name="idlieu" value = '{{ ligne.idlieu }}' >
+                      <td class=" center hidden-phone">{{ ligne.lieu }}</td>
+                      <td class=" center hidden-phone">{{ ligne.encadrant }}</td>
+                      <td class=" center hidden-phone">{{ ligne.dpt }}</td>
+                      <td class=" center hidden-phone">{% if ligne.contratinitial %}{{ ligne.contratinitial }} mois{% endif %}</td>
+                      <td class=" center hidden-phone">{% if ligne.smic %}{{ ligne.smic }}€ {% endif %}</td>
+                      <td class=" center hidden-phone">{% if ligne.essai %}{{ ligne.essai }} jours{% endif %}</td>
+                      <td ><a href="{{path_for('cqpchantier',{'idlieu' : ligne.idlieu},{'lieu' : ligne.lieu}) }}"><p class="btn btn-info" style ="text-align:justify-all" >FORMATION</p></a></td>
+                      <td ><a href="{{path_for('salariechantier',{'idlieu' : ligne.idlieu},{'lieu' : ligne.lieu},{'intitule' : "cqp"}) }}"><p class="fa fa-folder-open" style ="text-align:justify-all; color : blue" title = "Liste des Salariés  {{ ligne.lieu }}"></p></a></td>
+                      <td ><a href="{{path_for('listdocsal',{'idlieu' : ligne.idlieu},{'lieu' : ligne.lieu},{'intitule' : "cqp"}) }}"><p class="fa fa-address-card" style ="text-align:justify-all; color : #FF4233" title = "Liste des documents à fournir par Salariés  {{ ligne.lieu }}"></p></a></td>
+                      <td ><a href="{{path_for('modifchantier',{'idlieu' : ligne.idlieu})  }}"><button type="button" class ="btn btn-outline-secondary" title = " Modification">Modif</button></a></a></td>
+
+                    </tr>
+                  {% endfor %}
+                </table>
+            </div>
+          </div>
+</div>
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+  <script type="text/javascript" src="DataTables/datatables.min.js"></script>
+  <script src="..assets/js/jquery/jquery.min.js"></script>
+  <script src="..assets/js/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="..assets/js/jquery.backstretch.min.js"></script>
+  
+  <script>
+        $(document).ready(function() {
+        $('#etable').DataTable();
+      } );
+        
+  </script>
+  
+ <script>
+      function bouton()
+      { 
+      document.getElementById("orange").style.visibility = "hidden";   
+      document.getElementById("vert")  .style.visibility = "visible";  
+      
+    
+      } 
+</script>
+{% endblock %}

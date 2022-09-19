@@ -1,0 +1,29 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<div class="container text-center">
+  <h3 ><i class="fa fa-book"></i>&nbsp;Liste des types de sanction&nbsp;
+    <a class="btn btn-outline-success btn-sm" href="{{path_for('newsanction')}}"><i class="fa fa-copy"></i>&nbsp;Nouveau type de sanction</a>
+  </h3>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Type de sanction</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ligne in lignes %}
+      <tr>
+        <td> {{ligne.idsanction}}   </td>
+        <td> {{ligne.sanctions}}</td>
+      </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+{% endblock %}
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+{% endblock %}

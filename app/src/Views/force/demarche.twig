@@ -1,0 +1,29 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<div class="container text-center">
+  <h3 ><i class="fa fa-book"></i>&nbsp;Liste des démarches&nbsp;
+    <a class="btn btn-outline-success btn-sm" href="{{path_for('newdemarche')}}"><i class="fa fa-copy"></i>&nbsp;Nouveau type de démarche</a>
+  </h3>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Type de démarche</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ligne in lignes %}
+      <tr>
+        <td> {{ligne.iddemarche}}   </td>
+        <td> {{ligne.demarche}}</td>
+      </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+{% endblock %}
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+{% endblock %}

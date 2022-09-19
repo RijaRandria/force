@@ -1,0 +1,183 @@
+{% extends "maitre.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<style type="text/css">
+      .fond input[type="radio"] {
+        display: none;
+      }
+      .fond input[type="checkbox"] {
+        display: none;
+      }
+     
+
+      .toolbar label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+       .toolbar1 label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+
+      .toolbar input[type="radio"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+      .toolbar input[type="checkbox"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+
+      .toolbar1 input[type="radio"]:checked+label {
+        background-color: red;
+        color : white;
+      }
+     .toolbar1 input[type="checkbox"]:checked+label {
+        background-color: red;
+        color : white;
+      }  
+    
+   
+</style>
+<section>
+<div class="col-12">
+                                      <br/>
+                                      <div class="col-md-12 detailed">
+                                      {% for salarie in salaries %}
+                                         <h4> {{titre}} {{salarie.nom}} {{salarie.prenom}}</h4>
+                                      {% endfor %}   
+                                      </div>
+                                      <form size ="350 px" class="form-login" method="post" action="{{ path_for('updatepmsmp') }}"style="box-shadow: 15px 15px 8px 1px #DCDCDC">
+                                        <div >
+                                          <label ><b>PMSMP  : </b></label> {{idpmsmp}} {{idsalarie}}
+                                      {% for pmsmp in pmsmps %}    
+                                          
+                                          <div class="input-group mb-3" >
+                                          <div class="input-group-prepend">
+                                            <div class="form-group">
+                                              <input type="hidden" name="idsalarie" value='{{idsalarie}}'>
+                                              <input type="hidden" name="idpmsmp" value='{{idpmsmp}}'>
+                                             
+                                              {% set datedeb =  pmsmp.datedeb|date("d/m/Y", "Europe/Paris") %}
+                                             
+                                              <label> Du</label>
+                                               <input type ="date" name ="datedeb" id= "datedeb" value ={{pmsmp.datedeb}}>
+                                               <label> Au</label>
+                                               <input type ="date" name ="datefin" id= "datefin" value ={{pmsmp.datefin}}>
+                                              <label> Nombre d'Heures </label> <input type="number" name="nbreh" id= "nbreh" value ='{{pmsmp.nbheures}}'> </br>
+                                              <label>Prolongation </label>
+                                              
+                                           <div class ="border border-5 border-success  "  style =" display : flex; width : 110px;margin-left : 15px ">
+                                              <div class ="fond toolbar " style =" display : flex">
+                                               {% if pmsmp.prolongation == 1 %}
+                                            
+                                         
+                                                    <div class ="fond toolbar " style =" display : flex">
+
+                                                      <input type="radio" id="radio1" name="prolongation" value="1" checked>
+                                                      <label  for="radio1">OUI</label>
+                                                    </div>  
+                                                    <div class ="fond toolbar1" style =" display : flex">
+                                                      <input type = "radio" name ="prolongation" id = "radio2" value ="0" > 
+                                                      <label  for="radio2">NON</label>
+                                                    </div>
+                                           
+                                              {% elseif pmsmp.prolongation == 0 %}
+
+                                                    <div class ="fond toolbar " style =" display : flex">
+
+                                                        <input type = "radio" name ="prolongation" id = "radio3" value =1  >
+                                                        <label  for="radio3">OUI</label>
+                                                    </div>    
+                                                    <div class ="fond toolbar1 " style =" display : flex">    
+                                                        <input type = "radio" name ="prolongation" id = "radio4" value =0 checked>
+                                                        <label  for="radio4">NON</label>
+                                                    </div>
+                                               {% else %}
+                                                    <div class ="fond toolbar " style =" display : flex">
+
+                                                        <input type = "radio" name ="prolongation" id = "radio5" value =1 > 
+                                                        <label  for="radio5">OUI</label>
+                                                    </div>    
+                                                    <div class ="fond toolbar1 " style =" display : flex">                                            
+                                                          <input type = "radio" name ="prolongation" id = "radio6" value =0 > 
+                                                        <label  for="radio6">NON</label>
+                                                    </div>
+
+                                          {% endif %}
+                                            </div>
+                                            
+                                          </div>  
+                                          </br>  
+                                  
+                                              <input type ="text" size ="45" name ="entreprise" id= "entreprise" value = "{{pmsmp.entreprise}}" ></input>
+                                              <input type ="text" size ="45" name ="siret" id= "siret" value ="{{pmsmp.siret}}" ></input>
+                                              <input type ="text" size ="45" name ="activite" id= "activite" value ="{{pmsmp.activite}}" ></input>
+                                              <input type ="text" size ="45" name ="contact" id= "contact" value ="{{pmsmp.contactpmsmp}}" ></input>
+                                              <input type ="text" size ="13" name ="telephone" id= "telephone" value ="{{pmsmp.telephone}}" ></input>
+                                              <input type ="mail" size ="45" name ="mail" id= "mail" value ="{{pmsmp.mail}}" ></input>
+                                              <input type ="text" size ="45" name ="ville" id= "ville" value ="{{pmsmp.ville}}" ></input>
+                                              <input type ="number" min ="00" max ="99" name ="dpt" id= "dpt" value ="{{pmsmp.departement}}" ></input>
+                                              <br/><br/>
+                                              <textarea name ="bilan" id= "bilan"  rows="5" cols="45">{{pmsmp.bilan}}</textarea>
+                                              {{csrf}}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      {% endfor %}
+                                        <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                                        <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                                      </form>
+                                    </div>
+                                      </br></br>
+                                  </div>
+                                </div>
+                              </div>
+
+
+</section>
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

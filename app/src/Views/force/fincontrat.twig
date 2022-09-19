@@ -1,0 +1,56 @@
+{% extends "maitre.twig" %}
+
+{% block content %}
+
+
+  <p style = "margin-top : 45px; font-size :25px;text-decoration: underline"><b> {{titre}} du {{vdatein|date("d/m/Y", "Europe/Paris")}} au {{vdateout|date("d/m/Y", "Europe/Paris")}} </b></p></br></br>
+  {% set lieutrav = " " %}
+  {% for lieu in lieux %}
+      {% set lieutrav = lieu.lieu %}
+      {% set count = 0 %}
+     
+            {% for salarie in salaries %}
+
+                  {% if salarie.id_lieu_travail == lieu.idlieu and (salarie.datefinreelle|date("Y/m/d", "Europe/Paris") >= vdatein and salarie.datefinreelle|date("Y/m/d", "Europe/Paris") <= vdateout) %}
+                    {% if count == 0 %}<p style ="text-decoration: underline "><b>{{lieutrav}}</b></p>
+
+                          <table class="table table-active">
+                            <thead>
+                                <tr>
+                                  <th scope="col">Nom</td>
+                                  <th scope="col">Prénom</td>
+                                  <th scope="col">Date fin de contrat</td>
+                                  <th scope="col">Date de Sortie</td>
+
+                                </tr>
+                            </thead>
+                    {% endif %}  
+
+                                <tbody>
+                                    <tr>
+                                      <td width = 30%>{{salarie.nom}}</td>
+                                      <td width = 30%>{{salarie.prenom}}</td>
+                                      <td width = 30%>{{salarie.datefinreelle|date("d/m/Y")}}</td>
+                                      {% if (salarie.datesortie) %}
+                                         <td width = 30%>{{salarie.datesortie|date("d/m/Y")}}</td>
+                                      {% endif %}
+                                    </tr>
+                                </tbody>
+                    {% set count = count + 1 %}
+                  {% endif %}
+
+            {% endfor %}
+            </table>
+          </br>
+    {% endfor %}
+
+
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  <script src="js/chart-master/Chart.js"></script>
+</script>
+{% endblock %}

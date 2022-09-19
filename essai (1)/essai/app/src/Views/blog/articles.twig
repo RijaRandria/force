@@ -1,0 +1,48 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<div class="container text-center">
+  <h1 >Articles {{sousfamille.name}}&nbsp;
+    {% if typeuser == 'Admin' %}
+      <a class="btn btn-outline-success btn-sm" href="{{path_for('formnouvelarticle', {'idsousfamille': idsousfamille})}}">Ajouter article</a>
+    {% endif %}
+  </h1>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ path_for('home') }}">Accueil</a></li>
+      <li class="breadcrumb-item"><a href="{{ path_for('sousfamille', {'id': sousfamille.id_family}) }}">{{sousfamille.name_family}}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{sousfamille['name']}}</li>
+    </ol>
+  </nav>
+  <div class="row">
+    {% for article in articles %}
+      <div class="card col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card-body">
+          <h4 class="card-title">{{article.title}}</h4>
+          <p class="card-text text-justify">{{article.content}}</p>
+          {% if article.url %}
+          <br/>
+          <a href="{{path_for('carousel', {'id': article.id})}}" title="{{article.caption}}">
+            <img src="{{article.url}}" width="98%" />
+          </a>
+          {% endif %}
+          {% if typeuser == 'Admin' %}
+          <a class="btn btn-danger btn-sm" href="javascript:efface('{{article.title}}','{{path_for('supprimerarticle', {'id': article.id, 'sousfam': article.id_subfamily})}}')" title="Effacer cet article..."><i class="fa fa-times"></i></a>
+          <a class="btn btn-primary btn-sm" href="{{path_for('affajouterimage', {'id': article.id})}}" title="Ajouter une image à cet article"><i class="fa fa-picture-o"></i></a>
+        {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  function efface(nom, url) {
+    if (confirm("Voulez vous effacer l\'article " + nom + "?")) {
+      location.replace(url);
+    }
+  }
+</script>
+{% endblock %}

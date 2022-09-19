@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <title>{{titre}}</title>
+    {% block stylesheet %}
+      <link rel="stylesheet" href="../../assets/bootstrap/dist/css/bootstrap.min.css"/>
+      <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
+      <link href="../../font-awesome/css/font-awesome.min.css" rel="stylesheet">
+      <link  href="{{ path_for('home') }}../../assets/css/main.min.css" rel="stylesheet"/><!-- main.css for dev -->
+      <link  type="text/css" href="../../assets/css/dashio/zabuto_calendar.css" rel="stylesheet"/>
+      <link type="text/css" href="../../js/gritter/css/jquery.gritter.css" rel="stylesheet" />
+      <!-- Custom styles for this template -->
+      <link href="../../assets/css/style.css" rel="stylesheet" />
+      <link href="../../assets/css/dashio\style.css" rel="stylesheet" />
+      <link href="../../assets/css/style.css" rel="stylesheet" />
+      <link href="../../assets/css/style-responsive.css" rel="stylesheet"/>
+      <link href="../../assets/css/style-responsive.css" rel="stylesheet"/>
+      <link href="../../assets/css/main.min.css" rel="stylesheet"/>
+      <link href ="https://code.jquery.com/jquery-3.5.1.js"/>
+      <link href ="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"/>
+      <link href ="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+     
+ 
+
+      <!--<link href="assets/css/style.css" rel="stylesheet">-->
+    {% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-light" style="background-color: #ef9c00;">
+      <a class="navbar-brand" href="{{ path_for('home') }}">
+        <img src ="../../assets/images/force.jpg " width = 100px, heigth = 100px > </img>
+        <span>FORMATION CAP EMPLOI</span> 
+      </a>
+      <img src ="../../assets/images/esus1.png " width = 100px, heigth = 100px > </img>
+
+      <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link {% if is_current_path('home') %}active{% endif %}" href="{{path_for('home')}}">Accueil</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if is_current_path('salarie') %}active{% endif %}" href="{{path_for('salarie')}}">Salarié</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if is_current_path('lieu') %}active{% endif %}" href="{{path_for('lieu')}}">Chantier</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if is_current_path('listeuser') %}active{% endif %}" href="{{path_for('listeuser')}}">Utilisateurs</a>
+        </li>
+
+        <li class="nav-item">
+          <div class="dropdown">
+          <button class="btn btn-outline-light btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Extractions</button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style = "box-shadow: 12px 10px 8px 1px  rgba(0, 0, 0, 0.186)">
+                    <a class="dropdown-item nav-link {% if is_current_path('societe')             %}active{% endif %}" href="{{path_for('societe')}}     ">Sociétés PMSMP</a>
+                    <a class="dropdown-item nav-link {% if is_current_path('statfiltre')          %}active{% endif %}" href="{{path_for('statfiltre')}}  ">Statistique Global</a>
+                    <a class="dropdown-item nav-link {% if is_current_path('fincontrat')          %}active{% endif %}" href="{{path_for('fincontrat')}}  ">Liste fin contrat</a>
+                    <a class="dropdown-item nav-link {% if is_current_path('finsortie')           %}active{% endif %}" href="{{path_for('finsortie')}}   ">Liste Sortie</a>
+                    <a class="dropdown-item nav-link {% if is_current_path('permis')              %}active{% endif %}" href="{{path_for('permis')}}      ">Réalisation Formation</a>
+                    <a class="dropdown-item nav-link {% if is_current_path('recapentretien')      %}active{% endif %}" href="{{path_for('recapentretien')}}      ">Recap Entretien</a>
+                  </div>
+            </div>
+        </li>
+
+        <li class="nav-item ">
+
+              <div class="dropdown">
+                <button class="btn btn-outline-light btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Saisie tables </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style = "box-shadow: 12px 10px 8px 1px rgba(0, 0, 0, 0.186)">
+                            <a class="dropdown-item nav-link {% if is_current_path('DocList')             %}active{% endif %}" href="{{path_for('DocList')}}            ">Documents à Fournir</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('permis')              %}active{% endif %}" href="{{path_for('permis')}}             ">Permis</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('formation')           %}active{% endif %}" href="{{path_for('formation')}}          ">Type de Formation</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('locomotion')          %}active{% endif %}" href="{{path_for('locomotion')}}         ">Moyen de Locomotion</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('etudes')              %}active{% endif %}" href="{{path_for('etudes')}}             ">Niveau d'études</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('situation')           %}active{% endif %}" href="{{path_for('situation')}}          ">Situation Familiale</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('ressources')          %}active{% endif %}" href="{{path_for('ressources')}}         ">Ressources</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('presence')            %}active{% endif %}" href="{{path_for('presence')}}           ">Présence</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('frein')               %}active{% endif %}" href="{{path_for('frein')}}              ">Freins à l'Entrée</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('pieceList')           %}active{% endif %}" href="{{path_for('pieceList')}}          ">Pièces d'Identité</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('typesortie')          %}active{% endif %}" href="{{path_for('typesortie')}}         ">Type de Sortie</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('detailsortie')        %}active{% endif %}" href="{{path_for('detailsortie')}}       ">Détails Type de Sortie</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('motifsortie')         %}active{% endif %}" href="{{path_for('motifsortie')}}        ">Motif de Sortie</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('typedemarche')        %}active{% endif %}" href="{{path_for('typedemarche')}}       ">Démarche</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('detaildemarche')      %}active{% endif %}" href="{{path_for('detaildemarche')}}     ">Types de Démarche</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('detailtypedemarche')  %}active{% endif %}" href="{{path_for('detailtypedemarche')}} ">Détails Types de Démarche</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('zone')                %}active{% endif %}" href="{{path_for('zone')}}               ">Zone (QPV, ZRR,...)</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('sanction')            %}active{% endif %}" href="{{path_for('sanction')}}           ">Sanction</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('motifsanction')       %}active{% endif %}" href="{{path_for('motifsanction')}}     ">Motif sanction</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('objectif')            %}active{% endif %}" href="{{path_for('objectif')}}          ">Objectifs</a>
+                            <a class="dropdown-item nav-link {% if is_current_path('projet')              %}active{% endif %}" href="{{path_for('projet')}}            ">Projet Pro</a>
+                        </div>
+            </div>
+        </li>
+        &nbsp
+        <li class="nav-item">
+            <button type="button" class="btn btn-outline-light btn-sm" data-toggle="modal" data-target="#exampleModal">Rechercher</button>
+        </li>
+        &nbsp
+        <li class="nav-item">
+        {% if username != 'Visiteur' %}
+            <a class="badge badge-primary text-wrap {% if is_current_path('deconnecte') %}active{% endif %}" href="{{path_for('deconnecte')}}"><i class="fa fa-power-off"></i>&nbspDéconnecter {{username}}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="{{path_for('changepwd')}}" title="Changer mot de passe"><i class="fa fa-lock" tit></i></a>
+            </li>
+
+        {% else %}
+         <a class="badge badge-primary text-wrap btn btn-primary"role ="button"href="{{path_for('authentification')}}" title="Vous connecter">{{username}}&nbsp;&nbsp;<i class="fa fa-2x fa-sign-in text-success"></i></a></span>
+        {% endif %}
+
+
+    </ul>
+    </nav>
+    <div class="container">
+      {% if alert is defined and alert is not empty %}
+        {% for key,messages in alert %}
+          <div class="alert alert-dismissible alert-{{key}} container">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {% for msg in messages %}
+              {{msg}}<br>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% block content %}
+    {% endblock %}
+
+    <!-- Fenêtre modale de recherche -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Rechercher</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action={{path_for('executionrecherche')}} method="POST">
+            <div class="modal-body">
+                <div class="form-group">
+                  <input type="text" class="form-control" name="recherche" placeholder="Entrez le nom ou le prénom ...">
+                  <input type="hidden" name="route" value="{{current_path()}}">
+                </div>
+            </div>
+            <div class="modal-footer">
+              <input type="submit" class="btn btn-primary" value="Rechercher" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    {% block javascript %}
+      <script src="{{ path_for('routerjs') }}"></script>
+      <script type="text/javascript">
+
+      function horloge(){
+       var div = document.getElementById("horloge");
+       var heure = new Date();
+       div.firstChild.nodeValue = heure.getHours()+":"+heure.getMinutes()+":"+heure.getSeconds();
+       window.setTimeout("horloge()",1000);
+      }
+
+      horloge();
+      </script>
+
+
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+      <script src="{{ path_for('home') }}assets/js/bundle.min.js" charset="utf-8"></script><!-- bundle.js for dev -->
+      <script src="lib/chart-master/Chart.js"></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+      <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+      <script type="text/javascript" src="DataTables/datatables.min.js"></script>
+
+    {% endblock %}
+  </body>
+</html>

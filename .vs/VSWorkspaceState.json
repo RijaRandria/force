@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\src",
+    "\\app\\src\\Controllers",
+    "\\app\\src\\Views",
+    "\\app\\src\\Views\\Force",
+    "\\public"
+  ],
+  "SelectedNode": "\\app\\src\\Controllers\\ForceController.php",
+  "PreviewInSolutionExplorer": false
+}

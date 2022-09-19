@@ -1,0 +1,41 @@
+{% extends "maitre.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<section>
+<div id="login-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <br/>
+                <h2 class="text-center">{{titre}}</h2>
+                <form class="form-login" method="POST" action="{{ path_for('ajouteruser') }}">
+                 <h2 class="form-login-heading">Utilisateur</h2>
+                 </br>
+                  <div class="form-group">
+                    
+                    <input type="text" class="form-control" name="name" placeholder="Utilisateur">
+                    {{csrf()}}
+                  </div>
+                  <div class="form-group">
+                    <label for="id_type">Type usager</label>
+                    <select name="id_type">
+                      {% for usertype in usertypes %}
+                      <option value="{{usertype.id}}" >{{usertype.name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    
+                    <input type="password" class="form-control" name="password" placeholder="Mot de passe de l'usager">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                  <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

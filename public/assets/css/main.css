@@ -1,0 +1,88 @@
+#titleExemple {
+    color: #2eb82e;
+    font-size: 3rem;
+}
+
+#logo {
+    height: 200px;
+    width: 200px;
+    background: url(/assets/img/logo.png);
+}
+
+$color-1: #2ecc71;
+$color-2: #3498db;
+$color-3: #f1c40f;
+$color-4: #e74c3c;
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #222;
+}
+
+.custom-radios {
+    div {
+        display: inline-block;
+    }
+    input[type="radio"] {
+        display: none;
+        +label {
+            color: #333;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            span {
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                margin: -1px 4px 0 0;
+                vertical-align: middle;
+                cursor: pointer;
+                border-radius: 50%;
+                border: 2px solid #FFFFFF;
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
+                background-repeat: no-repeat;
+                background-position: center;
+                text-align: center;
+                line-height: 44px;
+                img {
+                    opacity: 0;
+                    transition: all .3s ease;
+                }
+            }
+        }
+        input[type="radio"]::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--form-control-color);
+        }
+        input[type="radio"]:checked::before {
+            transform: scale(1);
+        }
+        &#color-1+label span {
+            background-color: $color-1;
+        }
+        &#color-2+label span {
+            background-color: $color-2;
+        }
+        &#color-3+label span {
+            background-color: $color-3;
+        }
+        &#color-4+label span {
+            background-color: $color-4;
+        }
+        &:checked+label span img {
+            opacity: 1;
+        }
+    }
+}

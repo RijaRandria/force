@@ -1,0 +1,117 @@
+{% extends "maitre.twig" %}
+
+{% block title %}Changer mot de passe{% endblock %}
+{% block content %}
+<link href="img/favicon.png" rel="icon">
+<link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+<!--<link href="../assets/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
+  <!--external css-->
+  <!--<link href="../js/font-awesome/css/font-awesome.css" rel="stylesheet" />-->
+  <!-- Custom styles for this template -->
+  <link href="../..assets/css/dashio/style.css" rel="stylesheet">
+  <link href="../../assets/css/dashio/style-responsive.css" rel="stylesheet">
+
+
+<div id="login-page">
+    <div class="container">
+      <!--<form class="login-form" id="auth" role="form" method="POST" action="{{ path_for('verifauth') }}">-->
+        <form class = " form-login" method="POST" onSubmit="return accepter()" action="{{ path_for('verifauth') }}">
+        <!--<form method="POST" onSubmit="return accepter()" class="form-login" id="auth" role="form"  action="{{ path_for('verifauth') }}">-->
+        <h2 class="form-login-heading">Changer mot de passe</h2>
+        <div class="login-wrap">
+          <input type="password" name="newpdw" id="nom" class="form-control" placeholder="Nouveau mot de passe " autofocus>
+          {{ csrf() }}
+          <br>
+          <input type="password" name="confirmpword" id="confirmpword" class="form-control" placeholder="Confirmation mot de passe">
+          <br>
+          <div class="form-check text-center">
+              <button class="btn btn btn-secondary" href="index.html" type="submit"><i class="fa fa-lock"></i> VALIDER</button>
+              <a href="{{ path_for('home') }}" class="btn btn-secondary">Annuler</a>
+      <!--    </div>
+          <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> VALIDER</button>
+          <hr>
+
+        </div>-->
+
+      </form>
+    </div>
+  </div>
+
+  {% block javascript %}
+    {{ parent() }}
+
+    <script>
+
+           function confirm () {
+                    document.write("javascript").die()
+                   if ((document.getElementById('newpwd').value != "") &&
+                      (document.getElementById('confirmpword').value != ""))
+                   {
+
+
+                       var accueil2 =  "Validation Changement de mot de passe ";
+                       //var accueil = (accueil1);
+                       alert(accueil2);
+                       return true;
+
+                   }
+
+
+                   else {
+
+
+                       alert ("Mots de passe saisis non identiques");
+                       return false
+
+                   }
+
+           }
+             // function myFunction() {
+             //   document.getElementById("newtitre").innerHTML = "Hello World";
+             //   return
+             // }
+          //}
+
+
+    </script>
+
+  {% endblock %}
+  <!-- js placed at the end of the document so the pages load faster -->
+
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="..assets/js/jquery.backstretch.min.js"></script>
+  <script>
+    $.backstretch("img/login-bg.jpg", {
+      speed: 500
+    });
+  </script>
+
+<!--<section class="login-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 login-sec">
+                <br/><br/>
+                <h2 class="text-center">Identification</h2>
+                <form class="login-form" id="auth" role="form" method="POST" action="{{ path_for('verifauth') }}">
+                    <div class="form-group">
+                        <label for="login" class="text-uppercase">Utilisateur</label>
+                        <input type="text" name="login" class="form-control" placeholder="Votre identifiant">
+                        {{ csrf() }}
+                    </div>
+                    <div class="form-group">
+                        <label for="pword" class="text-uppercase">Mot de passe</label>
+                        <input type="password" name="pword" class="form-control" placeholder="Votre mot de passe">
+                    </div>
+                    <div class="form-check text-center">
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                        <a href="{{ path_for('home') }}" class="btn btn-secondary">Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>-->
+{% endblock %}
+{% block scripts %}
+{% endblock %}

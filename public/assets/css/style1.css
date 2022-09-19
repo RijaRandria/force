@@ -1,0 +1,10 @@
+#etat {
+    display: flex;
+    width: 550px;
+    border: 5px solid red;
+    background-color: rgba(117, 190, 218, 0.5);
+}
+
+h5 {
+    color: #A52A2A;
+}

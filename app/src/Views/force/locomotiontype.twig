@@ -1,0 +1,29 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<div class="container text-center">
+  <h3 ><i class="fa fa-book"></i>&nbsp;Liste des moyens de locomotion&nbsp;
+    <a class="btn btn-outline-success btn-sm" href="{{path_for('newlocomotion')}}"><i class="fa fa-copy"></i>&nbsp;Nouveau moyen de locomotion</a>
+  </h3>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Type de locomotion</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ligne in lignes %}
+      <tr>
+        <td> {{ligne.id}}   </td>
+        <td> {{ligne.locomotion}}</td>
+      </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+{% endblock %}
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+{% endblock %}

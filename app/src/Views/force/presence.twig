@@ -1,0 +1,29 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<div class="container text-center">
+  <h3 ><i class="fa fa-book"></i>&nbsp;Liste des Justificatifs de présence&nbsp;
+    <a class="btn btn-outline-success btn-sm" href="{{path_for('newpres')}}"><i class="fa fa-copy"></i>&nbsp;Nouveau Item</a>
+  </h3>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Présence</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ligne in lignes %}
+      <tr>
+        <td> {{ligne.idpresence}}   </td>
+        <td> {{ligne.presence}}</td>
+      </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+{% endblock %}
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+{% endblock %}

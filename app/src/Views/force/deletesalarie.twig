@@ -1,0 +1,46 @@
+{% extends "maitre.twig" %}
+{% block content %}
+  {% block fiche %}
+      {% include './force/basefiche.twig' %} 
+  {% endblock %}
+  
+  </section>
+  &nbsp <button class="btn btn btn-primary" type="submit" value="Supprimer">Supprimer</button>
+  &nbsp<button  class="btn btn btn-secondary" type="reset" value="annuler" >Annuler</button><br>
+
+</form>
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function supprimer () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Suppression  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Suppression annulée");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

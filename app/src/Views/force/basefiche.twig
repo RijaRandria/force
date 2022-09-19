@@ -1,0 +1,321 @@
+{% block content %}
+</div>
+<h5 id="fichesalarie" class="fa fa-2x fa-angle-right"style ="color :#007BFF">{{titre}}</h5>
+<section id="main-content" style ="display : flex; background : #387ab1; box-shadow: 15px 15px 8px 1px #DCDCDC">
+  <!--  <section class="wrapper site-min-height">-->
+      <div class="col-md-4 profile-text -white-5">
+        <div class="profile-pic">
+          <p><img src="../../assets/images/salaries/{{idsalarie}}.jpg" class="img-circle"></p>        
+        </div>
+     
+        <div class="form-group ">
+            <label style="font-weight : bold " >Civilité : </label> <span>{{civilite}}</span>  
+        </div>
+        <div class="form-group ">
+            <label style="font-weight : bold " >Nom et prénom : </label>  <span>{{nom}} {{prenom}}</span>
+        </div>
+        <div class="form-group ">
+            <label style="font-weight:bold" >Date et lieu de naissance :</label>
+            <div class="col-sm-18">
+                <span>{{datenaissance|date("d/m/Y", "Europe/Paris")}} -</span > 
+                {% set vdate = "now"|date("Y", "Europe/Paris") %}
+                {% set vdatenaissance = datenaissance|date("Y", "Europe/Paris") %}
+               
+                {% set age = vdate - vdatenaissance %}
+                <span>{{lieunaissance}}</span >
+                <span>({{dptnaissance}})</span >
+                <label style="font-weight:bold" > &nbsp&nbsp Age :</label>
+                <span>{{age}}</span>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label style="font-weight:bold" >Situation familiale : </label> <span>{{situfamiliale}}</span >
+        </div>
+        <div class="form-group ">
+            <label  style="font-weight:bold">Nombre d'enfants :</label>
+           
+                    {% if '{{enfants}}' != null  %}
+                      <span>{{enfants}}</span >
+                    {% endif %}
+           
+        </div>
+        <div class="form-group ">
+                <label  style="font-weight:bold">Nationalité : </label> <span>{{nationalite}}</span >
+       
+        </div>
+
+        <div class="form-group ">
+                <label style="font-weight : bold" >Tél : </label> <span>{{telephone}}</span >
+                <label style="font-weight : bold" >- Mail : </label> <span>{{mailsalarie}}</span >
+      
+        </div>        
+
+        <div class="form-group ">
+                <label style="font-weight : bold" >Adresse : </label> <span>{{adresse1}} - </span > <span>{{adresse2}}</span >
+       
+        </div>
+        <div class="form-group ">
+                <label style="font-weight : bold" >Ville : </label>  <span>{{villeadresse}} - {{codepostaladresse}}</span >
+        
+        </div>
+
+        <div class="form-group ">
+                <label  style="font-weight:bold" >Personne à contacter en cas d'urgence :</label>
+                    <div class="col-sm-18">
+                        <span>{{contact}}</span >
+                    </div>
+        </div >  
+
+
+      </div>
+
+      
+      <div class="col-md-4 profile-text">
+        <div class="form-group  ">
+            <label style="font-weight : bold ">CHANTIER : </label> <span>{{lieutravail}}</span>&nbsp&nbsp
+            <label  style="font-weight:bold" >Date AMETRA : </label> 
+            {% if dateametra|date("Y", "Europe/Paris") > 0 %}
+               <span >{{dateametra|date("d/m/Y", "Europe/Paris")}}</span>
+            {% endif %}
+        </div >
+     
+        
+        <div class="form-group ">
+            <label style="font-weight : bold " >Date du contrat :</label>
+                       
+                            <span>
+                              <tr >
+                                  <td >Du {{datedebcontrat|date("d/m/Y", "Europe/Paris")}}</td>
+                                  <td >Au {{datefininitial|date("d/m/Y", "Europe/Paris")}}</td></br>
+                              </tr>
+                            </span>
+                        
+        </div>
+        <div class="form-group " >
+            <label  style="font-weight:bold" >Renouvellement :</label></br>
+                
+                            {% set datefin = datefininitial %}
+                            {% for renew in renouvellement %}
+                             <div class="form-group border " >   
+                              <span>
+                                <tr >
+                                  <td >Du {{ renew.newdebdate|date("d/m/Y", "Europe/Paris") }}</td>
+                                  <td >Au {{ renew.nouvelle_date|date("d/m/Y", "Europe/Paris") }}</td></br>
+                                </tr>
+                                {% if renew.engagement == 1 %}
+                                    {% set ire = "oui" %}
+                                {% else %}
+                                    {% set ire = "non" %}
+                                {% endif %}
+                                <tr >
+                                  <td >Contrat d'Engagement : {{ire}}</td></br>
+                                </tr>
+                              </span>
+                              {% set datefin = renew.nouvelle_date %}
+                             </div> 
+                            {% endfor %}
+               
+        </div>
+                    <div class="form-group ">
+                        <label style="font-weight : bold" >Date Fin de Contrat : </label> <span>{{datefin|date("d/m/Y", "Europe/Paris")}}</span>
+                   
+                    </div>
+                     {% if datesortie > 0 %}
+
+                        <label style="font-weight:bold"  >SORTIE:</label></br>
+                        <div class="form-group border " >
+                           <label  style="font-weight:bold" >Date sortie :</label>
+                                <span>{{datesortie|date("d/m/Y", "Europe/Paris")}}</span ></br>
+                                <span>=> {{detailsortie}}</span>
+              
+                         </div>       
+                     {% endif %}
+                 
+                   
+                   
+                 
+                
+                    <div class="form-group " >
+                    <label  style="font-weight:bold" >Ressources : </label> 
+                  
+                            <span>{{ressources}}</span >
+                   
+
+                                    
+                </div>
+                    <div class="form-group  ">
+                        <label style="font-weight : bold " >RQTH : </label> <span>{{rqth}}</span >&nbsp&nbsp
+                     
+                        <label style="font-weight : bold " >QPV / ZRR : </label>
+                       
+                            {% for zone in zones %}
+                                {% if qpv == zone.idzone %}
+                                    <span>{{zone.zone}}</span >
+                                {% endif %}
+                            {% endfor %}
+                        <label style="font-weight : bold " >&nbsp Droit à l'image : </label> <span>{{droitimage}}</span>
+                    </div>
+                    <div class="form-group ">
+                        <label  style="font-weight:bold">Niveau d'études :</label> <span>{{niveauetude}}</span >
+                 
+                    </div>
+
+                    <div class="form-group ">
+                        <label  style="font-weight:bold">Moyen de locomotion :</label></br>
+                       
+                          {% for loc in locosalarie %}
+                            <span>
+                              <tr >
+                                <td >{{loc.locomotion }}</td></br>
+                              </tr>
+                            </span>
+                          {% endfor %}
+                       
+                    </div>
+                    <div class="form-group ">
+                        <label  style="font-weight:bold">Permis :</label></br>
+                        
+                          {% for perm in permsalarie %}
+                            <span>
+                              <tr >
+                                <td >{{perm.permis}}</td></br>
+                              </tr>
+                            </span>
+                          {% endfor %}
+                      
+                    </div>
+                    <div class="form-group ">
+                            <label style="font-weight : bold" >Observation permis : </label> <span>{{obspermis}}</span >
+                
+                    </div>
+
+                    <div class="form-group ">
+                        <label  style="font-weight:bold">Carte BTP : </label> <span>{{btp}}</span >
+                     
+                    </div>
+
+                    <div class="form-group border ">
+      <label style="font-weight : bold; text-decoration-line : underline " for="dateportabilite">Mutuelle</label></br>
+      <label style="font-weight : bold " for="datemutuelle">Validité Justificatif de dispenses (CSS ou Mutuelle) : </label>
+      {% if datemutuelle > 0 %}
+        <span> {{datemutuelle|date("d/m/Y", "Europe/Paris")}}</span>
+      {% endif %}  
+      {% if mutuelle == "1" %}
+        {% set mutuel = "OUI" %}
+      {% elseif mutuelle  == "0" %}       
+        {% set mutuel = "NON" %}
+       {% else %}
+         {% set mutuel = "" %}
+        {% endif %}
+
+     <label style="font-weight : bold " for="mutuelle">Adhésion à la Mutuelle de Force : </label> <span > {{mutuel}}</span>&nbsp &nbsp&nbsp&nbsp
+      <div class="col-sm-12">
+       {% if portabilite == "1" %}
+        {% set porta = "OUI" %}
+      {% elseif portabilite  == "0" %}       
+        {% set porta = "NON" %}
+       {% else %}
+         {% set porta = "" %}
+        {% endif %}
+     
+      </div>
+      <label style="font-weight : bold " for="mutuelle">Portabilité : </label> <span> {{porta}}</span>&nbsp &nbsp&nbsp&nbsp
+     
+    </div>
+
+
+                </div> <!---form-group -->
+   
+      <div class="col-md-4 profile-text ">
+ 
+                <div class="form-group ">
+                    <label style="font-weight:bold" >Numéro Sécurité sociale : </label> <span>{{securitesociale}}</span >
+    
+                </div>
+                <div class="form-group ">
+                    <label  style="font-weight:bold" >Numéro caf : </label> <span>{{numcaf}}</span >&nbsp&nbsp
+                    <label  style="font-weight:bold" >Id. Pôle Emploi : </label> <span>{{idpole}}</span >
+                    
+                </div >
+                <div class="form-group ">
+                    <label  style="font-weight:bold" >N° PASS IAE : </label> <span>{{numagrementpole}}</span >
+            
+                </div >
+               
+                <div class="form-group " >
+                    <label  style="font-weight:bold" >Prescripteur : </label>  <span>{{prescripteur}}</span >
+               
+                </div>
+                 <label style="font-weight:bold"  >FSE:</label></br>
+                <div class="form-group border " >
+                
+                  <label  style="font-weight:bold" >Id :</label>
+                    
+                        <span>{{idfse}}</span ></br>
+                    
+                    
+                        {% if datefse > 0  %}
+                            <label  style="font-weight:bold" >Date entrée :</label>
+                            <span>{{datefse|date("d/m/Y", "Europe/Paris")}}</span >
+                        {% endif %}
+                        {% if datesortiefse > 0 %}
+                            <label  style="font-weight:bold" >Date sortie :</label>
+                            <span>{{datesortiefse|date("d/m/Y", "Europe/Paris")}}</span >
+                        {% endif %}
+                 
+                   
+                   
+                </div>  
+                 <div class="form-group "  >
+                    <label  style="font-weight:bold" >DPAE :</label>
+                    
+                         {% if dpae > 0 %}
+                              <span>{{dpae|date("d/m/Y", "Europe/Paris")}}</span >
+                        {% endif %}
+                       
+                    
+                </div>  
+                 <div class="form-group "  >
+                    <label  style="font-weight:bold" >N° URSSAF : </label>
+                    
+                        <span>{{numurssaf}}</span >
+                    
+                </div>  
+                 <div class="form-group "  >
+                    <label  style="font-weight:bold" >Id Extranet : </label>
+                    
+                        <span>{{idextranet}}</span >
+                    
+                </div>  
+
+
+
+                 <div class="form-group border border-danger" >
+                    <label  style="font-weight:bold" >SANCTION :</label></br>
+                    <div class="col-sm-18">
+                    {% for sanctionsal in sanctionsals %}
+                        <div class="form-group border border-danger" >
+                            <label> Date sanction :  </label>
+                            {% if sanctionsal.datesanction|date("Y", "Europe/Paris") > 0 %}
+                                <span>{{sanctionsal.datesanction|date("d/m/Y", "Europe/Paris")}}</span> 
+                            {% endif %}    
+                            <label> Date envoi :</label>
+                            {% if sanctionsal.dateenvoi|date("Y", "Europe/Paris") > 0 %}
+                                <span>{{sanctionsal.dateenvoi|date("d/m/Y", "Europe/Paris")}}</span>
+                            {% endif %}  
+                            </br>
+                              <label> Référence : </label> <span> {{sanctionsal.refenvoi}}</span > </br> 
+                            <label><b>Sanction </b>: </label> <span class ="text-danger bg-light"> {{sanctionsal.sanctions}} </span> <label>&nbsp Motif : </label> <span class ="text-danger bg-light"> {{sanctionsal.motifsanction}} </span ></br>
+                            <label> Observation : </label> <span>{{sanctionsal.obs}}</span >
+                         </div>  
+
+                    {% endfor %}
+                    </div> 
+                </div>  
+
+
+      </div>
+
+      </section>
+
+{% endblock %}

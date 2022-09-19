@@ -1,0 +1,210 @@
+{% extends "maitre.twig" %}
+{% block content %} 
+ <style type="text/css">
+      .fond input[type="radio"] {
+        display: none;
+      }
+      .fond input[type="checkbox"] {
+        display: none;
+      }
+     
+
+      .toolbar label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+       .toolbar1 label {
+        display: inline-block;
+        background-color: silver;
+        padding: 4px 11px;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+        margin : auto
+      }
+
+      .toolbar input[type="radio"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+       .toolbar input[type="checkbox"]:checked+label {
+        background-color: green;
+        color : white;
+      }
+      
+      .toolbar1 input[type="radio"]:checked+label {
+        background-color: red;
+        color : white;
+      }
+    
+   
+</style>
+    {% block fiche %}
+      {% include './force/basefiche.twig' %} 
+    {% endblock %}
+    <div class="col-lg-12 mt">
+               <div class="row content-panel">
+            <!--<div class="panel-heading">-->
+              <nav class="nav nav-justified nav-pills " style = " width :100%; background-color :#1E90FF " >
+                <a href="{{path_for('sanctionsalarie',{'idsalarie' : idsalarie})  }}"<button type="button" class ="btn btn-danger" title = " Lien vers la saisie de sanction">SANCTION</button></a>          
+                <a href="{{path_for('editsalarie',{'idsalarie' : idsalarie})  }}"<button type="button" class ="btn btn-warning" title = " Lien vers la modification">MODIFICATION</button></a>          
+                <a href="{{path_for('modifsalarie',{'idsalarie' : idsalarie})  }}"<button type="button" class ="btn btn-info" title = " Lien vers le dossier">DOSSIER</button></a>          
+
+            </nav>
+          </div>
+            <!-- /panel-heading renouvellement-->
+              <div class="panel-body">
+            <form size ="350 px" method="POST"  action="{{ path_for('insertsortiesal') }} ">
+                <div class="row">
+                    <div class="col-md-6 detailed">
+                      <input type="hidden" name="idsalarie" value='{{idsalarie}}'>
+                      <input type ="hidden" name"idlieu" value='{{idlieu}}'>
+                      <section>
+                      <div id="login-page">
+                          <div class="container">
+                                <h4>Motif de Sortie de {{civilite}} {{nom}} {{prenom}}</h4>
+                                <div class="row">
+                                  <div class="col-md-12 form-login" style="box-shadow: 15px 15px 8px 1px #DCDCDC">
+                                         <span class ="text-center"> Pour annuler une sortie, Veuillez valider en laissant vide le formulaire.</span>
+                                         <div class="form-group" >
+                                          <p><b>Motifs de sortie</b></p>
+                                          {% for motif in motifs %}
+                                              {% if (motifsortie == motif.idmotif) %}
+
+                                                  <div class ="fond toolbar label">
+
+                                                        <input type="checkbox" id="{{motif.motifsortie}}" name="motifsortie" value='{{motif.idmotif}}' checked >
+                                                        <label class =" d-grid gap-2 col-12 mx-auto btn btn-light" for="{{motif.motifsortie}}">{{motif.motifsortie}}.</label>
+                                                                                                     
+                                                  </div>
+                                                 
+                                              {% else %}
+                                                  <div class ="fond toolbar label">
+
+                                                        <input type="checkbox" id="{{motif.motifsortie}}" name="motifsortie" value='{{motif.idmotif}}' >
+                                                        <label class =" d-grid gap-2 col-12 mx-auto btn btn-light" for="{{motif.motifsortie}}">{{motif.motifsortie}}.</label>
+                                                                                                     
+                                                  </div>
+                                                  
+                                              {% endif %}  
+                                               
+                                          {% endfor %}</br>
+                                          <div class="col-md-6 detailed">
+                                          <label><b>Date de Sortie</b></label>
+                                          <input type="date" class="form-control" name="datesortie" id ="datesortie" value ={{datesortie}}></br>
+                                          </div>
+                                          <label><b>Détail de Sortie </b></label></br>
+                                          <textarea  rows = 6 cols = 58 name="detail" id ="detail" value = {{detailsortie}}  >{{detailsortie}}</textarea>
+                                          </br>
+                                          {{csrf()}}
+                                        </div>
+                                      </br></br>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      </section>
+                    </div>
+                    <!-- /col-md-6 -->
+                    <div class="col-md-6 detailed">
+                      <input type="hidden" name="idsalarie" value='{{idsalarie}}'>
+                      <input type ="hidden" name"idlieu" value='{{idlieu}}'>
+                      <section>
+                      <div id="login-page">
+                          <div class="container">
+                               <h4>Situation à la Sortie de {{civilite}} {{nom}} {{prenom}}</h4>
+                                   <div class="row">
+                                     <div class="col-lg-20 border border-primary" style="box-shadow: 15px 15px 8px 1px #DCDCDC">
+                                       
+                                        <input type="hidden" name="idsalarie" value='{{idsalarie}}'>
+                                          <p><b>Situation </b></p>
+                                          {% for typesortie in typesorties %}
+                                             
+                                              {% if (typesort == typesortie.idtypesortie) %}
+                                                <input type = "hidden" name ="sortie" value = '{{typesortie.idsortie}}'></input>
+                                                 <div class ="fond toolbar label">
+
+                                                        <input type="checkbox" id="{{typesortie.typesortie}}" name="typesortie" value='{{typesortie.idtypesortie}}' checked>
+                                                        <label class =" d-grid gap-2 col-12 mx-auto btn btn-light" for="{{typesortie.typesortie}}">{{typesortie.typesortie}}.</label>
+                                                                                                     
+                                                  </div>
+                                              
+                                              {% else %}
+                                                  <div class ="fond toolbar label">
+
+                                                        <input type="checkbox" id="{{typesortie.typesortie}}" name="typesortie" value='{{typesortie.idtypesortie}}'>
+                                                        <label class =" d-grid gap-2 col-12 mx-auto btn btn-light" for="{{typesortie.typesortie}}">{{typesortie.typesortie}}.</label>
+                                                                                                     
+                                                  </div>
+                                                 
+                                              {% endif %}
+                                             
+                                          {% endfor %}
+
+                                        </div>
+
+                                  </div>
+
+                              </div>
+                              </br>
+                              <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                              <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                          </div>
+
+                      </div>
+                      </section>
+                    </br>
+
+                    </div>
+                  </form>
+                    <!-- /col-md-6 -->
+                  </div>
+                  <!-- /OVERVIEW -->
+                </div>
+                <!-- /tab-pane -->
+
+              </div>
+              <!-- /tab-content -->
+            </div>
+            <!-- /panel-body fin renouvellement-->
+
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

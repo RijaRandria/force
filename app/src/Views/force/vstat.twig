@@ -1,0 +1,82 @@
+{% extends "maitre.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<section>
+</div>
+<div id="login-page">
+
+    <h2 class="text-center">{{titre}}</h2>
+
+              </br>
+              <div id ="affichage">
+              </br></br>
+              {% set lieutrav = " " %}
+              {% for lieu in lieux %}
+
+                  {% set lieutrav = lieu.lieu %}
+                     <table class ="border border-primary center" >
+                            <caption>Ressources</caption>
+                            <tr>
+                                 <th scope="col"></th>
+                                 <th scope ="col">{{lieu.lieu}}</th> 
+                            </tr>
+
+                    {% for ressource in ressources %}
+                        {% set count = 0  %}
+                        {% set pcount = 0 %}
+                        {% for salarie in salaries %}
+                              {% if salarie.ressources == ressource.id and salarie.id_lieu_travail == lieu.idlieu %}
+                                    {% set count = count + 1 %}
+                              {% endif %}
+                        {% endfor %}
+                      
+                            <tr >
+                                 <th scope="row">{{ressource.ressources}}</th>
+                                 <td scope ="col">{{count}}</td>
+                            </tr>
+                            
+                        
+                    {% endfor %}
+                  </table>
+              {% endfor %}
+              
+              </br>
+
+   
+</div>
+</section>
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

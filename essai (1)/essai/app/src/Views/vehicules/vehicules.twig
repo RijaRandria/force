@@ -1,0 +1,26 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<h1 id="vehicules">{{titre}}</h1>
+<table border='1'>
+  <tr>
+    <th>Marque</th>
+    <th>Véhicule</th>
+    <th>Moteur</th>
+  <tr/>
+  {% for ligne in lignes %}
+  <tr>
+      <td>{{ ligne.marque }}</td>
+      <td>{{ ligne.vehicule }}</td>
+      <td>{{ ligne.moteur }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  // alert("Coucou les auditeurs !");
+</script>
+{% endblock %}

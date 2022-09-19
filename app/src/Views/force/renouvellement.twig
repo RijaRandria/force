@@ -1,0 +1,67 @@
+{% extends "maitre.twig" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<div id="overview" class="tab-pane active">
+  <div class="row">
+    <div class="col-md-6">
+
+      <section>
+      <div id="login-page">
+          <div class="container">
+              <div class="row">
+                  <div class="col-12">
+                      <br/>
+                      <h2 class="text-center">{{titre}}</h2>
+                      <form class="form-login" method="POST" onSubmit="return accepter()" action="{{ path_for('insertrenouv') }}">
+                        <div class="form-group">
+                          <label for="encadrant">Date renouvellement</label>
+                          <input type="hidden" name="idsalarie" value={{idsalarie}}>
+                          <input type="date" class="form-control" name="newdatefin" id ="newdatefin">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Valider</button>&nbsp;&nbsp;
+                        <a href="{{ path_for('home')}}" class="btn btn-secondary">Annuler</a>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+
+  <script>
+
+         function accepter () {
+
+                 if ((document.getElementById('nom').value != "") &&
+                    (document.getElementById('prenom').value != ""))
+                 {
+
+
+                     var accueil2 =  "Validation  ";
+                     //var accueil = (accueil1);
+                     alert(accueil2);
+                     return true;
+
+                 }
+
+
+                 else {
+
+
+                     alert ("Veuillez saisir nom et prénom");
+                     return false
+
+                 }
+
+         }
+
+
+  </script>
+
+{% endblock %}

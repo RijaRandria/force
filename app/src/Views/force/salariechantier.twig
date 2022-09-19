@@ -1,0 +1,61 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<h4 id="salarie" class="fa fa-2x fa-angle-right"style ="color :#007BFF">{{titre}}</h4>
+<a class="{% if is_current_path('newsalarie') %}active{% endif %}" href="{{path_for('newsalarie')}}">
+<img src ="../../assets/images/salarie.png" style ="width : 100px; height : 100px" title = "Saisie Nouveau Salarié"></br></img></a>
+</br>
+<div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+            <div class="adv-table table-responsive -xl}">
+                <table class ="table ">
+                <!--<table>-->
+                  <thead class="thead-light centre">
+                    <tr >
+
+                      <th scope="col" >Nom</th>
+                      <th scope="col" >Prénom</th>
+                      <th scope="col" >Chantier</th>
+                      <th scope="col" >Date Début contrat</th>
+                      <th scope="col" >Date Fin contrat</th>
+                      <th scope="col " >Dossier Administratif</th>
+                      <th scope="col " >Sortie</th>
+                      <th scope="col " colspan="5"> CIP</th>
+
+
+                      <!--<th scope="col" class=" center hidden-phone">Lieu de naissance</th>
+                      <th scope="col" class=" center hidden-phone">Id Pôle-Emploi</th>-->
+
+                    <tr/>
+                    {% for ligne in lignes %}
+
+                        <tr class="centre">
+                          <td ><b>{{ligne.nom}}</b></td>
+                          <td >{{ligne.prenom}}</td>
+                          <td ><b>{{ligne.lieu}}</b></td>
+                          <td >{{ligne.datedebcontrat|date("d/m/Y", "Europe/Paris")}}</td>
+                          <td >{{ligne.datefinreelle|date("d/m/Y", "Europe/Paris")}}</td>
+                          <td ><a href="{{path_for('modifsalarie',{'idsalarie' : ligne.id},{'idlieu' : ligne.idlieu}) }}"><p class="fa fa-folder-open" style ="text-align:justify-all; color : green" title = "Dossier administratif de {{ ligne.genre }} {{ ligne.nom }}"></p></a></td>
+                          <td ><a href="{{path_for('sortiesalarie',{'idsalarie' : ligne.id},{'idlieu' : ligne.idlieu}) }}"><img src="../../assets/images/sortie.jpg" title = "Fiche de Sortie de {{ ligne.genre }} {{ ligne.nom }}"></img> </a></td>
+                          <td ><a href="{{path_for('suivisalarie',{'idsalarie' : ligne.id}) }}"><button type="button" class="btn btn-secondary" title = "Vue Fiche de {{ ligne.genre }} {{ ligne.nom }}">Vue</button> </a></td>
+                          <td ><a href="{{path_for('suivisalarie',{'idsalarie' : ligne.id}) }}"><button type="button" class="btn btn-info" title = "Fiche de entretien de {{ ligne.genre }} {{ ligne.nom }}">1er Entretien</button> </a></td>
+                          <td ><a href="{{path_for('diagnosticsalarie',{'idsalarie' : ligne.id}) }}"><button type="button" class="btn btn-info" title = "Fiche de Diagnostic de {{ ligne.genre }} {{ ligne.nom }}">Diagnostic</button> </a></td>
+                          <td ><a href="{{path_for('entretiensalarie',{'idsalarie' : ligne.id}) }}"><button type="button" class="btn btn-success" title = "Fiche de suivi de {{ ligne.genre }} {{ ligne.nom }}">Suivi</button> </a></td>
+                          <td ><a href="{{path_for('entretiensalarie',{'idsalarie' : ligne.id}) }}"><button type="button" class="btn btn-primary" title = "Fiche de Démarche de {{ ligne.genre }} {{ ligne.nom }}">Démarche</button> </a></td>
+                        </tr>
+
+                    {% endfor %}
+                  </thead>
+                </table>
+            </div>
+          </div>
+</div>
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  // alert("Coucou les auditeurs !");
+</script>
+{% endblock %}

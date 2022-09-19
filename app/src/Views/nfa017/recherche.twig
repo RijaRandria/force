@@ -1,0 +1,17 @@
+{% extends "maitre.twig" %}
+{% block content %}
+<h1 id="vehicules">{{titre}}</h1>
+<form method="post">
+<input type='text' size='30' name='recherche' placeholder='Entrez votre recherche...' >
+<input type='submit' value='Recherche'>
+<input type='cancel' value='Annuler'>
+</form>
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+<script>
+  // alert("Coucou les auditeurs !");
+</script>
+{% endblock %}
